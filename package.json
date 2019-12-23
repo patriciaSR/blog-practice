@@ -1,0 +1,25 @@
+{
+    "name": "blog-practice",
+    "version": "1.0.0",
+    "main": "main.js",
+    "directories": {
+        "test": "tests"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "4.17.1",
+        "mongodb": "^3.4.1"
+    },
+    "devDependencies": {
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-plugin-import": "^2.19.1",
+        "jest": "^24.9.0"
+    },
+    "scripts": {
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+        "test:coverage": "jest --collect-coverage"
+    }
+}
