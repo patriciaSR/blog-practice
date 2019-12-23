@@ -1,9 +1,8 @@
-const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
 const express = require('express');
 const cors = require('cors');
 
-const url = 'mongodb://localhost:27017/blogDB';
+const repository = require('./repository.js');
 
 const app = express();
 // Enable CORS
@@ -11,13 +10,9 @@ app.use(cors());
 // Convert json bodies to JavaScript object
 app.use(express.json());
 
-// Save info of collections DataBase Mongo
-let posts;
-let users;
-let comments;
-let roles;
 
 app.post('/posts', async (req, res) => {
+  const posts = repository.getCollection('posts');
   const post = req.body;
   const { title, content, date, tags, categories, image, userID } = post;
 
@@ -43,11 +38,13 @@ app.post('/posts', async (req, res) => {
 });
 
 app.get('/posts', async (req, res) => {
+  const posts = repository.getCollection('posts');
   const allPosts = await posts.find().toArray();
   res.json(allPosts);
 });
 
 app.get('/posts/:id', async (req, res) => {
+  const posts = repository.getCollection('posts');
   const id = req.params.id;
   const post = await posts.find({ _id: new ObjectId(id) }).toArray();
   if (!post) {
@@ -58,6 +55,7 @@ app.get('/posts/:id', async (req, res) => {
 });
 
 app.delete('/posts/:id', async (req, res) => {
+  const posts = repository.getCollection('posts');
   const id = req.params.id;
   const post = await posts.deleteOne({ _id: new ObjectId(id) });
   if (!post) {
@@ -68,6 +66,7 @@ app.delete('/posts/:id', async (req, res) => {
 });
 
 app.put('/posts/:id', async (req, res) => {
+  const posts = repository.getCollection('posts');
   const id = req.params.id;
   const post = await posts.findOne({ _id: new ObjectId(id) });
   if (!post) {
@@ -98,22 +97,10 @@ app.put('/posts/:id', async (req, res) => {
   }
 });
 
-async function dbConnect() {
-  const conn = await MongoClient.connect(url, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  });
 
-  console.log("Connected to Mongo");
-
-  posts = conn.db().collection('posts');
-  users = conn.db().collection('users');
-  comments = conn.db().collection('comments');
-  roles = conn.db().collection('roles');
-}
 
 async function main() {
-  await dbConnect();
+  await repository.connect();
 
   app.listen(3000, () => console.log('Server started in port 3000'));
 }
