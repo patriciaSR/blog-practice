@@ -2,7 +2,7 @@ const ObjectId = require('mongodb').ObjectId;
 const express = require('express');
 const cors = require('cors');
 
-const repository = require('./repository.js');
+const repository = require('./repository/');
 
 const app = express();
 // Enable CORS
@@ -12,41 +12,28 @@ app.use(express.json());
 
 
 app.post('/posts', async (req, res) => {
-  const posts = repository.getCollection('posts');
   const post = req.body;
-  const { title, content, date, tags, categories, image, userID } = post;
+  const { title, content, userID } = post;
 
   // Validation
   if (!(content && title && userID)) {
     res.sendStatus(400);
   } else {
     // Create object with needed fields and assign id
-    const newPost = {
-      title,
-      content,
-      date,
-      tags,
-      categories,
-      image,
-      userID,
-    };
-    // Save resource
-    await posts.insertOne(newPost);
+    await repository.posts.addPost(post);
     // Return new resource
-    res.json(newPost);
+    res.json(post);
   }
 });
 
 app.get('/posts', async (req, res) => {
-  const posts = repository.getCollection('posts');
-  const allPosts = await posts.find().toArray();
+  const allPosts = await repository.posts.getAllPosts();
   res.json(allPosts);
 });
 
 app.get('/posts/:id', async (req, res) => {
-  const posts = repository.getCollection('posts');
   const id = req.params.id;
-  const post = await posts.find({ _id: new ObjectId(id) }).toArray();
+  const post = await repository.posts.getPostById(id);
   if (!post) {
     res.sendStatus(404);
   } else {
@@ -55,9 +42,8 @@ app.get('/posts/:id', async (req, res) => {
 });
 
 app.delete('/posts/:id', async (req, res) => {
-  const posts = repository.getCollection('posts');
   const id = req.params.id;
-  const post = await posts.deleteOne({ _id: new ObjectId(id) });
+  const post = await repository.posts.deletePostById(id);
   if (!post) {
     res.sendStatus(404);
   } else {
@@ -66,33 +52,22 @@ app.delete('/posts/:id', async (req, res) => {
 });
 
 app.put('/posts/:id', async (req, res) => {
-  const posts = repository.getCollection('posts');
   const id = req.params.id;
-  const post = await posts.findOne({ _id: new ObjectId(id) });
+  const post = await repository.posts.findPost(id);
+
   if (!post) {
     res.sendStatus(404);
   } else {
     const postReq = req.body;
-    const { title, content, date, tags, categories, image, userID } = postReq;
+    const { title, content, userID } = postReq;
 
     // Validation
     if (!(title && content && userID)) {
       res.sendStatus(400);
     } else {
-      const newPost = {
-        title,
-        content,
-        date,
-        tags,
-        categories,
-        image,
-        userID,
-      };
-
-      // Create object with needed fields and assign id
-      posts.updateOne({ _id: new ObjectId(id) }, { $set: newPost });
+      await repository.posts.updatePost(id, postReq);
       // Return new resource
-      res.json(newPost);
+      res.json(postReq);
     }
   }
 });
