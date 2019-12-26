@@ -9,9 +9,13 @@ offensiveRouter.post('/', async (req, res) => {
   const newWord = req.body;
   const { word, level } = newWord;
 
+  const isWordIncluded = await repository.offensiveWords.findWord(word);
+
   // Validation
   if (!(word && level)) {
     res.sendStatus(400);
+  } else if (isWordIncluded) {
+    res.status(400).send('Esa palabra ya existe en la base de datos');
   } else {
     // Create object with needed fields and assign id
     await repository.offensiveWords.addWord(newWord);

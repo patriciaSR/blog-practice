@@ -4,15 +4,25 @@ const commentsRouter = express.Router();
 
 const repository = require('../repository/');
 
+const haveOffensiveWords = require('../validator');
+
 
 commentsRouter.post('/', async (req, res) => {
   const comment = req.body;
   const { content, userID, postID } = comment;
   comment.date = new Date();
 
+  const offensiveWords = await repository.offensiveWords.getAllWords();
+  const notAllowedWords = haveOffensiveWords(content, offensiveWords);
+
   // Validation
   if (!(content && postID && userID)) {
     res.sendStatus(400);
+  } else if (notAllowedWords.length !== 0) {
+    const errorText = 'Tu comentario no puede contener palabras ofensivas';
+
+    res.status(400).send(notAllowedWords);
+    return errorText;
   } else {
     // Create object with needed fields and assign id
     await repository.comments.addComment(comment);
