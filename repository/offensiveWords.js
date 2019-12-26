@@ -15,6 +15,11 @@ module.exports = class OffensiveWords {
     return this.collection.insertOne(newWordtoAdd);
   }
 
+  addDefaultWords(defaultWords) {
+    // Save resource
+    return this.collection.insertMany(defaultWords);
+  }
+
   getAllWords() {
     return this.collection.find().toArray();
   }

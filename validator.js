@@ -1,6 +1,6 @@
 
 function haveOffensiveWords(text, offensiveWords) {
-  let notAllowedOffensiveWords = [];
+  const notAllowedOffensiveWords = [];
 
   offensiveWords.forEach((word) => {
     const isWordIncluded = text.includes(word.word);
