@@ -21,7 +21,6 @@ commentsRouter.post('/', async (req, res) => {
   }
 });
 
-
 commentsRouter.delete('/:id', async (req, res) => {
   const id = req.params.id;
   const comment = await repository.comments.deleteCommentById(id);
