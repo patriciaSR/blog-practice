@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 
-const postsRouter = require('./controller/postsRouter');
 const repository = require('./repository/');
+
+const postsRouter = require('./controller/postsRouter');
+const commentsRouter = require('./controller/commentsRouter');
 
 const app = express();
 // Enable CORS
@@ -13,6 +15,8 @@ app.use(express.json());
 app.use('./controller/postsRouter.js', postsRouter);
 
 app.use('/posts', postsRouter);
+app.use('/posts/:id/comments', commentsRouter);
+
 
 
 async function main() {
