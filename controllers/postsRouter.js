@@ -28,9 +28,12 @@ postsRouter.get('/', async (req, res) => {
 postsRouter.get('/:id', async (req, res) => {
   const id = req.params.id;
   const post = await repository.posts.getPostByID(id);
+  const comments = await repository.comments.getCommentsPost(id);
+
   if (!post) {
     res.sendStatus(404);
   } else {
+    post[0].comments = comments;
     res.json(post);
   }
 });
