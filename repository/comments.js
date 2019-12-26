@@ -19,8 +19,8 @@ module.exports = class Posts {
     return this.collection.insertOne(newComment);
   }
 
-  getCommentsPost(postId) {
-    return this.collection.find({ postID: postId }).toArray();
+  getCommentsPost(postID) {
+    return this.collection.find({ postID }).toArray();
   }
 
   findComment(id) {
