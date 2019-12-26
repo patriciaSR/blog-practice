@@ -7,7 +7,7 @@ const postsRouter = require('./controllers/postsRouter');
 const commentsRouter = require('./controllers/commentsRouter');
 const offensiveRouter = require('./controllers/offensiveRouter');
 
-const defaultWords = require('./src/defaultWords');
+const defaultWords = require('./src/data/defaultWords');
 
 const app = express();
 // Enable CORS
