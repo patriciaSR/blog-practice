@@ -3,9 +3,9 @@ const cors = require('cors');
 
 const repository = require('./repository/');
 
-const postsRouter = require('./controller/postsRouter');
-const commentsRouter = require('./controller/commentsRouter');
-const offensiveRouter = require('./controller/offensiveRouter');
+const postsRouter = require('./controllers/postsRouter');
+const commentsRouter = require('./controllers/commentsRouter');
+const offensiveRouter = require('./controllers/offensiveRouter');
 
 const app = express();
 // Enable CORS

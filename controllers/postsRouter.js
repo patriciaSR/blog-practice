@@ -2,7 +2,7 @@ const express = require('express');
 
 const postsRouter = express.Router();
 
-const repository = require('../repository/');
+const repository = require('../repository');
 
 
 postsRouter.post('/', async (req, res) => {
