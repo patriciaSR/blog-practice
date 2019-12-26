@@ -20,7 +20,7 @@ module.exports = class Posts {
   }
 
   getCommentsPost(postId) {
-    return this.collection.find({ postID: new ObjectId(postId) }).toArray();
+    return this.collection.find({ postID: postId }).toArray();
   }
 
   findComment(id) {
@@ -43,5 +43,9 @@ module.exports = class Posts {
 
   deleteCommentById(id) {
     return this.collection.deleteOne({ _id: new ObjectId(id) });
+  }
+
+  deleteComentsPostById(idPost) {
+    return this.collection.deleteMany({ postID: idPost });
   }
 };

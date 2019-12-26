@@ -41,9 +41,11 @@ postsRouter.get('/:id', async (req, res) => {
 postsRouter.delete('/:id', async (req, res) => {
   const id = req.params.id;
   const post = await repository.posts.deletePostById(id);
+  const comments = await repository.comments.deleteComentsPostById(id);
   if (!post) {
     res.sendStatus(404);
   } else {
+    post.comments = comments;
     res.json(post);
   }
 });
