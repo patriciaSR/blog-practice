@@ -79,28 +79,28 @@ Optionally, the practice can be delivered with the persistence of offensive word
 * **Comment without offensive words**: if the comment does not have offensive words, an OK validation must be obtained.
 
 ## Install Depencencies
-Install Node.js:
+Install **Node.js**:
 
 `npm install -g node`
 
-Install Express.js for building REST APIs:
+Install **Express.js** for building REST APIs:
 
 `npm install express`
 
-Install MongoDB for buildig Non-Relational(NoSQL) Database:
+Install **MongoDB** for buildig Non-Relational(NoSQL) Database:
 
 `npm install mongodb`
 
-Install CORS node.js package for providing a Connect/Express middleware that can be used to enable CORS:
+Install **CORS** node.js package for providing a Connect/Express middleware that can be used to enable CORS:
 
 `npm install cors`
 
 ## Install DevDepencencies
-Install Jest for testing:
+Install **Jest** for testing:
 
 `npm install --save-dev jest`
 
-Install esLint for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs:
+Install **esLint** for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs:
 
 `npm install --save-dev eslint`
 
