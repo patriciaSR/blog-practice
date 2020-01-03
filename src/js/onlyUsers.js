@@ -11,4 +11,23 @@ function getOnlyUsersArray(post, comments) {
   return onlyUserIDsArray;
 }
 
-module.exports = getOnlyUsersArray;
+function getUserPostInfo(userID, onlyUsersInfo) {
+  const userPostInfo = onlyUsersInfo.find((user) => user.userID === userID);
+
+  return userPostInfo;
+}
+
+function getUserCommentsInfo(comments, onlyUsersInfo) {
+  comments.forEach((comment) => {
+    const userCommentInfo = onlyUsersInfo.find((user) => user.userID === comment.userID);
+    comment.userInfo = userCommentInfo;
+  });
+
+  return comments;
+}
+
+module.exports = {
+  getOnlyUsersArray,
+  getUserPostInfo,
+  getUserCommentsInfo,
+};

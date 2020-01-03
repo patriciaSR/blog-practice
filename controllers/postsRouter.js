@@ -3,8 +3,7 @@ const express = require('express');
 const postsRouter = express.Router();
 
 const repository = require('../repository');
-const getOnlyUsersArray = require('../src/js/onlyUsers');
-
+const { getOnlyUsersArray, getUserPostInfo, getUserCommentsInfo } = require('../src/js/onlyUsers');
 
 postsRouter.post('/', async (req, res) => {
   const post = req.body;
@@ -33,14 +32,18 @@ postsRouter.get('/:id', async (req, res) => {
   const comments = await repository.comments.getCommentsPost(id);
 
   const onlyUserIDs = getOnlyUsersArray(post, comments);
+
   const onlyUserInfo = await repository.users.getUsersById(onlyUserIDs);
 
-  console.log(onlyUserInfo);
+  const userPostInfo = getUserPostInfo(post[0].userID, onlyUserInfo);
+
+  const completeCommentsInfo = getUserCommentsInfo(comments, onlyUserInfo);
 
   if (!post) {
     res.sendStatus(404);
   } else {
-    post[0].comments = comments;
+    post[0].userInfo = userPostInfo;
+    post[0].comments = completeCommentsInfo;
     res.json(post);
   }
 });
