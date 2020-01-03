@@ -32,7 +32,7 @@ If the comment you are trying to incorporate contains any of the offensive words
 
 Offensive words will be stored in the database. If the application detects that there are no offensive words in the database, the application must insert a **default offensive-words set**.
 
-## Project Structure:
+## Project's Structure:
 ```
 ├── app.js (app module, express server)
 │
