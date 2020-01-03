@@ -65,6 +65,7 @@ postsRouter.put('/:id', async (req, res) => {
     res.sendStatus(404);
   } else {
     const postReq = req.body;
+    postReq.date = new Date();
     const { title, content, userID } = postReq;
 
     // Validation
