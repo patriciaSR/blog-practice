@@ -3,10 +3,12 @@ const express = require('express');
 const postsRouter = express.Router();
 
 const repository = require('../repository');
+const getOnlyUsersArray = require('../src/js/onlyUsers');
 
 
 postsRouter.post('/', async (req, res) => {
   const post = req.body;
+  post.date = new Date();
   const { title, content, userID } = post;
 
   // Validation
@@ -30,7 +32,10 @@ postsRouter.get('/:id', async (req, res) => {
   const post = await repository.posts.getPostByID(id);
   const comments = await repository.comments.getCommentsPost(id);
 
-  getOnlyUsersArray(post, comments);
+  const onlyUserIDs = getOnlyUsersArray(post, comments);
+  const onlyUserInfo = await repository.users.getUsersById(onlyUserIDs);
+
+  console.log(onlyUserInfo);
 
   if (!post) {
     res.sendStatus(404);
