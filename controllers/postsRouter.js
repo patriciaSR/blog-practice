@@ -30,6 +30,8 @@ postsRouter.get('/:id', async (req, res) => {
   const post = await repository.posts.getPostByID(id);
   const comments = await repository.comments.getCommentsPost(id);
 
+  getOnlyUsersArray(post, comments);
+
   if (!post) {
     res.sendStatus(404);
   } else {
