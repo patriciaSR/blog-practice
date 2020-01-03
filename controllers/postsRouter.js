@@ -10,7 +10,7 @@ postsRouter.post('/', async (req, res) => {
   const { title, content, userID } = post;
 
   // Validation
-  if (!(content && title && userID)) {
+  if (!content && !title && !userID) {
     res.sendStatus(400);
   } else {
     // Create object with needed fields and assign id
@@ -61,7 +61,7 @@ postsRouter.put('/:id', async (req, res) => {
     const { title, content, userID } = postReq;
 
     // Validation
-    if (!(title && content && userID)) {
+    if (!title && !content && !userID) {
       res.sendStatus(400);
     } else {
       await repository.posts.updatePost(id, postReq);

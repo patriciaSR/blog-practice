@@ -16,7 +16,7 @@ commentsRouter.post('/', async (req, res) => {
   const notAllowedWords = haveOffensiveWords(content, offensiveWords);
 
   // Validation
-  if (!(content && postID && userID)) {
+  if (!content && !postID && !userID) {
     res.sendStatus(400);
   } else if (notAllowedWords.length !== 0) {
     const errorText = 'Tu comentario no puede contener palabras ofensivas';
@@ -53,7 +53,7 @@ commentsRouter.put('/:id', async (req, res) => {
     commentReq.date = new Date();
 
     // Validation
-    if (!(postID && content && userID)) {
+    if (!postID && !content && !userID) {
       res.sendStatus(400);
     } else {
       await repository.comments.updateComment(id, commentReq);
