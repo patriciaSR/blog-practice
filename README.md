@@ -33,7 +33,7 @@ If the comment you are trying to incorporate contains any of the offensive words
 Offensive words will be stored in the database. If the application detects that there are no offensive words in the database, the application must insert a **default offensive-words set**.
 
 ## Project Structure:
-`
+```
 ├── app.js (app module, express server)
 ├── /controllers (router APIs REST)
 │   ├── commentsRouter.js (comments collection API methods)
@@ -57,7 +57,7 @@ Offensive words will be stored in the database. If the application detects that 
 ├── .gitignore (gitignore file configuration)
 ├── package.json (dependencies and project information)
 ├── postman.json (REST APIs information to import in Postman application)
-`
+```
 
 ## REST API
 The REST API must be level2 maturity and the format of the URLs must identify resources, not actions.
