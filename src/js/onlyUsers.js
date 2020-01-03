@@ -1,4 +1,4 @@
-function getOnlyUsersArray(post, comments) {
+function getOnlyUsersIDs(post, comments) {
   const onlyUserIDsSet = new Set();
 
   onlyUserIDsSet.add(post[0].userID);
@@ -27,7 +27,7 @@ function getUserCommentsInfo(comments, onlyUsersInfo) {
 }
 
 module.exports = {
-  getOnlyUsersArray,
+  getOnlyUsersIDs,
   getUserPostInfo,
   getUserCommentsInfo,
 };

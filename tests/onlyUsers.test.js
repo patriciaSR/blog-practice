@@ -1,4 +1,4 @@
-const getOnlyUserIDsArray = require('../src/js/onlyUsers');
+const { getOnlyUsersIDs } = require('../src/js/onlyUsers');
 
 describe('getOnlyUserIDsArray method test', () => {
   const mockPost = [{
@@ -24,7 +24,7 @@ describe('getOnlyUserIDsArray method test', () => {
   test('get onlyUserIDs into an Array', () => {
     const expectedResult = ['3a', '1a', '2a'];
 
-    const result = getOnlyUserIDsArray(mockPost, mockComments);
+    const result = getOnlyUsersIDs(mockPost, mockComments);
 
     expect(result.length).toEqual(3);
     expect(result).toEqual(expectedResult);
@@ -38,7 +38,7 @@ describe('getOnlyUserIDsArray method test', () => {
     ];
     const expectedResult = ['1a', '2a'];
 
-    const result = getOnlyUserIDsArray(mockRepeatUserIDPost, mockComments);
+    const result = getOnlyUsersIDs(mockRepeatUserIDPost, mockComments);
 
     expect(result.length).toEqual(2);
     expect(result).toEqual(expectedResult);
