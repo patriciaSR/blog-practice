@@ -7,12 +7,13 @@ const repository = require('../repository/');
 
 offensiveRouter.post('/', async (req, res) => {
   const newWord = req.body;
+  newWord.word = newWord.word.toLowerCase();
   const { word, level } = newWord;
 
   const isWordIncluded = await repository.offensiveWords.findWord(word);
 
   // Validation
-  if (!(word && level)) {
+  if (!word && !level) {
     res.sendStatus(400);
   } else if (isWordIncluded) {
     res.status(400).send('Esa palabra ya existe en la base de datos');
@@ -50,7 +51,7 @@ offensiveRouter.put('/:wordName', async (req, res) => {
     const { word, level } = wordReq;
 
     // Validation
-    if (!(word && level)) {
+    if (!word && !level) {
       res.sendStatus(400);
     } else {
       await repository.offensiveWords.updateWord(wordName, wordReq);

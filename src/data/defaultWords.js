@@ -11,6 +11,10 @@ const defaultWords = [
     word: "pedo",
     level: 1,
   },
+  {
+    word: "pis",
+    level: 1,
+  },
 ];
 
 module.exports = defaultWords;

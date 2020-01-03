@@ -5,6 +5,8 @@ const Posts = require('./posts');
 const Comments = require('./comments');
 const OffensiveWords = require('./offensiveWords');
 
+const defaultWords = require('../src/data/defaultWords');
+
 const url = 'mongodb://localhost:27017/blogDB';
 
 module.exports = {
@@ -19,5 +21,13 @@ module.exports = {
     this.posts = new Posts(connection);
     this.comments = new Comments(connection);
     this.offensiveWords = new OffensiveWords(connection);
+  },
+
+  async checkDefault() {
+    const offensiveWords = await this.offensiveWords.getAllWords();
+
+    if (!offensiveWords.length) {
+      await this.offensiveWords.addDefaultWords(defaultWords);
+    }
   },
 };
