@@ -4,6 +4,8 @@ const MongoClient = require('mongodb').MongoClient;
 const Posts = require('./posts');
 const Comments = require('./comments');
 const OffensiveWords = require('./offensiveWords');
+const Users = require('./users');
+
 
 const defaultWords = require('../src/data/defaultWords');
 
@@ -21,6 +23,7 @@ module.exports = {
     this.posts = new Posts(connection);
     this.comments = new Comments(connection);
     this.offensiveWords = new OffensiveWords(connection);
+    this.users = new Users(connection);
   },
 
   async checkDefault() {

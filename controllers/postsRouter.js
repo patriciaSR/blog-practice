@@ -3,10 +3,11 @@ const express = require('express');
 const postsRouter = express.Router();
 
 const repository = require('../repository');
-
+const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../src/js/onlyUsers');
 
 postsRouter.post('/', async (req, res) => {
   const post = req.body;
+  post.date = new Date();
   const { title, content, userID } = post;
 
   // Validation
@@ -30,10 +31,19 @@ postsRouter.get('/:id', async (req, res) => {
   const post = await repository.posts.getPostByID(id);
   const comments = await repository.comments.getCommentsPost(id);
 
+  const onlyUserIDs = getOnlyUsersIDs(post, comments);
+
+  const onlyUserInfo = await repository.users.getUsersById(onlyUserIDs);
+
+  const userPostInfo = getUserPostInfo(post[0].userID, onlyUserInfo);
+
+  const completeCommentsInfo = getUserCommentsInfo(comments, onlyUserInfo);
+
   if (!post) {
     res.sendStatus(404);
   } else {
-    post[0].comments = comments;
+    post[0].userInfo = userPostInfo;
+    post[0].comments = completeCommentsInfo;
     res.json(post);
   }
 });
@@ -58,6 +68,7 @@ postsRouter.put('/:id', async (req, res) => {
     res.sendStatus(404);
   } else {
     const postReq = req.body;
+    postReq.date = new Date();
     const { title, content, userID } = postReq;
 
     // Validation

@@ -13,19 +13,25 @@ describe('haveOffensiveWords method test', () => {
 
   test('add comment without offensive words', () => {
     const mockGoodText = 'hola que tal';
+
     const result = haveOffensiveWords(mockGoodText, mockWords);
+
     expect(result.length).toEqual(0);
   });
 
   test('not add comment with offensive words', () => {
     const mockBadText = 'caca que tal';
+
     const result = haveOffensiveWords(mockBadText, mockWords);
+
     expect(result.length).toEqual(1);
   });
 
   test('not add comment with capitalize offensive words', () => {
     const mockBadText = 'CACA que tal';
+
     const result = haveOffensiveWords(mockBadText, mockWords);
+
     expect(result.length).toEqual(1);
   });
 });

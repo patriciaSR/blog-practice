@@ -60,7 +60,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"post1\",\n    \"content\": \"loremmmmmmmmm\",\n    \"date\": \"121212\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\",\n    \"userID\": \"ahgdajsdg16732\"\n}",
+					"raw": "{\n\t\"title\": \"newpost3\",\n    \"content\": \"loremmmmmmmmm\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\",\n    \"userID\": \"3a\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -87,7 +87,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/5e04d3911b1470164a0a21c0",
+					"raw": "http://localhost:3000/posts/5e0f596762e62251b442a7a3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -95,7 +95,7 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"5e04d3911b1470164a0a21c0"
+						"5e0f596762e62251b442a7a3"
 					]
 				}
 			},
@@ -115,7 +115,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"postCHANGE345345E\",\n    \"content\": \"loremmmmmmmmm\",\n    \"date\": \"121212\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\",\n    \"userID\": \"adhaskhd776283\"\n}",
+					"raw": "{\n\t\"title\": \"postCHANGE345345E\",\n    \"content\": \"loremmmmmmmmm\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\",\n    \"userID\": \"3a\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -123,7 +123,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/posts/5e00aa1729e70a3f4e6b0ae4",
+					"raw": "http://localhost:3000/posts/5e0f59a962e62251b442a7a8",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -131,7 +131,7 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"5e00aa1729e70a3f4e6b0ae4"
+						"5e0f59a962e62251b442a7a8"
 					]
 				}
 			},
@@ -143,7 +143,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/5e04d3911b1470164a0a21c0",
+					"raw": "http://localhost:3000/posts/5e0f59a962e62251b442a7a8",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -151,7 +151,7 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"5e04d3911b1470164a0a21c0"
+						"5e0f59a962e62251b442a7a8"
 					]
 				}
 			},
@@ -171,7 +171,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"content\": \"tolai\",\n\t\"date\": \"12/12/12\",\n\t\"userID\": \"32323\",\n\t\"postID\": \"5e04d3911b1470164a0a21c0\"\n}",
+					"raw": "{\n\t\"content\": \"hola\",\n\t\"userID\": \"2a\",\n\t\"postID\": \"5e0f596762e62251b442a7a3\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -179,7 +179,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/posts/5e04d3911b1470164a0a21c0/comments",
+					"raw": "http://localhost:3000/posts/5e0f596762e62251b442a7a3/comments",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -187,7 +187,7 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"5e04d3911b1470164a0a21c0",
+						"5e0f596762e62251b442a7a3",
 						"comments"
 					]
 				}
@@ -208,7 +208,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"content\": \"hola y adios\",\n\t\"date\": \"14/12/12\",\n\t\"userID\": \"32323\",\n\t\"postID\": \"5e00a992d247103e6e44ddc6\"\n}",
+					"raw": "{\n\t\"content\": \"hola y adios y adios\",\n\t\"userID\": \"1a\",\n\t\"postID\": \"5e0f596762e62251b442a7a3\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -216,7 +216,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/posts/5e00a992d247103e6e44ddc6/comments/5e049713ffa7b028d2052388",
+					"raw": "http://localhost:3000/posts/5e0f596762e62251b442a7a3/comments/5e0f598662e62251b442a7a5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -224,9 +224,9 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"5e00a992d247103e6e44ddc6",
+						"5e0f596762e62251b442a7a3",
 						"comments",
-						"5e049713ffa7b028d2052388"
+						"5e0f598662e62251b442a7a5"
 					]
 				}
 			},
@@ -238,7 +238,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/5e00a992d247103e6e44ddc6/comments/5e049f63f445bd3844f34523",
+					"raw": "http://localhost:3000/posts/5e0f596762e62251b442a7a3/comments/5e0f598662e62251b442a7a5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -246,9 +246,9 @@
 					"port": "3000",
 					"path": [
 						"posts",
-						"5e00a992d247103e6e44ddc6",
+						"5e0f596762e62251b442a7a3",
 						"comments",
-						"5e049f63f445bd3844f34523"
+						"5e0f598662e62251b442a7a5"
 					]
 				}
 			},
@@ -268,7 +268,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"word\": \"culo\",\n\t\"level\": 1\n}",
+					"raw": "{\n\t\"word\": \"FEO\",\n\t\"level\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -314,7 +314,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/offensive-words/tolai",
+					"raw": "http://localhost:3000/offensive-words/ñordo",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -322,7 +322,7 @@
 					"port": "3000",
 					"path": [
 						"offensive-words",
-						"tolai"
+						"ñordo"
 					]
 				}
 			},
