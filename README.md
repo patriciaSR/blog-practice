@@ -104,6 +104,6 @@ Run the app.js file with node in your terminal:
 
 The server is running now on port [http://localhost:3000](http://localhost:3000).
 
-Open **Postman app** and import postman.json file to interact with REST APIs endpoints
+Open **Postman app** and import `postman.json` file to interact with REST APIs endpoints
 
 Open **MongoDB Compass app** to interact with app database and collections. Connect to [http://localhost:27017](http://localhost:27017). 
