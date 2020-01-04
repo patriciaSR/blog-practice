@@ -1,5 +1,3 @@
-const ObjectId = require('mongodb').ObjectId;
-
 module.exports = class Users {
   constructor(connection) {
     this.connection = connection;
