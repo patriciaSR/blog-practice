@@ -57,7 +57,6 @@ module.exports = {
 
   async checkDefault() {
     const offensiveWords = await this.offensiveWords.getAllWords();
-    console.log(offensiveWords);
 
     if (!offensiveWords.length) {
       await this.offensiveWords.addDefaultWords(defaultWords);

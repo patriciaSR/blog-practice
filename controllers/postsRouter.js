@@ -35,16 +35,16 @@ postsRouter.get('/:id', async (req, res) => {
 
   const onlyUserInfo = await repository.users.getUsersById(onlyUserIDs);
 
-  const userPostInfo = getUserPostInfo(post[0].userID, onlyUserInfo);
+  const userPostInfo = getUserPostInfo(post.userID, onlyUserInfo);
 
   const completeCommentsInfo = getUserCommentsInfo(comments, onlyUserInfo);
+
+  const postComplete = { post, userPostInfo, completeCommentsInfo };
 
   if (!post) {
     res.sendStatus(404);
   } else {
-    post[0].userInfo = userPostInfo;
-    post[0].comments = completeCommentsInfo;
-    res.json(post);
+    res.json(postComplete);
   }
 });
 

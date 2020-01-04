@@ -1,7 +1,7 @@
 function getOnlyUsersIDs(post, comments) {
   const onlyUserIDsSet = new Set();
 
-  onlyUserIDsSet.add(post[0].userID);
+  onlyUserIDsSet.add(post.userID);
 
   comments.forEach((comment) => {
     onlyUserIDsSet.add(comment.userID);
@@ -18,12 +18,13 @@ function getUserPostInfo(userID, onlyUsersInfo) {
 }
 
 function getUserCommentsInfo(comments, onlyUsersInfo) {
+  const completeInfoComments = [];
   comments.forEach((comment) => {
     const userCommentInfo = onlyUsersInfo.find((user) => user.userID === comment.userID);
-    comment.userInfo = userCommentInfo;
+    completeInfoComments.push({ comment, userCommentInfo });
   });
 
-  return comments;
+  return completeInfoComments;
 }
 
 module.exports = {
