@@ -1,9 +1,10 @@
+const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectId;
 
 module.exports = class Posts {
-  constructor(connection) {
+  constructor(connection, postSchema) {
     this.connection = connection;
-    this.collection = this.connection.db().collection('posts');
+    this.collection = mongoose.model('posts', postSchema);
   }
 
   addPost(post) {
@@ -19,19 +20,16 @@ module.exports = class Posts {
       userID,
     };
     // Save resource
-    return this.collection.insertOne(newPost);
+    const postMongoose = new this.collection(newPost);
+    return postMongoose.save();
   }
 
   getAllPosts() {
-    return this.collection.find().toArray();
+    return this.collection.find().exec();
   }
 
   getPostByID(id) {
-    return this.collection.find({ _id: new ObjectId(id) }).toArray();
-  }
-
-  findPost(id) {
-    return this.collection.findOne({ _id: new ObjectId(id) });
+    return this.collection.findById(new ObjectId(id));
   }
 
   updatePost(id, post) {
@@ -45,12 +43,11 @@ module.exports = class Posts {
       image,
       userID,
     };
-
     // Create object with needed fields and assign id
-    return this.collection.updateOne({ _id: new ObjectId(id) }, { $set: newPost });
+    return this.collection.findByIdAndUpdate(new ObjectId(id), { $set: newPost });
   }
 
   deletePostById(id) {
-    return this.collection.deleteOne({ _id: new ObjectId(id) });
+    return this.collection.findByIdAndDelete(new ObjectId(id));
   }
 };

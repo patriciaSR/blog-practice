@@ -1,9 +1,10 @@
+const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectId;
 
-module.exports = class Posts {
-  constructor(connection) {
+module.exports = class Comments {
+  constructor(connection, commentSchema) {
     this.connection = connection;
-    this.collection = this.connection.db().collection('comments');
+    this.collection = mongoose.model('comments', commentSchema);
   }
 
   addComment(comment) {
@@ -16,15 +17,16 @@ module.exports = class Posts {
       postID,
     };
     // Save resource
-    return this.collection.insertOne(newComment);
+    const commentMongoose = new this.collection(newComment);
+    return commentMongoose.save();
   }
 
   getCommentsPost(postID) {
-    return this.collection.find({ postID }).toArray();
+    return this.collection.find({ postID }).exec();
   }
 
   findComment(id) {
-    return this.collection.findOne({ _id: new ObjectId(id) });
+    return this.collection.findById(new ObjectId(id));
   }
 
   updateComment(id, comment) {
@@ -38,11 +40,11 @@ module.exports = class Posts {
     };
 
     // Create object with needed fields and assign id
-    return this.collection.updateOne({ _id: new ObjectId(id) }, { $set: newComment });
+    return this.collection.findByIdAndUpdate(new ObjectId(id), { $set: newComment });
   }
 
   deleteCommentById(id) {
-    return this.collection.deleteOne({ _id: new ObjectId(id) });
+    return this.collection.findByIdAndDelete(new ObjectId(id));
   }
 
   deleteComentsPostById(idPost) {

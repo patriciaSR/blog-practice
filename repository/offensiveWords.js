@@ -1,18 +1,20 @@
+const mongoose = require('mongoose');
+
 module.exports = class OffensiveWords {
-  constructor(connection) {
+  constructor(connection, offensiveSchema) {
     this.connection = connection;
-    this.collection = this.connection.db().collection('offensiveWords');
+    this.collection = mongoose.model('offensiveWords', offensiveSchema, 'offensiveWords');
   }
 
   addWord(newWord) {
     const { word, level } = newWord;
-
-    const newWordtoAdd = {
+    const newWordToAdd = {
       word,
       level,
     };
     // Save resource
-    return this.collection.insertOne(newWordtoAdd);
+    const wordMongoose = new this.collection(newWordToAdd);
+    return wordMongoose.save();
   }
 
   addDefaultWords(defaultWords) {
@@ -21,11 +23,11 @@ module.exports = class OffensiveWords {
   }
 
   getAllWords() {
-    return this.collection.find().toArray();
+    return this.collection.find().exec();
   }
 
   findWord(wordName) {
-    return this.collection.findOne({ word: wordName });
+    return this.collection.find({ word: wordName }).exec();
   }
 
   updateWord(wordName, newWord) {

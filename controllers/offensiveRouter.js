@@ -15,7 +15,7 @@ offensiveRouter.post('/', async (req, res) => {
   // Validation
   if (!word && !level) {
     res.sendStatus(400);
-  } else if (isWordIncluded) {
+  } else if (isWordIncluded.length !== 0) {
     res.status(400).send('Esa palabra ya existe en la base de datos');
   } else {
     // Create object with needed fields and assign id

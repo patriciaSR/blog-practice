@@ -1,9 +1,9 @@
-const ObjectId = require('mongodb').ObjectId;
+const mongoose = require('mongoose');
 
 module.exports = class Users {
-  constructor(connection) {
+  constructor(connection, userSchema) {
     this.connection = connection;
-    this.collection = this.connection.db().collection('users');
+    this.collection = mongoose.model('users', userSchema);
   }
 
   addUser(user) {
@@ -18,15 +18,16 @@ module.exports = class Users {
       image,
     };
     // Save resource
-    return this.collection.insertOne(newUser);
+    const userMongoose = new this.collection(newUser);
+    return userMongoose.save();
   }
 
   getUsersById(userIDs) {
-    return this.collection.find({ userID: { $in: userIDs } }).toArray();
+    return this.collection.find({ userID: { $in: userIDs } }).exec();
   }
 
   findUser(userID) {
-    return this.collection.findOne({ userID });
+    return this.collection.find({ userID }).exec();
   }
 
   updateUser(user) {

@@ -62,7 +62,7 @@ postsRouter.delete('/:id', async (req, res) => {
 
 postsRouter.put('/:id', async (req, res) => {
   const id = req.params.id;
-  const post = await repository.posts.findPost(id);
+  const post = await repository.posts.getPostByID(id);
 
   if (!post) {
     res.sendStatus(404);
