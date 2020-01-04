@@ -1,31 +1,34 @@
 module.exports = class OffensiveWords {
   constructor(connection) {
     this.connection = connection;
-    this.collection = this.connection.db().collection('offensiveWords');
   }
 
   addWord(newWord) {
     const { word, level } = newWord;
-
-    const newWordtoAdd = {
-      word,
-      level,
-    };
     // Save resource
-    return this.collection.insertOne(newWordtoAdd);
+    return this.connection.execute(
+      'INSERT INTO offensiveWords SET word = ?, level = ?',
+      [word, level],
+    );
   }
 
   addDefaultWords(defaultWords) {
     // Save resource
-    return this.collection.insertMany(defaultWords);
+    return this.connection.execute(
+      'INSERT INTO offensiveWords SET word = ?, level = ?',
+      defaultWords,
+    );
   }
 
   getAllWords() {
-    return this.collection.find().toArray();
+    return this.connection.execute('SELECT * FROM offensiveWords');
   }
 
   findWord(wordName) {
-    return this.collection.findOne({ word: wordName });
+    return this.connection.execute(
+      'SELECT * FROM offensiveWords WHERE word = ?',
+      [wordName],
+    );
   }
 
   updateWord(wordName, newWord) {
@@ -37,10 +40,13 @@ module.exports = class OffensiveWords {
     };
 
     // Create object with needed fields and assign wordName
-    return this.collection.updateOne({ word: wordName }, { $set: newWordtoAdd });
+    return this.connection.execute(
+      'UPDATE offensiveWords SET word = ? level = ? WHERE word = ?',
+      [word, level, wordName],
+    );
   }
 
   deleteWordById(wordName) {
-    return this.collection.deleteOne({ word: wordName });
+    return this.connection.execute('DELETE FROM offensiveWords WHERE word = ?', [wordName]);
   }
 };

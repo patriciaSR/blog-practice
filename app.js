@@ -19,6 +19,7 @@ app.use('/offensive-words', offensiveRouter);
 
 async function main() {
   await repository.connect();
+  await repository.mysqlConnect();
 
   await repository.checkDefault();
 
