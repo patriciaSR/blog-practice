@@ -35,15 +35,15 @@ postsRouter.get('/:id', async (req, res) => {
 
   const onlyUserInfo = await repository.users.getUsersById(onlyUserIDs);
 
-  const userPostInfo = getUserPostInfo(post[0].userID, onlyUserInfo);
+  const userPostInfo = getUserPostInfo(post.userID, onlyUserInfo);
 
   const completeCommentsInfo = getUserCommentsInfo(comments, onlyUserInfo);
 
   if (!post) {
     res.sendStatus(404);
   } else {
-    post[0].userInfo = userPostInfo;
-    post[0].comments = completeCommentsInfo;
+    post.userInfo = userPostInfo;
+    post.comments = completeCommentsInfo;
     res.json(post);
   }
 });
@@ -62,7 +62,7 @@ postsRouter.delete('/:id', async (req, res) => {
 
 postsRouter.put('/:id', async (req, res) => {
   const id = req.params.id;
-  const post = await repository.posts.findPost(id);
+  const post = await repository.posts.getPostByID(id);
 
   if (!post) {
     res.sendStatus(404);

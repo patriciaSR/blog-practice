@@ -1,7 +1,7 @@
 function getOnlyUsersIDs(post, comments) {
   const onlyUserIDsSet = new Set();
 
-  onlyUserIDsSet.add(post[0].userID);
+  onlyUserIDsSet.add(post.userID);
 
   comments.forEach((comment) => {
     onlyUserIDsSet.add(comment.userID);

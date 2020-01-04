@@ -27,10 +27,6 @@ module.exports = class Posts {
   }
 
   getPostByID(id) {
-    return this.collection.find({ _id: new ObjectId(id) }).toArray();
-  }
-
-  findPost(id) {
     return this.collection.findOne({ _id: new ObjectId(id) });
   }
 
