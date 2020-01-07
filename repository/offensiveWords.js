@@ -5,42 +5,32 @@ module.exports = class OffensiveWords {
   }
 
   addWord(newWord) {
-    const { word, level } = newWord;
-
-    const newWordtoAdd = {
-      word,
-      level,
-    };
     // Save resource
-    return this.collection.insertOne(newWordtoAdd);
+    return this.collection.insertOne(newWord);
   }
 
   addDefaultWords(defaultWords) {
-    // Save resource
+    // Save default words
     return this.collection.insertMany(defaultWords);
   }
 
   getAllWords() {
+    // Find all words
     return this.collection.find().toArray();
   }
 
   findWord(wordName) {
+    // Find words by wordName
     return this.collection.findOne({ word: wordName });
   }
 
   updateWord(wordName, newWord) {
-    const { word, level } = newWord;
-
-    const newWordtoAdd = {
-      word,
-      level,
-    };
-
-    // Create object with needed fields and assign wordName
-    return this.collection.updateOne({ word: wordName }, { $set: newWordtoAdd });
+    // Create new object with needed fields and assign wordName
+    return this.collection.updateOne({ word: wordName }, { $set: newWord });
   }
 
-  deleteWordById(wordName) {
+  deleteWord(wordName) {
+    // Delete word by wordName
     return this.collection.deleteOne({ word: wordName });
   }
 };

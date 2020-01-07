@@ -8,15 +8,20 @@ const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../sr
 postsRouter.post('/', async (req, res) => {
   const post = req.body;
   post.date = new Date();
-  const { title, content, userID } = post;
+  const {
+    title,
+    content,
+    date,
+    tags,
+    categories,
+    image,
+    userID,
+  } = post;
 
-  // Validation
   if (!content && !title && !userID) {
     res.sendStatus(400);
   } else {
-    // Create object with needed fields and assign id
     await repository.posts.addPost(post);
-    // Return new resource
     res.json(post);
   }
 });
@@ -28,12 +33,12 @@ postsRouter.get('/', async (req, res) => {
 
 postsRouter.get('/:id', async (req, res) => {
   const id = req.params.id;
-  const post = await repository.posts.getPostByID(id);
+  const post = await repository.posts.getPost(id);
   const comments = await repository.comments.getCommentsPost(id);
 
   const onlyUserIDs = getOnlyUsersIDs(post, comments);
 
-  const onlyUserInfo = await repository.users.getUsersById(onlyUserIDs);
+  const onlyUserInfo = await repository.users.getUsers(onlyUserIDs);
 
   const userPostInfo = getUserPostInfo(post.userID, onlyUserInfo);
 
@@ -50,7 +55,7 @@ postsRouter.get('/:id', async (req, res) => {
 
 postsRouter.delete('/:id', async (req, res) => {
   const id = req.params.id;
-  const post = await repository.posts.deletePostById(id);
+  const post = await repository.posts.deletePost(id);
   const comments = await repository.comments.deleteComentsPostById(id);
   if (!post) {
     res.sendStatus(404);
@@ -62,21 +67,27 @@ postsRouter.delete('/:id', async (req, res) => {
 
 postsRouter.put('/:id', async (req, res) => {
   const id = req.params.id;
-  const post = await repository.posts.getPostByID(id);
+  const post = await repository.posts.getPost(id);
 
   if (!post) {
     res.sendStatus(404);
   } else {
     const postReq = req.body;
     postReq.date = new Date();
-    const { title, content, userID } = postReq;
+    const {
+      title,
+      content,
+      date,
+      tags,
+      categories,
+      image,
+      userID,
+    } = postReq;
 
-    // Validation
     if (!title && !content && !userID) {
       res.sendStatus(400);
     } else {
       await repository.posts.updatePost(id, postReq);
-      // Return new resource
       res.json(postReq);
     }
   }

@@ -1,51 +1,38 @@
 const ObjectId = require('mongodb').ObjectId;
 
-module.exports = class Posts {
+module.exports = class Comments {
   constructor(connection) {
     this.connection = connection;
     this.collection = this.connection.db().collection('comments');
   }
 
   addComment(comment) {
-    const { content, date, userID, postID } = comment;
-
-    const newComment = {
-      content,
-      date,
-      userID,
-      postID,
-    };
     // Save resource
-    return this.collection.insertOne(newComment);
+    return this.collection.insertOne(comment);
   }
 
   getCommentsPost(postID) {
+    // Find comment's Post by postID
     return this.collection.find({ postID }).toArray();
   }
 
   findComment(id) {
+    // Find comment by _id
     return this.collection.findOne({ _id: new ObjectId(id) });
   }
 
   updateComment(id, comment) {
-    const { content, date, userID, postID } = comment;
-
-    const newComment = {
-      content,
-      date,
-      userID,
-      postID,
-    };
-
-    // Create object with needed fields and assign id
-    return this.collection.updateOne({ _id: new ObjectId(id) }, { $set: newComment });
+    // Create new object with needed fields and assign id
+    return this.collection.updateOne({ _id: new ObjectId(id) }, { $set: comment });
   }
 
-  deleteCommentById(id) {
+  deleteComment(id) {
+    // Delete comment by _id
     return this.collection.deleteOne({ _id: new ObjectId(id) });
   }
 
-  deleteComentsPostById(idPost) {
-    return this.collection.deleteMany({ postID: idPost });
+  deleteComentsPostById(postID) {
+    // Delete all comments's post by postID
+    return this.collection.deleteMany({ postID });
   }
 };

@@ -4,46 +4,37 @@ module.exports = class Users {
     this.collection = this.connection.db().collection('users');
   }
 
-  addUser(user) {
-    const { userID, firstname, lastname, nickname, email, image } = user;
-
-    const newUser = {
+  addUser(newUser) {
+    const {
       userID,
       firstname,
       lastname,
       nickname,
       email,
       image,
-    };
+    } = newUser;
     // Save resource
     return this.collection.insertOne(newUser);
   }
 
-  getUsersById(userIDs) {
+  getUsers(userIDs) {
+    // Find all users objects by userIDs array
     return this.collection.find({ userID: { $in: userIDs } }).toArray();
   }
 
   findUser(userID) {
+    // Find user by userID
     return this.collection.findOne({ userID });
   }
 
   updateUser(user) {
-    const { userID, firstname, lastname, nickname, email, image } = user;
-
-    const newUser = {
-      userID,
-      firstname,
-      lastname,
-      nickname,
-      email,
-      image,
-    };
-
-    // Create object with needed fields and assign id
-    return this.collection.updateOne({ userID }, { $set: newUser });
+    const { userID } = user;
+    // Create object with needed fields and assign userID
+    return this.collection.updateOne({ userID }, { $set: user });
   }
 
   deleteUser(userID) {
+    // Delete user by userID
     return this.collection.deleteOne({ userID });
   }
 };
