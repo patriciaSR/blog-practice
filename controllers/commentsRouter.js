@@ -20,7 +20,7 @@ commentsRouter.post('/', async (req, res) => {
   } else if (notAllowedWords.length !== 0) {
     const errorText = 'Tu comentario no puede contener palabras ofensivas';
     notAllowedWords.unshift(errorText);
-    res.status(400).send(notAllowedWords);
+    res.status(400).send({ errorText, notAllowedWords });
   } else {
     await repository.comments.addComment(comment);
     res.json(comment);
