@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 module.exports = class Users {
   constructor(connection) {
     this.connection = connection;
@@ -36,5 +38,9 @@ module.exports = class Users {
   deleteUser(userID) {
     // Delete user by userID
     return this.collection.deleteOne({ userID });
+  }
+
+  verifyPassword(user, password) {
+    return bcrypt.compare(password, user.passwordHash);
   }
 };

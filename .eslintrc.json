@@ -25,6 +25,7 @@
     "max-len": 0,
     "import/no-cycle": 0,
     "import/no-mutable-exports": 0,
-    "prefer-destructuring": 0
+    "prefer-destructuring": 0,
+    "no-else-return": 0
   }
 }
