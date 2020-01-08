@@ -31,8 +31,6 @@ async function main() {
   await repository.connect();
 
   await repository.checkDefault();
-
-  app.listen(3000, () => console.log('Server started in port 3000'));
 }
 
 main();
