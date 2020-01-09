@@ -6,17 +6,26 @@ module.exports = class Users {
     this.collection = this.connection.db().collection('users');
   }
 
-  addUser(newUser) {
+  async addUser(newUser) {
     const {
       userID,
       firstname,
       lastname,
-      nickname,
+      username,
+      password,
       email,
       image,
     } = newUser;
-    // Save resource
-    return this.collection.insertOne(newUser);
+    const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(8), null);
+
+    const userOnDataBase = await this.collection.findOne({ username });
+
+    if (!userOnDataBase) {
+      newUser.passwordHash = passwordHash;
+      return this.collection.insertOne(newUser);
+    } else {
+      return new Error('Ese usuario ya existe');
+    }
   }
 
   getUsers(userIDs) {
@@ -24,9 +33,9 @@ module.exports = class Users {
     return this.collection.find({ userID: { $in: userIDs } }).toArray();
   }
 
-  findUser(userID) {
+  findUser(username) {
     // Find user by userID
-    return this.collection.findOne({ userID });
+    return this.collection.findOne({ username });
   }
 
   updateUser(user) {
