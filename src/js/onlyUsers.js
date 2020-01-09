@@ -20,7 +20,11 @@ function getUserPostInfo(userID, onlyUsersInfo) {
 function getUserCommentsInfo(comments, onlyUsersInfo) {
   comments.forEach((comment) => {
     const userCommentInfo = onlyUsersInfo.find((user) => user.userID === comment.userID);
-    comment.userInfo = userCommentInfo;
+    comment.userInfo = {
+      userID: userCommentInfo.userID,
+      username: userCommentInfo.username,
+      image: userCommentInfo.image,
+    };
   });
 
   return comments;
