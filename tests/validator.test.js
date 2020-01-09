@@ -34,4 +34,28 @@ describe('haveOffensiveWords method test', () => {
 
     expect(result.length).toEqual(1);
   });
+
+  test('add comment with offensive words inside an other word', () => {
+    const mockBadText = 'menuda cacatúa';
+
+    const result = haveOffensiveWords(mockBadText, mockWords);
+
+    expect(result.length).toEqual(0);
+  });
+
+  test('add comment with "false offensive words" inside an other word', () => {
+    const mockBadText = 'cacatua';
+
+    const result = haveOffensiveWords(mockBadText, mockWords);
+
+    expect(result.length).toEqual(0);
+  });
+
+  test('add comment with offensive words inside special characters', () => {
+    const mockBadText = 'esto es una **CACA***';
+
+    const result = haveOffensiveWords(mockBadText, mockWords);
+
+    expect(result.length).toEqual(1);
+  });
 });
