@@ -91,12 +91,12 @@ async function main() {
   //   firstname: 'pancho',
   //   lastname: 'perez',
   //   username: 'pancho22',
-  //   password: 'pancho22',
   //   email: 'pancho22@gmail.com',
   //   image: 'kadasad',
   // };
+  // const password = 'pancho22';
 
-  // await repository.users.addUser(newUser);
+  // await repository.users.addUser(newUser, password);
 }
 
 main();

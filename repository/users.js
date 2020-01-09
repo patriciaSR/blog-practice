@@ -6,13 +6,12 @@ module.exports = class Users {
     this.collection = this.connection.db().collection('users');
   }
 
-  async addUser(newUser) {
+  async addUser(newUser, password) {
     const {
       userID,
       firstname,
       lastname,
       username,
-      password,
       email,
       image,
     } = newUser;
@@ -24,7 +23,8 @@ module.exports = class Users {
       newUser.passwordHash = passwordHash;
       return this.collection.insertOne(newUser);
     } else {
-      return new Error('Ese usuario ya existe');
+      const error = new Error('Ese usuario ya existe');
+      return error;
     }
   }
 

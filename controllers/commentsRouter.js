@@ -45,10 +45,10 @@ commentsRouter.put('/:id', async (req, res) => {
     res.sendStatus(404);
   } else {
     const commentReq = req.body;
-    const { content, userID, postID } = commentReq;
+    const { content, userID } = commentReq;
     commentReq.date = new Date();
 
-    if (!postID && !content && !userID) {
+    if (!content && !userID) {
       res.sendStatus(400);
     } else {
       await repository.comments.updateComment(id, commentReq);
