@@ -6,13 +6,130 @@
 	},
 	"item": [
 		{
-			"name": "get all posts GET",
+			"name": "login jwt request",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "pancho22",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "pancho22",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "username",
+						"value": "pancho22",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "pancho22",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3443/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3443",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post newPost POST",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY0NTMzLCJleHAiOjE1Nzg1NjUxMzN9.hejvppyR-PnISZDl9fZ8j52ByYI1Yfib-e4bHdodehE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"newpost5\",\n    \"content\": \"loremmmmmmmmm\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\",\n    \"userID\": \"3a\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:3443/posts",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3443",
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all posts GET",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"followOriginalHttpMethod": false,
+				"followAuthorizationHeader": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1MTUyLCJleHAiOjE1Nzg1NjU3NTJ9.gXlEYaH6uJjErdhhwKIR058nV1UWiYSPta3UfbSY1mw",
+							"type": "string"
+						}
+					]
 				},
 				"method": "GET",
 				"header": [
@@ -33,47 +150,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/posts",
-					"protocol": "http",
+					"raw": "https://localhost:3443/posts",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
-					"path": [
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "post newPost POST",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"title\": \"newpost3\",\n    \"content\": \"loremmmmmmmmm\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\",\n    \"userID\": \"3a\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3000/posts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"posts"
 					]
@@ -84,18 +166,28 @@
 		{
 			"name": "get post and comments by id GET",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1MTUyLCJleHAiOjE1Nzg1NjU3NTJ9.gXlEYaH6uJjErdhhwKIR058nV1UWiYSPta3UfbSY1mw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/5e0f596762e62251b442a7a3",
-					"protocol": "http",
+					"raw": "https://localhost:3443/posts/5e16fbcdc138ea3c3484da2a",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"posts",
-						"5e0f596762e62251b442a7a3"
+						"5e16fbcdc138ea3c3484da2a"
 					]
 				}
 			},
@@ -104,6 +196,16 @@
 		{
 			"name": "put a post by id PUT",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY0MTc0LCJleHAiOjE1Nzg1NjQyOTR9.tqtsWsFW126q2FhkwONpL0zaDVaV5XfFxRD2n_-bhs8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -123,15 +225,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/posts/5e0f59a962e62251b442a7a8",
-					"protocol": "http",
+					"raw": "https://localhost:3443/posts/5e0f596762e62251b442a7a3",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"posts",
-						"5e0f59a962e62251b442a7a8"
+						"5e0f596762e62251b442a7a3"
 					]
 				}
 			},
@@ -140,18 +242,28 @@
 		{
 			"name": "delete a post and comments by ID DELETE",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1MTUyLCJleHAiOjE1Nzg1NjU3NTJ9.gXlEYaH6uJjErdhhwKIR058nV1UWiYSPta3UfbSY1mw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/5e0f59a962e62251b442a7a8",
-					"protocol": "http",
+					"raw": "https://localhost:3443/posts/5e16fdd3c138ea3c3484da31",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"posts",
-						"5e0f59a962e62251b442a7a8"
+						"5e16fdd3c138ea3c3484da31"
 					]
 				}
 			},
@@ -160,6 +272,16 @@
 		{
 			"name": "post a comment POST",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1MTUyLCJleHAiOjE1Nzg1NjU3NTJ9.gXlEYaH6uJjErdhhwKIR058nV1UWiYSPta3UfbSY1mw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -171,7 +293,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"content\": \"hola\",\n\t\"userID\": \"2a\",\n\t\"postID\": \"5e0f596762e62251b442a7a3\"\n}",
+					"raw": "{\n\t\"content\": \"hola me llamo marta\",\n\t\"userID\": \"3a\",\n\t\"postID\": \"5e16fbcdc138ea3c3484da2a\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -179,15 +301,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/posts/5e0f596762e62251b442a7a3/comments",
-					"protocol": "http",
+					"raw": "https://localhost:3443/posts/5e16fbcdc138ea3c3484da2a/comments",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"posts",
-						"5e0f596762e62251b442a7a3",
+						"5e16fbcdc138ea3c3484da2a",
 						"comments"
 					]
 				}
@@ -197,6 +319,16 @@
 		{
 			"name": "put a comment PUT",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY0NTMzLCJleHAiOjE1Nzg1NjUxMzN9.hejvppyR-PnISZDl9fZ8j52ByYI1Yfib-e4bHdodehE",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -208,7 +340,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"content\": \"hola y adios y adios\",\n\t\"userID\": \"1a\",\n\t\"postID\": \"5e0f596762e62251b442a7a3\"\n}",
+					"raw": "{\n\t\"content\": \"hola me llamo lola\",\n\t\"userID\": \"1a\",\n\t\"postID\": \"5e16fbcdc138ea3c3484da2a\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -216,17 +348,17 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/posts/5e0f596762e62251b442a7a3/comments/5e0f598662e62251b442a7a5",
-					"protocol": "http",
+					"raw": "https://localhost:3443/posts/5e16fbcdc138ea3c3484da2a/comments/5e16fc55c138ea3c3484da2d",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"posts",
-						"5e0f596762e62251b442a7a3",
+						"5e16fbcdc138ea3c3484da2a",
 						"comments",
-						"5e0f598662e62251b442a7a5"
+						"5e16fc55c138ea3c3484da2d"
 					]
 				}
 			},
@@ -235,20 +367,30 @@
 		{
 			"name": "delete a comment DELETE",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY0NTMzLCJleHAiOjE1Nzg1NjUxMzN9.hejvppyR-PnISZDl9fZ8j52ByYI1Yfib-e4bHdodehE",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts/5e0f596762e62251b442a7a3/comments/5e0f598662e62251b442a7a5",
-					"protocol": "http",
+					"raw": "https://localhost:3443/posts/5e16fbcdc138ea3c3484da2a/comments/5e16fc5bc138ea3c3484da2e",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"posts",
-						"5e0f596762e62251b442a7a3",
+						"5e16fbcdc138ea3c3484da2a",
 						"comments",
-						"5e0f598662e62251b442a7a5"
+						"5e16fc5bc138ea3c3484da2e"
 					]
 				}
 			},
@@ -257,6 +399,16 @@
 		{
 			"name": "post an offensive word POST",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1MTUyLCJleHAiOjE1Nzg1NjU3NTJ9.gXlEYaH6uJjErdhhwKIR058nV1UWiYSPta3UfbSY1mw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -268,7 +420,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"word\": \"FEO\",\n\t\"level\": 1\n}",
+					"raw": "{\n\t\"word\": \"TONTO\",\n\t\"level\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -276,12 +428,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/offensive-words",
-					"protocol": "http",
+					"raw": "https://localhost:3443/offensive-words",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"offensive-words"
 					]
@@ -292,15 +444,25 @@
 		{
 			"name": "get all offensive words GET",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1NzIzLCJleHAiOjE1Nzg1NjYzMjN9.dyPbhoavc9O8I3L27hTC8NKQ5sZ-6-BPB5HcSiC--6k",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/offensive-words",
-					"protocol": "http",
+					"raw": "https://localhost:3443/offensive-words",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"offensive-words"
 					]
@@ -311,18 +473,28 @@
 		{
 			"name": "delete an offensive word by name DELETE",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1NzIzLCJleHAiOjE1Nzg1NjYzMjN9.dyPbhoavc9O8I3L27hTC8NKQ5sZ-6-BPB5HcSiC--6k",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/offensive-words/ñordo",
-					"protocol": "http",
+					"raw": "https://localhost:3443/offensive-words/tonto",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"offensive-words",
-						"ñordo"
+						"tonto"
 					]
 				}
 			},
@@ -331,6 +503,16 @@
 		{
 			"name": "put an offensive word by name PUT",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1MTUyLCJleHAiOjE1Nzg1NjU3NTJ9.gXlEYaH6uJjErdhhwKIR058nV1UWiYSPta3UfbSY1mw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -342,7 +524,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"word\": \"culo\",\n\t\"level\": 1\n}",
+					"raw": "{\n\t\"word\": \"tolai\",\n\t\"level\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -350,15 +532,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/offensive-words/tolai",
-					"protocol": "http",
+					"raw": "https://localhost:3443/offensive-words/feo",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3443",
 					"path": [
 						"offensive-words",
-						"tolai"
+						"feo"
 					]
 				}
 			},
