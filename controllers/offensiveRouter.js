@@ -4,7 +4,6 @@ const offensiveRouter = express.Router();
 
 const repository = require('../repository/');
 
-
 offensiveRouter.post('/', async (req, res) => {
   const newWord = req.body;
   newWord.word = newWord.word.toLowerCase();

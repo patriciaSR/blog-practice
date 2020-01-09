@@ -5,6 +5,7 @@ const postsRouter = express.Router();
 const repository = require('../repository');
 const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../src/js/onlyUsers');
 
+
 postsRouter.post('/', async (req, res) => {
   const post = req.body;
   post.date = new Date();
