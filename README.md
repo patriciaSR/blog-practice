@@ -109,7 +109,7 @@ Run the app.js file with node in your terminal:
 
 `node app.js`
 
-The server is running now on port [http://localhost:3000](http://localhost:3000).
+The server is running now on safe port [https://localhost:3443](https://localhost:3443).
 
 Open **Postman app** and import `postman.json` file to interact with REST APIs endpoints
 
