@@ -86,18 +86,18 @@ async function main() {
 
   await repository.checkDefault();
 
-  // add new user with passwordhash
+  // // add new user with passwordhash
   // const newUser = {
-  //   userID: '2a',
+  //   userID: '5a',
   //   firstname: 'dumbo',
   //   lastname: 'perez',
-  //   username: 'dumbo666',
-  //   email: 'dumbo666@gmail.com',
+  //   username: 'dumbo555',
+  //   email: 'dumbo555@gmail.com',
   //   image: 'kadasad',
+  //   password: "dumbo22"
   // };
-  // const password = 'pancho22';
 
-  // await repository.users.addUser(newUser, password);
+  // await repository.users.addUser(newUser);
 }
 
 main();
