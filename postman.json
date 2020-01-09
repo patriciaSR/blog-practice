@@ -32,17 +32,20 @@
 						"key": "Content-Type",
 						"name": "Content-Type",
 						"value": "application/x-www-form-urlencoded",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					},
 					{
 						"key": "username",
 						"value": "pancho22",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					},
 					{
 						"key": "password",
 						"value": "pancho22",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -126,7 +129,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1MTUyLCJleHAiOjE1Nzg1NjU3NTJ9.gXlEYaH6uJjErdhhwKIR058nV1UWiYSPta3UfbSY1mw",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY4MTgwLCJleHAiOjE1Nzg1Njg3ODB9.vkNfNHge-2ptEe0_Qrvi6LAQ7DsIlvfARvQ-sBsFd7k",
 							"type": "string"
 						}
 					]
@@ -277,7 +280,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTY1MTUyLCJleHAiOjE1Nzg1NjU3NTJ9.gXlEYaH6uJjErdhhwKIR058nV1UWiYSPta3UfbSY1mw",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmNobzIyIiwiaWF0IjoxNTc4NTcwMTUxLCJleHAiOjE1Nzg1NzA3NTF9.Unw0urKGFTsOHjtmW5-WW3AjkqPdTMdzeL9mhTFAc-g",
 							"type": "string"
 						}
 					]
@@ -293,7 +296,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"content\": \"hola me llamo marta\",\n\t\"userID\": \"3a\",\n\t\"postID\": \"5e16fbcdc138ea3c3484da2a\"\n}",
+					"raw": "{\n\t\"content\": \"hola me llamo pancho\",\n\t\"userID\": \"3a\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -340,7 +343,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"content\": \"hola me llamo lola\",\n\t\"userID\": \"1a\",\n\t\"postID\": \"5e16fbcdc138ea3c3484da2a\"\n}",
+					"raw": "{\n\t\"content\": \"hola me llamo lola\",\n\t\"userID\": \"1a\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
