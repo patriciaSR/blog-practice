@@ -17,7 +17,7 @@ module.exports = class Users {
     } = newUser;
     const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(8), null);
 
-    const userOnDataBase = await this.collection.findOne({ username });
+    const userOnDataBase = await this.collection.findOne({ $or: [{ username }, { email }] });
 
     if (!userOnDataBase) {
       newUser.passwordHash = passwordHash;

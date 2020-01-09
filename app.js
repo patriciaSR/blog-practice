@@ -88,10 +88,10 @@ async function main() {
   // add new user with passwordhash
   // const newUser = {
   //   userID: '2a',
-  //   firstname: 'pancho',
+  //   firstname: 'dumbo',
   //   lastname: 'perez',
-  //   username: 'pancho22',
-  //   email: 'pancho22@gmail.com',
+  //   username: 'dumbo666',
+  //   email: 'dumbo666@gmail.com',
   //   image: 'kadasad',
   // };
   // const password = 'pancho22';
