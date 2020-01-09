@@ -18,16 +18,19 @@ const mockUsersInfo = [{
   _id: '2',
   userID: '1a',
   firstname: 'lola',
+  username: 'lola22',
 },
 {
   _id: '2',
   userID: '2a',
   firstname: 'paco',
+  username: 'paco22',
 },
 {
   _id: '2',
   userID: '3a',
   firstname: 'marta',
+  username: 'marta22',
 },
 ];
 
@@ -69,6 +72,7 @@ describe('getUserPostInfo method test', () => {
       _id: '2',
       userID: '3a',
       firstname: 'marta',
+      username: 'marta22',
     };
 
     const result = getUserPostInfo(mockUserID, mockUsersInfo);
@@ -92,27 +96,24 @@ describe('getUserCommentsInfo method test', () => {
       _id: '2',
       userID: '1a',
       userInfo: {
-        _id: '2',
-        firstname: 'lola',
         userID: '1a',
+        username: 'lola22',
       },
     },
     {
       _id: '2',
       userID: '1a',
       userInfo: {
-        _id: '2',
-        firstname: 'lola',
         userID: '1a',
+        username: 'lola22',
       },
     },
     {
       _id: '2',
       userID: '2a',
       userInfo: {
-        _id: '2',
-        firstname: 'paco',
         userID: '2a',
+        username: 'paco22',
       },
     }];
 
