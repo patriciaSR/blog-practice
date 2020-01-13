@@ -3,21 +3,17 @@ const cors = require('cors');
 const fs = require('fs');
 const https = require('https');
 
-// passport and jwt authentication
+// passport authentication
 const passport = require('passport');
-const BasicStrategy = require('passport-http').BasicStrategy;
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const jwt = require('jsonwebtoken');
-
-// const SECRET_KEY = 'SECRET_KEY';
 
 const repository = require('./repository/');
 
+// routers
 const postsRouter = require('./controllers/postsRouter');
 const commentsRouter = require('./controllers/commentsRouter');
 const offensiveRouter = require('./controllers/offensiveRouter');
 const authRouter = require('./controllers/authRouter');
+const signupRouter = require('./controllers/signupRouter');
 
 
 const app = express();
@@ -31,6 +27,7 @@ app.use(passport.initialize());
 
 // routes
 app.use('/login', authRouter);
+app.use('/signup', signupRouter);
 app.use('/posts', postsRouter);
 app.use('/posts/:id/comments', commentsRouter);
 app.use('/offensive-words', passport.authenticate('jwt', { session: false }), offensiveRouter);
