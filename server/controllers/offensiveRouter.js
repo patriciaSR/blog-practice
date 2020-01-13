@@ -4,6 +4,14 @@ const offensiveRouter = express.Router();
 
 const repository = require('../repository/');
 
+// function isRoleAllowed(req) {
+//   if(req.user.role === 'admin') {
+//     next();
+//   } else {
+//     res.status(403).sen('Not allowed');
+//   }
+// }
+
 offensiveRouter.post('/', async (req, res) => {
   const newWord = req.body;
   newWord.word = newWord.word.toLowerCase();
