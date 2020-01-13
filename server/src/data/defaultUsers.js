@@ -1,6 +1,5 @@
 const defaultUsers = [
   {
-    userID: '1a',
     firstname: 'dumbo',
     lastname: 'perez',
     username: 'dumbo555',
@@ -10,7 +9,6 @@ const defaultUsers = [
     rol: 'admin'
   },
   {
-    userID: '2a',
     firstname: 'bambi',
     lastname: 'lopez',
     username: 'bambi555',
@@ -20,7 +18,6 @@ const defaultUsers = [
     rol: 'publisher'
   },
   {
-    userID: '3a',
     firstname: 'pluto',
     lastname: 'martón',
     username: 'pluto33',
@@ -30,7 +27,6 @@ const defaultUsers = [
     rol: 'publisher'
   },
   {
-    userID: '4a',
     firstname: 'simba',
     lastname: 'perez',
     username: 'simba11',

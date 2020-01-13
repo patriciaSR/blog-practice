@@ -37,7 +37,9 @@ module.exports = {
     const users = await this.users.getAllUsers();
 
     if(!users.length) {
-      await this.users.addDefaultUsers(defaultUsers);
+      defaultUsers.forEach( async(user) => {
+        this.users.addUser(user);
+      });
     }
   },
 };
