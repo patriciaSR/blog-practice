@@ -1,17 +1,21 @@
 const express = require('express');
+const passport = require('passport');
 
 const commentsRouter = express.Router({ mergeParams: true });
+
+const ObjectId = require('mongodb').ObjectId;
 
 const repository = require('../repository/');
 
 const haveOffensiveWords = require('../src/utils/validator');
 
 
-commentsRouter.post('/', async (req, res) => {
+commentsRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const comment = req.body;
-  const { content, userID } = comment;
-  comment.postID = req.params.id;
+  comment.userID = req.user._id;
+  comment.postID = new ObjectId(req.params.id);
   comment.date = new Date();
+  const { content, userID } = comment;
 
   const offensiveWords = await repository.offensiveWords.getAllWords();
   const notAllowedWords = haveOffensiveWords(content, offensiveWords);
@@ -27,33 +31,54 @@ commentsRouter.post('/', async (req, res) => {
   }
 });
 
-commentsRouter.delete('/:id', async (req, res) => {
-  const id = req.params.id;
-  const comment = await repository.comments.deleteComment(id);
-  if (!comment) {
-    res.sendStatus(404);
+commentsRouter.delete('/:commentID', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const postID = req.params.id;
+  const commentID = req.params.commentID;
+  const reqUserID = req.user._id.toString();
+
+  const post = await repository.posts.getPost(postID);
+  const postUserID = post.userID.toString();
+ 
+  const comment = await repository.comments.findComment(commentID);
+  const commentUserID = comment.userID.toString();
+
+  if (req.user.role === 'admin' || reqUserID === postUserID || reqUserID === commentUserID) {
+    const deletedComment = await repository.comments.deleteComment(commentID);
+    if (!deletedComment) {
+      res.sendStatus(404);
+    } else {
+      res.json(deletedComment);
+    }
   } else {
-    res.json(comment);
+    res.status(403).send('No puedes borrar este comentario');
   }
 });
 
-commentsRouter.put('/:id', async (req, res) => {
-  const id = req.params.id;
-  const comment = await repository.comments.findComment(id);
+commentsRouter.put('/:commentID', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const commentID = req.params.commentID;
+  const reqUserID = req.user._id.toString();
+  
+  const comment = await repository.comments.findComment(commentID);
+  const commentUserID = comment.userID.toString();
 
-  if (!comment) {
-    res.sendStatus(404);
-  } else {
-    const commentReq = req.body;
-    const { content, userID } = commentReq;
-    commentReq.date = new Date();
-
-    if (!content && !userID) {
-      res.sendStatus(400);
+  if (req.user.role === 'admin' || reqUserID === commentUserID) {
+    if (!comment) {
+      res.sendStatus(404);
     } else {
-      await repository.comments.updateComment(id, commentReq);
-      res.json(commentReq);
+      const commentReq = req.body;
+      commentReq.userID = req.user._id;
+      commentReq.date = new Date();
+      const { content, userID } = commentReq;
+
+      if (!content && !userID) {
+        res.sendStatus(400);
+      } else {
+        await repository.comments.updateComment(commentID, commentReq);
+        res.json(commentReq);
+      }
     }
+  } else {
+    res.status(403).send('No puedes modificar este comentario');
   }
 });
 

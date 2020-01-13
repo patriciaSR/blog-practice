@@ -49,7 +49,7 @@ authRouter.all('/',
   (req, res) => {
     const { username } = req.user;
 
-    const opts = { expiresIn: 600 }; // token expires in 10min
+    const opts = { expiresIn: 6000 }; // token expires in 100min
     const token = jwt.sign({ username }, SECRET_KEY, opts);
 
     return res.status(200).json({ message: 'Auth Passed', token });

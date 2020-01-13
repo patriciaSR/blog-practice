@@ -22,7 +22,7 @@ module.exports = class Users {
 
   getUsers(userIDs) {
     // Find all users objects by userIDs array
-    return this.collection.find({ userID: { $in: userIDs } }).toArray();
+    return this.collection.find({ _id: { $in: userIDs } }).toArray();
   }
 
   findUser(username, email) {

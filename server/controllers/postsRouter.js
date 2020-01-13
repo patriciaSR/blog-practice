@@ -39,28 +39,29 @@ postsRouter.get('/:id', async (req, res) => {
   const post = await repository.posts.getPost(id);
   const comments = await repository.comments.getCommentsPost(id);
 
-  const onlyUserIDs = getOnlyUsersIDs(post, comments);
-
-  const onlyUserInfo = await repository.users.getUsers(onlyUserIDs);
-
-  const userPostInfo = getUserPostInfo(post.userID, onlyUserInfo);
-
-  const completeCommentsInfo = getUserCommentsInfo(comments, onlyUserInfo);
-
   if (!post) {
     res.sendStatus(404);
   } else {
+    const onlyUserIDs = getOnlyUsersIDs(post, comments);
+
+    const onlyUserInfo = await repository.users.getUsers(onlyUserIDs);
+
+    const userPostInfo = getUserPostInfo(post.userID, onlyUserInfo);
+
+    const completeCommentsInfo = getUserCommentsInfo(comments, onlyUserInfo);
+    
     post.userInfo = userPostInfo;
     post.comments = completeCommentsInfo;
     res.json(post);
   }
+
+
 });
 
 postsRouter.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const id = req.params.id;
   const post = await repository.posts.getPost(id);
-  console.log(req.user._id, post.userID);
-  if (req.user.role === 'admin' || req.user._id == post.userID.toString()) {
+  if (req.user.role === 'admin' || req.user._id.toString() === post.userID.toString()) {
     const deletedPost = await repository.posts.deletePost(id);
     const comments = await repository.comments.deleteComentsPostById(id);
     if (!deletedPost) {
@@ -82,7 +83,7 @@ postsRouter.put('/:id', passport.authenticate('jwt', { session: false }), async 
 
   if (!post) {
     res.sendStatus(404);
-  } else if (req.user.role === 'admin' || req.user._id == post.userID.toString()) {
+  } else if (req.user.role === 'admin' || req.user._id.toString() === post.userID.toString()) {
     const postReq = req.body;
     postReq.date = new Date();
     const {

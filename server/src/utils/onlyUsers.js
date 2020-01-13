@@ -12,16 +12,16 @@ function getOnlyUsersIDs(post, comments) {
 }
 
 function getUserPostInfo(userID, onlyUsersInfo) {
-  const userPostInfo = onlyUsersInfo.find((user) => user.userID === userID);
+  const userPostInfo = onlyUsersInfo.find((user) => user._id === userID);
 
   return userPostInfo;
 }
 
 function getUserCommentsInfo(comments, onlyUsersInfo) {
   comments.forEach((comment) => {
-    const userCommentInfo = onlyUsersInfo.find((user) => user.userID === comment.userID);
+    const userCommentInfo = onlyUsersInfo.find((user) => user._id.toString() === comment.userID.toString());
     comment.userInfo = {
-      userID: userCommentInfo.userID,
+      userID: userCommentInfo._id,
       username: userCommentInfo.username,
       image: userCommentInfo.image,
     };
