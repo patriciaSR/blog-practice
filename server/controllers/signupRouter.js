@@ -22,7 +22,8 @@ signupRouter.post('/', async (req, res) => {
     res.status(400).send('Ese usuario ya existe');
   } else {
     await repository.users.addUser(newUser);
-    res.status(200).send('Usuario registrado correctamente');
+    delete newUser.passwordHash;
+    res.status(200).send({message: 'Usuario registrado correctamente', newUser });
   }
 });
 
