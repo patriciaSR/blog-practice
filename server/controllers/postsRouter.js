@@ -49,31 +49,27 @@ postsRouter.get('/:id', async (req, res) => {
     const userPostInfo = getUserPostInfo(post.userID, onlyUserInfo);
 
     const completeCommentsInfo = getUserCommentsInfo(comments, onlyUserInfo);
-    
+
     post.userInfo = userPostInfo;
     post.comments = completeCommentsInfo;
     res.json(post);
   }
-
-
 });
 
 postsRouter.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const id = req.params.id;
   const post = await repository.posts.getPost(id);
-  if (req.user.role === 'admin' || req.user._id.toString() === post.userID.toString()) {
+
+  if (!post) {
+    res.sendStatus(404);
+  } else if (req.user.role === 'admin' || req.user._id.toString() === post.userID.toString()) {
     const deletedPost = await repository.posts.deletePost(id);
     const comments = await repository.comments.deleteComentsPostById(id);
-    if (!deletedPost) {
-      res.sendStatus(404);
-    } else {
-      post.comments = comments;
-      res.json(post);
-    }
+    deletedPost.comments = comments;
+    res.json(deletedPost);
   } else {
     res.status(403).send('No puedes borrar un post que no es tuyo');
   }
-
 });
 
 postsRouter.put('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -105,7 +101,6 @@ postsRouter.put('/:id', passport.authenticate('jwt', { session: false }), async 
   } else {
     res.status(403).send('No puedes modificar un post que no es tuyo');
   }
-
 });
 
 module.exports = postsRouter;
