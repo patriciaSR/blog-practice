@@ -6,7 +6,7 @@ const defaultUsers = [
     email: 'dumbo555@gmail.com',
     image: 'kadasad',
     password: "dumbo22",
-    rol: 'admin'
+    role: 'admin'
   },
   {
     firstname: 'bambi',
@@ -15,7 +15,7 @@ const defaultUsers = [
     email: 'bambi@gmail.com',
     image: 'kadasad',
     password: "bambi22",
-    rol: 'publisher'
+    role: 'publisher'
   },
   {
     firstname: 'pluto',
@@ -24,7 +24,7 @@ const defaultUsers = [
     email: 'pluto33@gmail.com',
     image: 'plutoahdjhsad',
     password: "pluto11",
-    rol: 'publisher'
+    role: 'publisher'
   },
   {
     firstname: 'simba',
@@ -33,7 +33,7 @@ const defaultUsers = [
     email: 'simba11@gmail.com',
     image: 'asdasdasd',
     password: "simba11",
-    rol: 'admin'
+    role: 'admin'
   },
 ];
 

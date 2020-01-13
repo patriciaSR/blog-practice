@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const postsRouter = express.Router();
 
@@ -6,8 +7,9 @@ const repository = require('../repository');
 const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../src/utils/onlyUsers');
 
 
-postsRouter.post('/', async (req, res) => {
+postsRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const post = req.body;
+  post.userID = req.user._id;
   post.date = new Date();
   const {
     title,
@@ -54,25 +56,33 @@ postsRouter.get('/:id', async (req, res) => {
   }
 });
 
-postsRouter.delete('/:id', async (req, res) => {
+postsRouter.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const id = req.params.id;
-  const post = await repository.posts.deletePost(id);
-  const comments = await repository.comments.deleteComentsPostById(id);
-  if (!post) {
-    res.sendStatus(404);
+  const post = await repository.posts.getPost(id);
+  console.log(req.user._id, post.userID);
+  if (req.user.role === 'admin' || req.user._id == post.userID.toString()) {
+    const deletedPost = await repository.posts.deletePost(id);
+    const comments = await repository.comments.deleteComentsPostById(id);
+    if (!deletedPost) {
+      res.sendStatus(404);
+    } else {
+      post.comments = comments;
+      res.json(post);
+    }
   } else {
-    post.comments = comments;
-    res.json(post);
+    res.status(403).send('No puedes borrar un post que no es tuyo');
   }
+
 });
 
-postsRouter.put('/:id', async (req, res) => {
+postsRouter.put('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const id = req.params.id;
+
   const post = await repository.posts.getPost(id);
 
   if (!post) {
     res.sendStatus(404);
-  } else {
+  } else if (req.user.role === 'admin' || req.user._id == post.userID.toString()) {
     const postReq = req.body;
     postReq.date = new Date();
     const {
@@ -91,7 +101,10 @@ postsRouter.put('/:id', async (req, res) => {
       await repository.posts.updatePost(id, postReq);
       res.json(postReq);
     }
+  } else {
+    res.status(403).send('No puedes modificar un post que no es tuyo');
   }
+
 });
 
 module.exports = postsRouter;
