@@ -8,6 +8,7 @@ const Users = require('./users');
 
 
 const defaultWords = require('../src/data/defaultWords');
+const defaultUsers = require('../src/data/defaultUsers');
 
 const url = 'mongodb://localhost:27017/blogDB';
 
@@ -31,6 +32,12 @@ module.exports = {
 
     if (!offensiveWords.length) {
       await this.offensiveWords.addDefaultWords(defaultWords);
+    }
+
+    const users = await this.users.getAllUsers();
+
+    if(!users.length) {
+      await this.users.addDefaultUsers(defaultUsers);
     }
   },
 };

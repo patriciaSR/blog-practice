@@ -3,7 +3,7 @@ const express = require('express');
 const postsRouter = express.Router();
 
 const repository = require('../repository');
-const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../src/js/onlyUsers');
+const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../src/utils/onlyUsers');
 
 
 postsRouter.post('/', async (req, res) => {

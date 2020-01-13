@@ -6,6 +6,15 @@ module.exports = class Users {
     this.collection = this.connection.db().collection('users');
   }
 
+  async addDefaultUsers(users) {
+    users.forEach(async (user) => {
+      const passwordHash = await bcrypt.hash(user.password, bcrypt.genSaltSync(8), null);
+      delete user.password;
+      user.passwordHash = passwordHash;
+      return this.collection.insertOne(user);
+    });
+  }
+
   async addUser(newUser) {
     const {
       userID,
@@ -28,6 +37,11 @@ module.exports = class Users {
       const error = new Error('Ese usuario ya existe');
       return error;
     }
+  }
+
+  getAllUsers() {
+    // Find all users in DB
+    return this.collection.find().toArray();
   }
 
   getUsers(userIDs) {

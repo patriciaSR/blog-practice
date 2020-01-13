@@ -34,36 +34,40 @@ Offensive words will be stored in the database. If the application detects that 
 
 ## Project's Structure:
 ```
-├── app.js (app module, express server)
+├── /server (server folder)
+│    ├── app.js (app module, express server)
+│    │
+│    ├── /controllers (router APIs REST)
+│    │   ├── commentsRouter.js (comments collection API methods)
+│    │   ├── offensiveRouter.js (offensive-words collection API methods)
+│    │   ├── postsRouter.js (posts collection API methods)
+│    │
+│    ├── /repository (database connection and interaction)
+│    │   ├── comments.js (comments collection interaction methods)
+│    │   ├── index.js (main database connection)
+│    │   ├── offensiveWords.js (offensive-words collection interaction methods)
+│    │   ├── posts.js (posts collection interaction methods)
+│    │   └── users.js (users collection interaction methods)
+│    │
+│    ├── /src (html, css and js source files)
+│    │   ├── /data
+│    │       ├── defaultWords.js (default offensiveWords array)
+│    │       └── defaultUsers.js (default users array to try the application)
+│    │   └── /utils
+│    │       ├── main.js
+│    │       ├── onlyUsers.js
+│    │       └── validator.js (check offensiveWords in a comment text)
+│    │
+│    ├── /tests (testing js files with jest)
+│    │   ├── onlyUsers.test.js
+│    │   └── validator.test.js
+│    │
+│    ├── .eslintrc.json (eslint configuration)
+│    ├── .gitignore (gitignore file configuration)
+│    ├── package.json (dependencies and project information)
+│    ├── postman.json (REST APIs information to import in Postman application)
 │
-├── /controllers (router APIs REST)
-│   ├── commentsRouter.js (comments collection API methods)
-│   ├── offensiveRouter.js (offensive-words collection API methods)
-│   ├── postsRouter.js (posts collection API methods)
-│
-├── /repository (database connection and interaction)
-│   ├── comments.js (comments collection interaction methods)
-│   ├── index.js (main database connection)
-│   ├── offensiveWords.js (offensive-words collection interaction methods)
-│   ├── posts.js (posts collection interaction methods)
-│   └── users.js (users collection interaction methods)
-│
-├── /src (html, css and js source files)
-│   ├── /data
-│       └── defaultWords.js (default offensiveWords array)
-│   └── /js
-│       ├── main.js
-│       ├── onlyUsers.js
-│       └── validator.js (check offensiveWords in a comment text)
-│
-├── /tests (testing js files with jest)
-│   ├── onlyUsers.test.js
-│   └── validator.test.js
-│
-├── .eslintrc.json (eslint configuration)
-├── .gitignore (gitignore file configuration)
-├── package.json (dependencies and project information)
-├── postman.json (REST APIs information to import in Postman application)
+├── /client (frontend folder)
 ```
 
 ## REST API

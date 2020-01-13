@@ -4,7 +4,7 @@ const commentsRouter = express.Router({ mergeParams: true });
 
 const repository = require('../repository/');
 
-const haveOffensiveWords = require('../src/js/validator');
+const haveOffensiveWords = require('../src/utils/validator');
 
 
 commentsRouter.post('/', async (req, res) => {
