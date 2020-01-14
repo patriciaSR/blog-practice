@@ -23,7 +23,7 @@ signupRouter.post('/', async (req, res) => {
   } else {
     await repository.users.addUser(newUser);
     delete newUser.passwordHash;
-    res.status(200).send({message: 'Usuario registrado correctamente', newUser });
+    res.status(200).json({message: 'Usuario registrado correctamente', newUser });
   }
 });
 

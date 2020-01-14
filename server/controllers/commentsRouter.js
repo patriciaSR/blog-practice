@@ -24,10 +24,10 @@ commentsRouter.post('/', passport.authenticate('jwt', { session: false }), async
     res.sendStatus(400);
   } else if (notAllowedWords.length !== 0) {
     const errorText = 'Tu comentario no puede contener palabras ofensivas';
-    res.status(400).send({ errorText, notAllowedWords });
+    res.status(403).json({ errorText, notAllowedWords });
   } else {
     await repository.comments.addComment(comment);
-    res.json(comment);
+    res.status(200).json(comment);
   }
 });
 
@@ -38,7 +38,7 @@ commentsRouter.delete('/:commentID', passport.authenticate('jwt', { session: fal
 
   const post = await repository.posts.getPost(postID);
   const postUserID = post.userID.toString();
- 
+
   const comment = await repository.comments.findComment(commentID);
   const commentUserID = comment.userID.toString();
 
@@ -47,23 +47,30 @@ commentsRouter.delete('/:commentID', passport.authenticate('jwt', { session: fal
     if (!deletedComment) {
       res.sendStatus(404);
     } else {
-      res.json(deletedComment);
+      res.status(200).json(deletedComment);
     }
   } else {
-    res.status(403).send('No puedes borrar este comentario');
+    res.status(403).send('No tienes permiso para borrar este comentario');
   }
 });
 
 commentsRouter.put('/:commentID', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const commentID = req.params.commentID;
+  const newComment = req.body.content;
   const reqUserID = req.user._id.toString();
-  
+
   const comment = await repository.comments.findComment(commentID);
   const commentUserID = comment.userID.toString();
+
+  const offensiveWords = await repository.offensiveWords.getAllWords();
+  const notAllowedWords = haveOffensiveWords(newComment, offensiveWords);
 
   if (req.user.role === 'admin' || reqUserID === commentUserID) {
     if (!comment) {
       res.sendStatus(404);
+    } else if (notAllowedWords.length !== 0) {
+      const errorText = 'Tu comentario no puede contener palabras ofensivas';
+      res.status(403).json({ errorText, notAllowedWords });
     } else {
       const commentReq = req.body;
       commentReq.userID = req.user._id;
@@ -74,7 +81,7 @@ commentsRouter.put('/:commentID', passport.authenticate('jwt', { session: false 
         res.sendStatus(400);
       } else {
         await repository.comments.updateComment(commentID, commentReq);
-        res.json(commentReq);
+        res.status(200).json(commentReq);
       }
     }
   } else {
