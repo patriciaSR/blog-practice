@@ -1,41 +1,21 @@
-const express = require('express');
-const cors = require('cors');
 const fs = require('fs');
 const https = require('https');
+const MongoClient = require('mongodb').MongoClient;
 
-// passport and middlewares
-const passport = require('./utils/passport');
-const isRoleAllowed = require('./middlewares/isRoleAllowed');
+const app = require('./server.js');
 
 // repository DB
 const repository = require('./repository/');
 
-// routers
-const postsRouter = require('./controllers/postsRouter');
-const commentsRouter = require('./controllers/commentsRouter');
-const offensiveRouter = require('./controllers/offensiveRouter');
-const authRouter = require('./controllers/authRouter');
-const signupRouter = require('./controllers/signupRouter');
-
-const app = express();
-// Enable CORS
-app.use(cors());
-// Convert json bodies to JavaScript object
-app.use(express.json());
-
-// init passport authentication
-app.use(passport.initialize());
-
-// routes
-app.use('/login', authRouter);
-app.use('/signup', signupRouter);
-app.use('/posts', postsRouter);
-app.use('/posts/:id/comments', commentsRouter);
-app.use('/offensive-words', passport.authenticate('jwt', { session: false }), isRoleAllowed, offensiveRouter);
-
 // server.js
 async function main() {
-  await repository.connect();
+  const url = 'mongodb://localhost:27017/blogDB';
+  const connection = await MongoClient.connect(url, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  });
+
+  await repository.connect(connection);
 
   await repository.checkDefault();
 

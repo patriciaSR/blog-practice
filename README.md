@@ -143,6 +143,10 @@ Install **Jest** for testing:
 
 `npm install --save-dev jest`
 
+Install **SuperTest** for REST API Testing:
+
+`npm install --save-dev supertest`
+
 Install **esLint** for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs:
 
 `npm install --save-dev eslint`
