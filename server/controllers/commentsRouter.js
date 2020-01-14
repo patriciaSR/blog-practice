@@ -7,7 +7,7 @@ const ObjectId = require('mongodb').ObjectId;
 
 const repository = require('../repository/');
 
-const haveOffensiveWords = require('../src/utils/validator');
+const haveOffensiveWords = require('../utils/validator');
 
 
 commentsRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {

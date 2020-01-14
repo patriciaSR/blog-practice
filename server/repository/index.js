@@ -7,8 +7,8 @@ const OffensiveWords = require('./offensiveWords');
 const Users = require('./users');
 
 
-const defaultWords = require('../src/data/defaultWords');
-const defaultUsers = require('../src/data/defaultUsers');
+const defaultWords = require('../utils/data/defaultWords');
+const defaultUsers = require('../utils/data/defaultUsers');
 
 const url = 'mongodb://localhost:27017/blogDB';
 

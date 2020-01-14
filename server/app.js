@@ -4,7 +4,7 @@ const fs = require('fs');
 const https = require('https');
 
 // passport and middlewares
-const passport = require('./src/passport');
+const passport = require('./utils/passport');
 const isRoleAllowed = require('./middlewares/isRoleAllowed');
 
 // repository DB

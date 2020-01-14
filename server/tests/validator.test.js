@@ -1,4 +1,4 @@
-const haveOffensiveWords = require('../src/utils/validator');
+const haveOffensiveWords = require('../utils/validator');
 
 describe('haveOffensiveWords method test', () => {
   const mockWords = [{

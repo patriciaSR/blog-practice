@@ -4,7 +4,7 @@ const passport = require('passport');
 const postsRouter = express.Router();
 
 const repository = require('../repository');
-const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../src/utils/onlyUsers');
+const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../utils/onlyUsers');
 
 
 postsRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {

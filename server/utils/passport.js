@@ -5,7 +5,7 @@ const BasicStrategy = require('passport-http').BasicStrategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
-const repository = require('../repository/');
+const repository = require('../repository');
 
 const SECRET_KEY = 'SECRET_KEY';
 
