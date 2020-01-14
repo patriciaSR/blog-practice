@@ -9,10 +9,10 @@ module.exports = class Users {
   async addUser(newUser) {
     const { password } = newUser;
 
-      const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(8), null);
-      delete newUser.password;
-      newUser.passwordHash = passwordHash;
-      return this.collection.insertOne(newUser);
+    const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(8), null);
+    delete newUser.password;
+    newUser.passwordHash = passwordHash;
+    return this.collection.insertOne(newUser);
   }
 
   getAllUsers() {

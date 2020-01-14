@@ -25,13 +25,13 @@ postsRouter.post('/', passport.authenticate('jwt', { session: false }), async (r
     res.sendStatus(400);
   } else {
     await repository.posts.addPost(post);
-    res.json(post);
+    res.status(200).json(post);
   }
 });
 
 postsRouter.get('/', async (req, res) => {
   const allPosts = await repository.posts.getAllPosts();
-  res.json(allPosts);
+  res.status(200).json(allPosts);
 });
 
 postsRouter.get('/:id', async (req, res) => {
@@ -52,7 +52,7 @@ postsRouter.get('/:id', async (req, res) => {
 
     post.userInfo = userPostInfo;
     post.comments = completeCommentsInfo;
-    res.json(post);
+    res.status(200).json(post);
   }
 });
 
@@ -66,7 +66,7 @@ postsRouter.delete('/:id', passport.authenticate('jwt', { session: false }), asy
     const deletedPost = await repository.posts.deletePost(id);
     const comments = await repository.comments.deleteComentsPostById(id);
     deletedPost.comments = comments;
-    res.json(deletedPost);
+    res.status(200).json(deletedPost);
   } else {
     res.status(403).send('No puedes borrar un post que no es tuyo');
   }
@@ -96,7 +96,7 @@ postsRouter.put('/:id', passport.authenticate('jwt', { session: false }), async 
       res.sendStatus(400);
     } else {
       await repository.posts.updatePost(id, postReq);
-      res.json(postReq);
+      res.status(200).json(postReq);
     }
   } else {
     res.status(403).send('No puedes modificar un post que no es tuyo');

@@ -1,4 +1,3 @@
-const repository = require('../repository/');
 
 // passport and jwt authentication
 const passport = require('passport');
@@ -6,15 +5,17 @@ const BasicStrategy = require('passport-http').BasicStrategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
+const repository = require('../repository/');
+
 const SECRET_KEY = 'SECRET_KEY';
 
 async function verify(username, password, done) {
   const user = await repository.users.findUser(username);
-  
+
   if (!user) {
     return done(null, false, { message: 'User not found' });
   }
-  
+
   if (await repository.users.verifyPassword(user, password)) {
     return done(null, user);
   } else {

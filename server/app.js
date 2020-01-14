@@ -34,7 +34,7 @@ app.use('/posts/:id/comments', commentsRouter);
 app.use('/offensive-words', passport.authenticate('jwt', { session: false }), isRoleAllowed, offensiveRouter);
 
 // server.js
-(async function main() {
+async function main() {
   await repository.connect();
 
   await repository.checkDefault();
@@ -47,5 +47,6 @@ app.use('/offensive-words', passport.authenticate('jwt', { session: false }), is
   }, app).listen(3443, () => {
     console.log('Https server started in port 3443');
   });
-})();
+}
 
+main();

@@ -44,6 +44,7 @@ commentsRouter.delete('/:commentID', passport.authenticate('jwt', { session: fal
 
   if (req.user.role === 'admin' || reqUserID === postUserID || reqUserID === commentUserID) {
     const deletedComment = await repository.comments.deleteComment(commentID);
+
     if (!deletedComment) {
       res.sendStatus(404);
     } else {
@@ -66,6 +67,7 @@ commentsRouter.put('/:commentID', passport.authenticate('jwt', { session: false 
   const notAllowedWords = haveOffensiveWords(newComment, offensiveWords);
 
   if (req.user.role === 'admin' || reqUserID === commentUserID) {
+
     if (!comment) {
       res.sendStatus(404);
     } else if (notAllowedWords.length !== 0) {

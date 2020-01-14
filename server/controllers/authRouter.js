@@ -3,8 +3,8 @@ const express = require('express');
 const authRouter = express.Router({ mergeParams: true });
 
 // passport and jwt authentication
-const passport = require('./../src/passport');
 const jwt = require('jsonwebtoken');
+const passport = require('./../src/passport');
 
 const SECRET_KEY = 'SECRET_KEY';
 
