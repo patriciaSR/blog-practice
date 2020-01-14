@@ -27,10 +27,33 @@ Offensive words:
 * DELETE: Delete an offensive word `/offensive-words/:word`
 * PUT: Modify an existing offensive word `/offensive-words/:word`
 
+Signup new users:
+* POST: save a new user on DB `/signup`
+
 ### Offensive words collection database
 If the comment you are trying to incorporate contains any of the offensive words registered in the database, the comment cannot be created. The REST request **will be rejected with an error code and a JSON will be returned with information about the offensive word (or words) and its level**. 
 
 Offensive words will be stored in the database. If the application detects that there are no offensive words in the database, the application must insert a **default offensive-words set**.
+
+## User control
+The application has to allow several roles of users:
+* _Authenticated_:
+  - **Admin**: Admin users can perform any operation of the REST API.
+  - **Publisher**: Publisher users can:
+      * Create blog entries.
+      * Delete and modify only the entries created by them.
+      * Delete comments from your posts.
+      * Add comments to other posts.
+* _No-Authenticated_: They can consult information but cannot add comments or posts.
+
+Any user can register in the application and will be assigned the role of “publisher”. 
+To do this, a user creation endpoint will be created. --> `/signup`
+
+The app implement a Node.js script called defaultUsers.js that will connect to MongoDB and create admin and publisher users when it runs the first time.
+
+## User Authentication
+The user authentication mechanism is **Basic Auth + JWT Tokens**.
+You can import `Blog-Admin.postman_environment.json` and `Blog-Publisher.postman_environment.json` environments into Postman application and test the authentication functionality with publisher or admin role on different apis endpoints and methods.
 
 ## Project's Structure:
 ```
@@ -86,13 +109,17 @@ Offensive words will be stored in the database. If the application detects that 
 The REST API must be level2 maturity and the format of the URLs must identify resources, not actions.
 A `postman.json` file must be delivered with at least one example of each endpoint of the REST API.
 
-## Persistence DataBase
-Persistence will be implemented with **MongoDB**. 
+## Mongo DataBase
+Persistence will be implemented with [**MongoDB**](https://docs.mongodb.com/manual/). 
 Optionally, the practice can be delivered with the persistence of offensive words in a MySQL database (with or without ORM).
 
 ## Unit Testing
 * **Comment with offensive words**: if the comment has an offensive word, the corresponding error must be generated.
 * **Comment without offensive words**: if the comment does not have offensive words, an OK validation must be obtained.
+
+## API testing
+This app use [SuperTest](https://github.com/visionmedia/supertest) REST API testing with [Jest](https://jestjs.io/en/).
+
 
 ## Install Depencencies
 Install **Node.js**:
@@ -130,3 +157,7 @@ The server is running now on safe port [https://localhost:3443](https://localhos
 Open **Postman app** and import `postman.json` file to interact with REST APIs endpoints
 
 Open **MongoDB Compass app** to interact with app database and collections. Connect to [http://localhost:27017](http://localhost:27017). 
+
+## Run testing
+Use `npm run test` to see tests running.
+
