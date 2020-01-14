@@ -1,18 +1,18 @@
 const defaultWords = [
   {
-    word: "caca",
+    word: 'caca',
     level: 1,
   },
   {
-    word: "culo",
+    word: 'culo',
     level: 1,
   },
   {
-    word: "pedo",
+    word: 'pedo',
     level: 1,
   },
   {
-    word: "pis",
+    word: 'pis',
     level: 1,
   },
 ];

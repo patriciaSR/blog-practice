@@ -1,4 +1,4 @@
-const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../src/js/onlyUsers');
+const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../utils/onlyUsers');
 
 const mockComments = [{
   _id: '2',
@@ -15,19 +15,19 @@ const mockComments = [{
 ];
 
 const mockUsersInfo = [{
-  _id: '2',
-  userID: '1a',
+  _id: '1a',
   firstname: 'lola',
+  username: 'lola22',
 },
 {
-  _id: '2',
-  userID: '2a',
+  _id: '2a',
   firstname: 'paco',
+  username: 'paco22',
 },
 {
-  _id: '2',
-  userID: '3a',
+  _id: '3a',
   firstname: 'marta',
+  username: 'marta22',
 },
 ];
 
@@ -66,9 +66,9 @@ describe('getUserPostInfo method test', () => {
 
   test('get userPostInfo from userPostID and onlyUsersInfo Array', () => {
     const expectedResult = {
-      _id: '2',
-      userID: '3a',
+      _id: '3a',
       firstname: 'marta',
+      username: 'marta22',
     };
 
     const result = getUserPostInfo(mockUserID, mockUsersInfo);
@@ -92,27 +92,24 @@ describe('getUserCommentsInfo method test', () => {
       _id: '2',
       userID: '1a',
       userInfo: {
-        _id: '2',
-        firstname: 'lola',
         userID: '1a',
+        username: 'lola22',
       },
     },
     {
       _id: '2',
       userID: '1a',
       userInfo: {
-        _id: '2',
-        firstname: 'lola',
         userID: '1a',
+        username: 'lola22',
       },
     },
     {
       _id: '2',
       userID: '2a',
       userInfo: {
-        _id: '2',
-        firstname: 'paco',
         userID: '2a',
+        username: 'paco22',
       },
     }];
 

@@ -13,7 +13,7 @@ module.exports = class Comments {
 
   getCommentsPost(postID) {
     // Find comment's Post by postID
-    return this.collection.find({ postID }).toArray();
+    return this.collection.find({ postID: new ObjectId(postID) }).toArray();
   }
 
   findComment(id) {
