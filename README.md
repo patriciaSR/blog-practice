@@ -96,8 +96,8 @@ You can import `Blog-Admin.postman_environment.json` and `Blog-Publisher.postman
 │    │
 │    ├── .eslintrc.json (eslint configuration)
 │    ├── package.json (dependencies and project information)
-│    ├── server.cert(openssl self-signed SLL certificate)
-│    └── server.key(openssl self-signed SLL key)
+│    ├── server.cert(openssl no-safe self-signed SSL certificate)
+│    └── server.key(openssl no-safe self-signed SSL key)
 │
 ├── /client (frontend folder)
 │
