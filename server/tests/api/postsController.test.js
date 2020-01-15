@@ -1,16 +1,15 @@
-jest.mock('../../utils/onlyUsers');
-
-const onlyUsers = require('../../utils/onlyUsers');
-const { mockedPosts, mockResponse, mockedComments, mockedUsers } = require('../fixtures/fixVariables');
 
 const supertest = require('supertest');
 const { MongoClient } = require('mongodb');
 const app = require('../../server');
 
 const repository = require('../../repository');
+const { mockedPosts, mockResponse, mockedComments, mockedUsers } = require('../fixtures/fixVariables');
+
+jest.mock('../../utils/onlyUsers');
+const onlyUsers = require('../../utils/onlyUsers');
 
 const request = supertest(app);
-
 
 describe('posts controller', () => {
   let connection;
