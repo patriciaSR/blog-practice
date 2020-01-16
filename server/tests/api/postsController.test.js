@@ -67,7 +67,7 @@ describe('posts controller', () => {
       .send(mockedPosts[0])
       .expect(401);
 
-    expect(response).toBe('Unauthorized');
+    expect(response.text).toBe('Unauthorized');
   });
 
   test('accept the request GET ALL posts and return them from DB', async () => {
