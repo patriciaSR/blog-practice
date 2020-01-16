@@ -43,6 +43,7 @@ describe('posts controller', () => {
   });
 
   afterAll(async () => {
+    await db.posts.remove();
     await connection.close();
     await db.close();
   });
