@@ -1,9 +1,7 @@
 
 const supertest = require('supertest');
 const { MongoClient } = require('mongodb');
-const ObjectId = require('mongodb').ObjectId;
 const app = require('../../server');
-
 
 const repository = require('../../repository');
 const { mockedPosts, mockedComments, mockedUsers } = require('../fixtures/fixVariables');
@@ -35,14 +33,12 @@ describe('posts controller', () => {
     const responseAdmin = await request
       .post('/login')
       .auth('dumbo555', 'dumbo22');
-    // .set('Authorization', 'Basic ZHVtYm81NTU6ZHVtYm8yMg==');
     tokenAdmin = responseAdmin.body.token;
 
     // login Publisher
     const responsePub = await request
       .post('/login')
       .auth('bambi555', 'bambi22');
-    // .set('Authorization', 'Basic ZHVtYm81NTU6ZHVtYm8yMg==');
     tokenPub = responsePub.body.token;
   });
 
@@ -63,6 +59,15 @@ describe('posts controller', () => {
     expect(response.body.content).toBe(mockedPosts[0].content);
     expect(response.body.date).toBeTruthy();
     expect(response.body.userID).toBeTruthy();
+  });
+
+  test('reject request new post if you are not authenticated', async () => {
+    const response = await request.post('/posts')
+      .set('Accept', 'application/json')
+      .send(mockedPosts[0])
+      .expect(401);
+
+    expect(response).toBe('Unauthorized');
   });
 
   test('accept the request GET ALL posts and return them from DB', async () => {
