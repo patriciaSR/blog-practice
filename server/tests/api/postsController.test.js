@@ -43,7 +43,8 @@ describe('posts controller', () => {
   });
 
   afterAll(async () => {
-    await db.posts.remove();
+    await db.collection('posts').remove();
+    await db.collection('comments').remove();
     await connection.close();
     await db.close();
   });
@@ -148,7 +149,7 @@ describe('posts controller', () => {
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenPub)
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(403);
+      .expect(401);
 
     expect(response.text).toBe('No puedes modificar un post que no es tuyo');
   });
@@ -156,7 +157,7 @@ describe('posts controller', () => {
   test('reject the request DELETE POST by false id and return not found post', async () => {
     const falseId = '5e1dec18ddd15a6923ab68cf';
 
-    const response = await request.put('/posts/' + falseId)
+    const response = await request.delete('/posts/' + falseId)
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
       .expect('Content-Type', 'text/plain; charset=utf-8')
@@ -166,13 +167,13 @@ describe('posts controller', () => {
   });
 
   test('reject the request DELETE POST if you no have correct role', async () => {
-    const response = await request.put('/posts/' + mockPostID)
+    const response = await request.delete('/posts/' + mockPostID)
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenPub)
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(403);
+      .expect(401);
 
-    expect(response.text).toBe('No puedes modificar un post que no es tuyo');
+    expect(response.text).toBe('No puedes borrar un post que no es tuyo');
   });
 
   test('accept the request DELETE POST by id and returns correct delete json', async () => {

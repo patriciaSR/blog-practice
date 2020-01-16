@@ -68,7 +68,7 @@ postsRouter.delete('/:id', passport.authenticate('jwt', { session: false }), asy
     deletedPost.comments = comments;
     res.status(200).json(deletedPost);
   } else {
-    res.status(403).send('No puedes borrar un post que no es tuyo');
+    res.status(401).send('No puedes borrar un post que no es tuyo');
   }
 });
 
@@ -99,7 +99,7 @@ postsRouter.put('/:id', passport.authenticate('jwt', { session: false }), async 
       res.status(200).json(postReq);
     }
   } else {
-    res.status(403).send('No puedes modificar un post que no es tuyo');
+    res.status(401).send('No puedes modificar un post que no es tuyo');
   }
 });
 

@@ -4,14 +4,11 @@ const { MongoClient } = require('mongodb');
 const app = require('../../server');
 
 const repository = require('../../repository');
-const { mockedPosts, mockedComments, mockedUsers } = require('../fixtures/fixVariables');
-
-// jest.mock('../../utils/onlyUsers');
-// const onlyUsers = require('../../utils/onlyUsers');
+const { mockedPosts } = require('../fixtures/fixVariables');
 
 const request = supertest(app);
 
-describe('posts controller', () => {
+describe('comments controller', () => {
   let connection;
   let db;
 
@@ -23,6 +20,7 @@ describe('posts controller', () => {
 
   const newComent = 'hola que tal';
   const offensiveComment = 'caca culo pedo pis';
+  const changeComment = { content: 'hola guapa' };
 
 
   beforeAll(async () => {
@@ -38,26 +36,32 @@ describe('posts controller', () => {
     const responseAdmin = await request
       .post('/login')
       .auth('dumbo555', 'dumbo22');
-    // .set('Authorization', 'Basic ZHVtYm81NTU6ZHVtYm8yMg==');
     tokenAdmin = responseAdmin.body.token;
 
     // login Publisher
     const responsePub = await request
       .post('/login')
       .auth('bambi555', 'bambi22');
-    // .set('Authorization', 'Basic ZHVtYm81NTU6ZHVtYm8yMg==');
     tokenPub = responsePub.body.token;
 
-    //new post
+    // new post
     const responsePost = await request.post('/posts')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
       .send(mockedPosts[0]);
     mockPostID = responsePost.body._id;
+
+    // new comment
+    const response = await request.post('/posts/' + mockPostID + '/comments')
+      .set('Accept', 'application/json')
+      .set('Authorization', 'bearer ' + tokenAdmin)
+      .send({ content: newComent });
+    mockCommentID = response.body._id;
   });
 
   afterAll(async () => {
-    await db.posts.remove();
+    await db.collection('posts').remove();
+    await db.collection('comments').remove();
     await connection.close();
     await db.close();
   });
@@ -91,7 +95,7 @@ describe('posts controller', () => {
     const response = await request.post('/posts/' + mockPostID + '/comments')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
-      .send({ content: 'caca' })
+      .send({ content: offensiveComment })
       .expect('Content-Type', /json/)
       .expect(403);
 
@@ -100,189 +104,73 @@ describe('posts controller', () => {
     expect(response.body.notAllowedWords[0].level).toBe(expectedWord.level);
   });
 
+  test('accept the request PUT COMMENT by id and return the new comment edited', async () => {
+    const response = await request.put('/posts/' + mockPostID + '/comments/' + mockCommentID)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'bearer ' + tokenAdmin)
+      .send(changeComment)
+      .expect('Content-Type', /json/)
+      .expect(200);
 
-  //   test('accept the request PUT POST by id and return the new post edited', async () => {
-  //     const changePost = { ...mockedPosts[0] };
-  //     changePost.title = 'chaaangePost';
+    expect(response.body.content).toBe(changeComment.content);
+    expect(response.body.date).toBeTruthy();
+    expect(response.body.userID).toBeTruthy();
+  });
 
-  //     const response = await request.put('/posts/' + mockPostID)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenAdmin)
-  //       .send(changePost)
-  //       .expect('Content-Type', /json/)
-  //       .expect(200);
+  test('reject the request PUT COMMENT by false id and return not found comment', async () => {
+    const falseId = '5e1dec18ddd15a6923ab68cf';
 
-  //     expect(response.body.title).toBe(changePost.title);
-  //     expect(response.body.date).toBeTruthy();
-  //   });
+    const response = await request.put('/posts/' + mockPostID + '/comments/' + falseId)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'bearer ' + tokenAdmin)
+      .send(changeComment)
+      .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect(404);
 
-  //   test('reject the request PUT POST by false id and return not found post', async () => {
-  //     const falseId = '5e1dec18ddd15a6923ab68cf';
+    expect(response.text).toBe('Not Found');
+  });
 
-  //     const response = await request.put('/posts/' + falseId)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenAdmin)
-  //       .expect('Content-Type', 'text/plain; charset=utf-8')
-  //       .expect(404);
+  test('reject the request PUT COMMENT if you no have correct role', async () => {
+    const response = await request.put('/posts/' + mockPostID + '/comments/' + mockCommentID)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'bearer ' + tokenPub)
+      .send(changeComment)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(401);
 
-  //     expect(response.text).toBe('Not Found');
-  //   });
+    expect(response.text).toBe('No puedes modificar este comentario');
+  });
 
-  //   test('reject the request PUT POST if you no have correct role', async () => {
-  //     const response = await request.put('/posts/' + mockPostID)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenPub)
-  //       .expect('Content-Type', 'text/html; charset=utf-8')
-  //       .expect(403);
+  test('reject the request DELETE COMMENT by false id and return not found comment', async () => {
+    const falseId = '5e1dec18ddd15a6923ab68cf';
 
-  //     expect(response.text).toBe('No puedes modificar un post que no es tuyo');
-  //   });
+    const response = await request.delete('/posts/' + mockPostID + '/comments/' + falseId)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'bearer ' + tokenAdmin)
+      .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect(404);
 
-  //   test('reject the request DELETE POST by false id and return not found post', async () => {
-  //     const falseId = '5e1dec18ddd15a6923ab68cf';
+    expect(response.text).toBe('Not Found');
+  });
 
-  //     const response = await request.put('/posts/' + falseId)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenAdmin)
-  //       .expect('Content-Type', 'text/plain; charset=utf-8')
-  //       .expect(404);
+  test('reject the request DELETE COMMENT if you no have correct role', async () => {
+    const response = await request.delete('/posts/' + mockPostID + '/comments/' + mockCommentID)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'bearer ' + tokenPub)
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(401);
 
-  //     expect(response.text).toBe('Not Found');
-  //   });
+    expect(response.text).toBe('No tienes permiso para borrar este comentario');
+  });
 
-  //   test('reject the request DELETE POST if you no have correct role', async () => {
-  //     const response = await request.put('/posts/' + mockPostID)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenPub)
-  //       .expect('Content-Type', 'text/html; charset=utf-8')
-  //       .expect(403);
+  test('accept the request DELETE POST by id and returns correct delete json', async () => {
+    const response = await request.delete('/posts/' + mockPostID + '/comments/' + mockCommentID)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'bearer ' + tokenAdmin)
+      .expect('Content-Type', /json/)
+      .expect(200);
 
-  //     expect(response.text).toBe('No puedes modificar un post que no es tuyo');
-  //   });
-
-  //   test('accept the request DELETE POST by id and returns correct delete json', async () => {
-  //     const response = await request.delete('/posts/' + mockPostID)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenAdmin)
-  //       .expect('Content-Type', /json/)
-  //       .expect(200);
-
-  //     expect(response.body.deletedCount).toBe(1);
-  //     expect(response.body.comments.deletedCount).toBe(0);
-  //   });
-  // });test('accept the request GET ALL posts and return them from DB', async () => {
-  //     await request.post('/posts')
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenAdmin)
-  //       .send(mockedPosts[1]);
-
-  //     const response = await request.get('/posts')
-  //       .set('Accept', 'application/json')
-  //       .expect('Content-Type', /json/)
-  //       .expect(200);
-
-  //     mockPostID = response.body[0]._id;
-
-  //     expect(response.body.length).toBe(2);
-  //     expect(response.body[1]._id).toBeTruthy();
-  //     expect(response.body[1].title).toBe(mockedPosts[1].title);
-  //   });
-
-  //   test('accept the request GET POST by id and return the selected post and comments from DB', async () => {
-  //     onlyUsers.getOnlyUsersIDs.mockImplementation(() => []);
-  //     onlyUsers.getUserPostInfo.mockImplementation(() => mockedUsers[0]);
-  //     onlyUsers.getUserCommentsInfo.mockImplementation(() => mockedComments);
-
-  //     const response = await request.get('/posts/' + mockPostID)
-  //       .set('Accept', 'application/json')
-  //       .expect('Content-Type', /json/)
-  //       .expect(200);
-
-  //     expect(response.body._id).toBe(mockPostID);
-  //     expect(response.body.content).toBe(mockedPosts[0].content);
-  //     expect(response.body.userInfo).toEqual(mockedUsers[0]);
-  //     expect(response.body.comments).toEqual(mockedComments);
-  //   });
-
-  //   test('reject the request GET POST by id and return "not found" with false postID', async () => {
-  //     const falseId = '5e1dec18ddd15a6923ab68cf';
-
-  //     const response = await request.get('/posts/' + falseId)
-  //       .set('Accept', 'application/json')
-  //       .expect('Content-Type', 'text/plain; charset=utf-8')
-  //       .expect(404);
-
-  //     expect(response.text).toBe('Not Found');
-  //   });
-
-  //   test('accept the request PUT POST by id and return the new post edited', async () => {
-  //     const changePost = { ...mockedPosts[0] };
-  //     changePost.title = 'chaaangePost';
-
-  //     const response = await request.put('/posts/' + mockPostID)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenAdmin)
-  //       .send(changePost)
-  //       .expect('Content-Type', /json/)
-  //       .expect(200);
-
-  //     expect(response.body.title).toBe(changePost.title);
-  //     expect(response.body.date).toBeTruthy();
-  //   });
-
-  //   test('reject the request PUT POST by false id and return not found post', async () => {
-  //     const falseId = '5e1dec18ddd15a6923ab68cf';
-
-  //     const response = await request.put('/posts/' + falseId)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenAdmin)
-  //       .expect('Content-Type', 'text/plain; charset=utf-8')
-  //       .expect(404);
-
-  //     expect(response.text).toBe('Not Found');
-  //   });
-
-  //   test('reject the request PUT POST if you no have correct role', async () => {
-  //     const response = await request.put('/posts/' + mockPostID)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenPub)
-  //       .expect('Content-Type', 'text/html; charset=utf-8')
-  //       .expect(403);
-
-  //     expect(response.text).toBe('No puedes modificar un post que no es tuyo');
-  //   });
-
-  //   test('reject the request DELETE POST by false id and return not found post', async () => {
-  //     const falseId = '5e1dec18ddd15a6923ab68cf';
-
-  //     const response = await request.put('/posts/' + falseId)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenAdmin)
-  //       .expect('Content-Type', 'text/plain; charset=utf-8')
-  //       .expect(404);
-
-  //     expect(response.text).toBe('Not Found');
-  //   });
-
-  //   test('reject the request DELETE POST if you no have correct role', async () => {
-  //     const response = await request.put('/posts/' + mockPostID)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenPub)
-  //       .expect('Content-Type', 'text/html; charset=utf-8')
-  //       .expect(403);
-
-  //     expect(response.text).toBe('No puedes modificar un post que no es tuyo');
-  //   });
-
-  //   test('accept the request DELETE POST by id and returns correct delete json', async () => {
-  //     const response = await request.delete('/posts/' + mockPostID)
-  //       .set('Accept', 'application/json')
-  //       .set('Authorization', 'bearer ' + tokenAdmin)
-  //       .expect('Content-Type', /json/)
-  //       .expect(200);
-
-  //     expect(response.body.deletedCount).toBe(1);
-  //     expect(response.body.comments.deletedCount).toBe(0);
-  //   });
+    expect(response.body.deletedCount).toBe(1);
+    expect(response.body.result.ok).toBe(1);
+  });
 });
-
