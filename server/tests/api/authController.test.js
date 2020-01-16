@@ -26,7 +26,9 @@ describe('auth controller', () => {
   });
 
   test('reject the request if the auth header is not send', async () => {
-    await request.post('/login').expect(401);
+    const response = await request.post('/login').expect(401);
+
+    expect(response.text).toBe('Unauthorized');
   });
 
   test('accept the request if auth header is send', async () => {
