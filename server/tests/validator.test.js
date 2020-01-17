@@ -19,7 +19,7 @@ describe('haveOffensiveWords method test', () => {
     expect(result.length).toEqual(0);
   });
 
-  test('not add comment with offensive words', () => {
+  test('reject add comment with offensive words', () => {
     const mockBadText = 'caca que tal';
 
     const result = haveOffensiveWords(mockBadText, mockWords);
@@ -27,7 +27,7 @@ describe('haveOffensiveWords method test', () => {
     expect(result.length).toEqual(1);
   });
 
-  test('not add comment with capitalize offensive words', () => {
+  test('reject add comment with capitalize offensive words', () => {
     const mockBadText = 'CACA que tal';
 
     const result = haveOffensiveWords(mockBadText, mockWords);
@@ -35,7 +35,7 @@ describe('haveOffensiveWords method test', () => {
     expect(result.length).toEqual(1);
   });
 
-  test('add comment with offensive words inside an other word', () => {
+  test('add comment with not first offensive words inside an other word', () => {
     const mockBadText = 'menuda cacatúa';
 
     const result = haveOffensiveWords(mockBadText, mockWords);
@@ -43,7 +43,7 @@ describe('haveOffensiveWords method test', () => {
     expect(result.length).toEqual(0);
   });
 
-  test('add comment with "false offensive words" inside an other word', () => {
+  test('add comment with first "false offensive words" inside an other word', () => {
     const mockBadText = 'cacatua';
 
     const result = haveOffensiveWords(mockBadText, mockWords);
@@ -51,7 +51,7 @@ describe('haveOffensiveWords method test', () => {
     expect(result.length).toEqual(0);
   });
 
-  test('add comment with offensive words inside special characters', () => {
+  test('reject add comment with offensive words inside special characters', () => {
     const mockBadText = 'esto es una **CACA***';
 
     const result = haveOffensiveWords(mockBadText, mockWords);
