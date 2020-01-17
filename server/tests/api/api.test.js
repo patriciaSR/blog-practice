@@ -574,6 +574,7 @@ describe('offensiveWords controller', () => {
   });
 });
 
+
 describe('signup controller', () => {
   let connection;
   let db;
@@ -628,12 +629,13 @@ describe('signup controller', () => {
   test('reject the request POST NEW USER if user name exist on DB', async () => {
     const existUserChangedEmail = { ...existUser };
     existUserChangedEmail.email = 'lola22@gmail.com';
+
     const response = await request.post('/signup')
       .set('Accept', 'application/json')
       .send(existUserChangedEmail)
       .expect(400);
 
-    expect(response.text).toBe('Ese usuario ya existe');
+    expect(response.text).toBe('Ese nombre de usuario ya existe');
   });
   test('reject the request POST NEW USER if user email exist on DB', async () => {
     const existUserChangedName = { ...existUser };
@@ -644,6 +646,6 @@ describe('signup controller', () => {
       .send(existUserChangedName)
       .expect(400);
 
-    expect(response.text).toBe('Ese usuario ya existe');
+    expect(response.text).toBe('Ese email ya existe');
   });
 });

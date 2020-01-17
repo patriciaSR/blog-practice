@@ -18,13 +18,19 @@ signupRouter.post('/', async (req, res) => {
 
   if (!firstname && !username && !email && !password) {
     res.sendStatus(400);
-  } else if (await repository.users.findUser(username, email)) {
-    res.status(400).send('Ese usuario ya existe');
   } else {
-    newUser.role = 'publisher';
-    await repository.users.addUser(newUser);
-    delete newUser.passwordHash;
-    res.status(200).json({ message: 'Usuario registrado correctamente', newUser });
+    const findUser = await repository.users.findUser(username, email);
+
+    if (!findUser) {
+      newUser.role = 'publisher';
+      await repository.users.addUser(newUser);
+      delete newUser.passwordHash;
+      res.status(200).json({ message: 'Usuario registrado correctamente', newUser });
+    } else if (findUser.username === username) {
+      res.status(400).send('Ese nombre de usuario ya existe');
+    } else {
+      res.status(400).send('Ese email ya existe');
+    }
   }
 });
 
