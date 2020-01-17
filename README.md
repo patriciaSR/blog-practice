@@ -201,7 +201,7 @@ and set this config on scripts key on `package.json` file to run tests:
         "test:watch": "jest --watch",
         "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
         "test:coverage": "jest --collect-coverage"
-    }
+}
 ```
 
 Install **[jest-mongodb](https://jestjs.io/docs/en/mongodb)** for mocking db connection:
@@ -213,7 +213,7 @@ and set this config on `package.json` file:
 ```
 "jest": {
         "preset": "@shelf/jest-mongodb"
-    }
+}
 ```
 
 Install **[SuperTest](https://www.npmjs.com/package/supertest)** for REST API Testing:
