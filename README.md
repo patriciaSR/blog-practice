@@ -242,7 +242,7 @@ Use `npm run test:watch` to see changes code in tests running.
 
 Use `npm run test:coverage` to see test coverage.
 
-Use `npm run test:debug` to see break points debuuger in your code when you run tests.
+Use `npm run test:debug` to see break points debugger in your code when you run tests.
 
 
 
