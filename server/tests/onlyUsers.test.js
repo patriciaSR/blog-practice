@@ -2,7 +2,7 @@ const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../ut
 const { mockPost, mockRepeatUserIDPost, mockComments, mockUsersInfo } = require('./fixtures/fixOnlyUserVariables');
 
 describe('getOnlyUserIDs method test', () => {
-  test('get onlyUserIDs into an Array', () => {
+  test('return onlyUserIDs from post and comments into an Array', () => {
     const expectedResult = ['3a', '1a', '2a'];
 
     const result = getOnlyUsersIDs(mockPost, mockComments);
@@ -11,7 +11,7 @@ describe('getOnlyUserIDs method test', () => {
     expect(result).toEqual(expectedResult);
   });
 
-  test('get onlyUserIDs into an Array without repeated ids', () => {
+  test('return onlyUserIDs from post and comments into an Array without repeated userIDs', () => {
     const expectedResult = ['1a', '2a'];
 
     const result = getOnlyUsersIDs(mockRepeatUserIDPost, mockComments);
@@ -25,7 +25,7 @@ describe('getOnlyUserIDs method test', () => {
 describe('getUserPostInfo method test', () => {
   const mockUserID = '3a';
 
-  test('get userPostInfo from userPostID and onlyUsersInfo Array', () => {
+  test('return an object with userPostInfo from userPostID and onlyUsersInfo Array', () => {
     const expectedResult = mockUsersInfo[2];
 
     const result = getUserPostInfo(mockUserID, mockUsersInfo);
@@ -44,7 +44,7 @@ describe('getUserPostInfo method test', () => {
 
 
 describe('getUserCommentsInfo method test', () => {
-  test('get getUserCommentsInfo from userPostID and onlyUsersInfo Array', () => {
+  test('return an array with comments and their userInfo from userID and onlyUsersInfo Array', () => {
     const expectedResult = [{
       _id: '2',
       userID: '1a',
