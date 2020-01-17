@@ -1,10 +1,9 @@
-
 const supertest = require('supertest');
 const { MongoClient } = require('mongodb');
 const app = require('../../server');
 
 const repository = require('../../repository');
-const { mockedPosts, mockedComments, mockedUsers } = require('../fixtures/fixVariables');
+const { mockedPosts, mockedComments, mockedUsers } = require('../fixtures/fixApiVariables');
 
 jest.mock('../../utils/onlyUsers');
 const onlyUsers = require('../../utils/onlyUsers');
@@ -31,13 +30,21 @@ describe('auth controller', () => {
     await db.close();
   });
 
-  test('reject the request if the auth header is not send', async () => {
+  test('reject request POST LOGIN if the auth header is not send', async () => {
     const response = await request.post('/login').expect(401);
 
     expect(response.text).toBe('Unauthorized');
   });
 
-  test('accept the request if auth header is send', async () => {
+  test('reject request POST LOGIN if username is not on DB', async () => {
+    const response = await request.post('/login')
+      .auth('lola11', 'bambi22')
+      .expect(401);
+
+    expect(response.text).toBe('Unauthorized');
+  });
+
+  test('accept request POST LOGIN if auth header is send', async () => {
     const response = await request.post('/login')
       .auth('dumbo555', 'dumbo22')
       .expect('Content-Type', /json/)
@@ -100,7 +107,7 @@ describe('posts controller', () => {
     done();
   });
 
-  test('accept the request GET ALL posts and return them from DB', async () => {
+  test('accept request GET ALL posts and return them from DB', async () => {
     const response = await request.get('/posts')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
@@ -111,7 +118,7 @@ describe('posts controller', () => {
     expect(response.body[0].title).toBe(mockedPosts[1].title);
   });
 
-  test('send new post to DB', async () => {
+  test('accept request POST NEW POST to DB', async () => {
     const response = await request.post('/posts')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
@@ -125,7 +132,7 @@ describe('posts controller', () => {
     expect(response.body.userID).toBeTruthy();
   });
 
-  test('reject request new post if you are not authenticated', async () => {
+  test('reject request POST NEW POST if you are not authenticated', async () => {
     const response = await request.post('/posts')
       .set('Accept', 'application/json')
       .send(mockedPosts[0])
@@ -134,7 +141,7 @@ describe('posts controller', () => {
     expect(response.text).toBe('Unauthorized');
   });
 
-  test('accept the request GET POST by id and return the selected post and comments from DB', async () => {
+  test('accept request GET POST by id and return the selected post and comments from DB', async () => {
     onlyUsers.getOnlyUsersIDs.mockImplementation(() => []);
     onlyUsers.getUserPostInfo.mockImplementation(() => mockedUsers[0]);
     onlyUsers.getUserCommentsInfo.mockImplementation(() => mockedComments);
@@ -150,7 +157,7 @@ describe('posts controller', () => {
     expect(response.body.comments).toEqual(mockedComments);
   });
 
-  test('reject the request GET POST by id and return "not found" with false postID', async () => {
+  test('reject request GET POST by id and return "not found" with false postID', async () => {
     const falseId = '5e1dec18ddd15a6923ab68cf';
 
     const response = await request.get('/posts/' + falseId)
@@ -161,7 +168,7 @@ describe('posts controller', () => {
     expect(response.text).toBe('Not Found');
   });
 
-  test('accept the request PUT POST by id and return the new post edited', async () => {
+  test('accept request PUT POST by id and return the new post edited', async () => {
     const changePost = { ...mockedPosts[0] };
     changePost.title = 'chaaangePost';
 
@@ -176,7 +183,7 @@ describe('posts controller', () => {
     expect(response.body.date).toBeTruthy();
   });
 
-  test('reject the request PUT POST by false id and return not found post', async () => {
+  test('reject request PUT POST by false id and return not found post', async () => {
     const falseId = '5e1dec18ddd15a6923ab68cf';
 
     const response = await request.put('/posts/' + falseId)
@@ -188,7 +195,7 @@ describe('posts controller', () => {
     expect(response.text).toBe('Not Found');
   });
 
-  test('reject the request PUT POST if you no have correct role', async () => {
+  test('reject request PUT POST if you not have correct role', async () => {
     const response = await request.put('/posts/' + mockPostID)
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenPub)
@@ -198,7 +205,7 @@ describe('posts controller', () => {
     expect(response.text).toBe('No puedes modificar un post que no es tuyo');
   });
 
-  test('reject the request DELETE POST by false id and return not found post', async () => {
+  test('reject request DELETE POST by false id and return not found post', async () => {
     const falseId = '5e1dec18ddd15a6923ab68cf';
 
     const response = await request.delete('/posts/' + falseId)
@@ -210,7 +217,7 @@ describe('posts controller', () => {
     expect(response.text).toBe('Not Found');
   });
 
-  test('reject the request DELETE POST if you no have correct role', async () => {
+  test('reject request DELETE POST if you not have correct role', async () => {
     const response = await request.delete('/posts/' + mockPostID)
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenPub)
@@ -220,7 +227,7 @@ describe('posts controller', () => {
     expect(response.text).toBe('No puedes borrar un post que no es tuyo');
   });
 
-  test('accept the request DELETE POST by id and returns correct delete json', async () => {
+  test('accept request DELETE POST by id and returns correct delete json', async () => {
     const response = await request.delete('/posts/' + mockPostID)
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
@@ -269,7 +276,6 @@ describe('comments controller', () => {
     tokenPub = responsePub.body.token;
   });
 
-
   afterAll(async () => {
     await connection.close();
     await db.close();
@@ -296,7 +302,7 @@ describe('comments controller', () => {
     await repository.comments.deleteComment(mockCommentID);
   });
 
-  test('accept request and send new COMMENT POST on DB', async () => {
+  test('accept request and send POST COMMENT on DB', async () => {
     const response = await request.post('/posts/' + mockPostID + '/comments')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
@@ -311,7 +317,7 @@ describe('comments controller', () => {
     expect(response.body.content).toBe(newComent);
   });
 
-  test('reject request new COMMENT POST if you are not authenticated', async () => {
+  test('reject request POST COMMENT if you are not authenticated', async () => {
     const response = await request.post('/posts/' + mockPostID + '/comments')
       .set('Accept', 'application/json')
       .send({ content: newComent })
@@ -320,7 +326,7 @@ describe('comments controller', () => {
     expect(response.text).toBe('Unauthorized');
   });
 
-  test('reject request new COMMENT POST if comments has offensive words', async () => {
+  test('reject request POST COMMENT if comments has offensive words', async () => {
     const expectedWord = await repository.offensiveWords.findWord('caca');
     const response = await request.post('/posts/' + mockPostID + '/comments')
       .set('Accept', 'application/json')
@@ -334,20 +340,7 @@ describe('comments controller', () => {
     expect(response.body.notAllowedWords[0].level).toBe(expectedWord.level);
   });
 
-  test('accept the request PUT COMMENT by id and return the new comment edited', async () => {
-    const response = await request.put('/posts/' + mockPostID + '/comments/' + mockCommentID)
-      .set('Accept', 'application/json')
-      .set('Authorization', 'bearer ' + tokenAdmin)
-      .send(changeComment)
-      .expect('Content-Type', /json/)
-      .expect(200);
-
-    expect(response.body.content).toBe(changeComment.content);
-    expect(response.body.date).toBeTruthy();
-    expect(response.body.userID).toBeTruthy();
-  });
-
-  test('reject the request PUT COMMENT by false id and return not found comment', async () => {
+  test('reject request PUT COMMENT by false id and return not found comment', async () => {
     const falseId = '5e1dec18ddd15a6923ab68cf';
 
     const response = await request.put('/posts/' + mockPostID + '/comments/' + falseId)
@@ -360,7 +353,7 @@ describe('comments controller', () => {
     expect(response.text).toBe('Not Found');
   });
 
-  test('reject the request PUT COMMENT if you no have correct role', async () => {
+  test('reject request PUT COMMENT if you not have correct role', async () => {
     const response = await request.put('/posts/' + mockPostID + '/comments/' + mockCommentID)
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenPub)
@@ -371,7 +364,20 @@ describe('comments controller', () => {
     expect(response.text).toBe('No puedes modificar este comentario');
   });
 
-  test('reject the request DELETE COMMENT by false id and return not found comment', async () => {
+  test('accept request PUT COMMENT by id and return the new comment edited', async () => {
+    const response = await request.put('/posts/' + mockPostID + '/comments/' + mockCommentID)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'bearer ' + tokenAdmin)
+      .send(changeComment)
+      .expect('Content-Type', /json/)
+      .expect(200);
+
+    expect(response.body.content).toBe(changeComment.content);
+    expect(response.body.date).toBeTruthy();
+    expect(response.body.userID).toBeTruthy();
+  });
+
+  test('reject request DELETE COMMENT by false id and return not found comment', async () => {
     const falseId = '5e1dec18ddd15a6923ab68cf';
 
     const response = await request.delete('/posts/' + mockPostID + '/comments/' + falseId)
@@ -383,7 +389,7 @@ describe('comments controller', () => {
     expect(response.text).toBe('Not Found');
   });
 
-  test('reject the request DELETE COMMENT if you no have correct role', async () => {
+  test('reject request DELETE COMMENT if you not have correct role', async () => {
     const response = await request.delete('/posts/' + mockPostID + '/comments/' + mockCommentID)
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenPub)
@@ -451,7 +457,7 @@ describe('offensiveWords controller', () => {
     await db.close();
   });
 
-  test('reject request new WORD POST if you are not authenticated', async () => {
+  test('reject request new POST WORD if you are not authenticated', async () => {
     const response = await request.post('/offensive-words')
       .set('Accept', 'application/json')
       .send(newWord)
@@ -460,7 +466,7 @@ describe('offensiveWords controller', () => {
     expect(response.text).toBe('Unauthorized');
   });
 
-  test('reject request new WORD POST if you not have admin role', async () => {
+  test('reject request new POST WORD if you not have admin role', async () => {
     const response = await request.post('/offensive-words')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenPub)
@@ -470,7 +476,7 @@ describe('offensiveWords controller', () => {
     expect(response.text).toBe('Unauthorized');
   });
 
-  test('send new WORD POST to DB', async () => {
+  test('send new POST WORD to DB', async () => {
     const response = await request.post('/offensive-words')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
@@ -483,7 +489,7 @@ describe('offensiveWords controller', () => {
     expect(response.body.level).toBe(newWord.level);
   });
 
-  test('reject request  GET ALL WORDS if you are not authenticated', async () => {
+  test('reject request GET ALL WORDS if you are not authenticated', async () => {
     const response = await request.get('/offensive-words')
       .set('Accept', 'application/json')
       .expect(401);
@@ -501,7 +507,7 @@ describe('offensiveWords controller', () => {
     expect(response.text).toBe('Unauthorized');
   });
 
-  test('accept the request GET ALL WORDS and return them from DB', async () => {
+  test('accept request GET ALL WORDS and return them from DB', async () => {
     const response = await request.get('/offensive-words')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
@@ -532,7 +538,7 @@ describe('offensiveWords controller', () => {
     expect(response.text).toBe('Unauthorized');
   });
 
-  test('accept the request PUT WORD by word name and return the new post edited', async () => {
+  test('accept request PUT WORD by word name and return the new word edited', async () => {
     const response = await request.put('/offensive-words/caca')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
@@ -544,7 +550,7 @@ describe('offensiveWords controller', () => {
     expect(response.body.level).toBe(ChangeWord.level);
   });
 
-  test('reject the request DELETE WORD by word name if you are not authenticated', async () => {
+  test('reject request DELETE WORD by word name if you are not authenticated', async () => {
     const response = await request.delete('/offensive-words/pedo')
       .set('Accept', 'application/json')
       .send(ChangeWord)
@@ -562,7 +568,7 @@ describe('offensiveWords controller', () => {
     expect(response.text).toBe('Unauthorized');
   });
 
-  test('accept the request DELETE WORD by name word and returns correct delete json', async () => {
+  test('accept request DELETE WORD by name word and returns correct delete json', async () => {
     const response = await request.delete('/offensive-words/pedo')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
@@ -613,7 +619,7 @@ describe('signup controller', () => {
     await db.close();
   });
 
-  test('accept the request POST NEW USER', async () => {
+  test('accept request POST NEW USER', async () => {
     const response = await request.post('/signup')
       .set('Accept', 'application/json')
       .send(newUser)
@@ -626,7 +632,7 @@ describe('signup controller', () => {
     expect(response.body.newUser.passwordHash).toBeFalsy();
   });
 
-  test('reject the request POST NEW USER if user name exist on DB', async () => {
+  test('reject request POST NEW USER if user name exist on DB', async () => {
     const existUserChangedEmail = { ...existUser };
     existUserChangedEmail.email = 'lola22@gmail.com';
 
@@ -637,7 +643,7 @@ describe('signup controller', () => {
 
     expect(response.text).toBe('Ese nombre de usuario ya existe');
   });
-  test('reject the request POST NEW USER if user email exist on DB', async () => {
+  test('reject request POST NEW USER if user email exist on DB', async () => {
     const existUserChangedName = { ...existUser };
     existUserChangedName.username = 'Lola';
 
