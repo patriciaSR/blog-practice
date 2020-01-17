@@ -76,11 +76,11 @@ You can import `Blog-Admin.postman_environment.json` and `Blog-Publisher.postman
 │    │   └── postman.json (REST APIs information to import in Postman application)
 │    │
 │    ├── /repository (database connection and interaction)
-│    │   ├── comments.js (comments collection interaction methods)
+│    │   ├── Comments.js (comments collection interaction methods)
 │    │   ├── index.js (main database connection)
-│    │   ├── offensiveWords.js (offensive-words collection interaction methods)
-│    │   ├── posts.js (posts collection interaction methods)
-│    │   └── users.js (users collection interaction methods)
+│    │   ├── OffensiveWords.js (offensive-words collection interaction methods)
+│    │   ├── Posts.js (posts collection interaction methods)
+│    │   └── Users.js (users collection interaction methods)
 │    │
 │    ├── /tests (testing js files with jest)
 │    │   ├── onlyUsers.test.js

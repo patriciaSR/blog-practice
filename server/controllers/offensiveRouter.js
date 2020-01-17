@@ -2,7 +2,7 @@ const express = require('express');
 
 const offensiveRouter = express.Router();
 
-const repository = require('../repository/');
+const repository = require('../repository');
 
 offensiveRouter.post('/', async (req, res) => {
   const newWord = req.body;

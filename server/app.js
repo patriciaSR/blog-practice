@@ -5,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient;
 const app = require('./server.js');
 
 // repository DB
-const repository = require('./repository/');
+const repository = require('./repository');
 
 // server.js
 async function main() {

@@ -1,7 +1,7 @@
-const Posts = require('./posts');
-const Comments = require('./comments');
-const OffensiveWords = require('./offensiveWords');
-const Users = require('./users');
+const Posts = require('./Posts');
+const Comments = require('./Comments');
+const OffensiveWords = require('./OffensiveWords');
+const Users = require('./Users');
 
 
 const defaultWords = require('../utils/data/defaultWords');

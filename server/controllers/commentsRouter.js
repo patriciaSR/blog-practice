@@ -5,7 +5,7 @@ const commentsRouter = express.Router({ mergeParams: true });
 
 const ObjectId = require('mongodb').ObjectId;
 
-const repository = require('../repository/');
+const repository = require('../repository');
 
 const haveOffensiveWords = require('../utils/validator');
 
