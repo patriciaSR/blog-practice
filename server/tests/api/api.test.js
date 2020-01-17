@@ -1,6 +1,6 @@
 const supertest = require('supertest');
 const { MongoClient } = require('mongodb');
-const app = require('../../server');
+const app = require('../../appServer');
 
 const repository = require('../../repository');
 const { mockedPosts, mockedComments, mockedUsers } = require('../fixtures/fixApiVariables');

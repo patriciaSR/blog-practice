@@ -28,7 +28,7 @@ module.exports = {
 
     if (!users.length) {
       await Promise.all(
-        defaultUsers.map((user) => this.users.addUser(user))
+        defaultUsers.map((user) => this.users.addUser(user)),
       );
     }
   },

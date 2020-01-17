@@ -2,7 +2,7 @@ const fs = require('fs');
 const https = require('https');
 const MongoClient = require('mongodb').MongoClient;
 
-const app = require('./server.js');
+const app = require('./appServer.js');
 
 // repository DB
 const repository = require('./repository');
