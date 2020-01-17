@@ -58,9 +58,8 @@ You can import `Blog-Admin.postman_environment.json` and `Blog-Publisher.postman
 ## Project's Structure:
 ```
 ├── /server (server folder)
-│    ├── app.js (app module, express server)
 │    │
-│    ├── /controllers (router APIs REST)
+│    ├── /controllers (router REST API)
 │    │   ├── authRouter.js (authentication login API methods)
 │    │   ├── commentsRouter.js (comments collection API methods)
 │    │   ├── offensiveRouter.js (offensive-words collection API methods)
@@ -73,7 +72,7 @@ You can import `Blog-Admin.postman_environment.json` and `Blog-Publisher.postman
 │    ├── /postman (postman config folder)
 │    │   ├── Blog-Admin.postman_environment.json (AdminUser Environment config file to import in Postman)
 │    │   ├── Blog-Publisher.postman_environment.json (PublisherUser Environment config file to import in Postman)
-│    │   └── postman.json (REST APIs information to import in Postman application)
+│    │   └── postman.json (REST API information to import in Postman application)
 │    │
 │    ├── /repository (database connection and interaction)
 │    │   ├── Comments.js (comments collection interaction methods)
@@ -83,6 +82,11 @@ You can import `Blog-Admin.postman_environment.json` and `Blog-Publisher.postman
 │    │   └── Users.js (users collection interaction methods)
 │    │
 │    ├── /tests (testing js files with jest)
+│    │   ├── /api
+│    │   │   └── api.test.js (REST API testing with Supertest)
+│    │   ├── /fixtures (mock variables for testing)
+│    │   │   ├── fixApiVariables(mock variables for REST API testing)
+│    │   │   └── fixOnlyUsersVariables.js (mock variables for OnlyUsers methods testing)
 │    │   ├── onlyUsers.test.js
 │    │   └── validator.test.js
 │    │
@@ -95,6 +99,8 @@ You can import `Blog-Admin.postman_environment.json` and `Blog-Publisher.postman
 │    │   └── validator.js (check offensiveWords in a comment text)
 │    │
 │    ├── .eslintrc.json (eslint configuration)
+│    ├── app.js (app module, express server connection)
+│    ├── appServer.js (app module, express server configuration)
 │    ├── package.json (dependencies and project information)
 │    ├── server.cert(openssl no-safe self-signed SSL certificate)
 │    └── server.key(openssl no-safe self-signed SSL key)
@@ -117,37 +123,104 @@ Optionally, the practice can be delivered with the persistence of offensive word
 * **Comment with offensive words**: if the comment has an offensive word, the corresponding error must be generated.
 * **Comment without offensive words**: if the comment does not have offensive words, an OK validation must be obtained.
 
-## API testing
+## REST API testing
 This app use [SuperTest](https://github.com/visionmedia/supertest) REST API testing with [Jest](https://jestjs.io/en/).
 
+## User interface
+The user interface is created with **[Vue](https://vuejs.org/)** and has the following guidelines:
+- [Vuetify](https://vuetifyjs.com/) implementation
+- The **main view** has a list with the title of each post.
+- Each title is a link that will navigate to a new page with the **post content**
+- The post's page shows its **content and comments**
+- According to type of user, the interface will show the **vue components that allow to user performs all the operations that are available in the REST API** (create posts, create comments, delete comments...)
+- It allows the **new users signup**.
 
-## Install Depencencies
-Install **Node.js**:
+
+## Install Dependencies
+You can install all dependencies in `package.json` file on one step using:
+
+`npm install`
+
+Or you can install install separately one by one:
+
+Install **[Node.js](https://nodejs.org/es/)**:
 
 `npm install -g node`
 
-Install **Express.js** for building REST APIs:
+Install **[Express.js](https://expressjs.com/)** for building REST APIs:
 
 `npm install express`
 
-Install **MongoDB** for buildig Non-Relational(NoSQL) Database:
+Install **[MongoDB](https://www.mongodb.com/)** for buildig Non-Relational(NoSQL) Database:
 
 `npm install mongodb`
 
-Install **CORS** node.js package for providing a Connect/Express middleware that can be used to enable CORS:
+Install **[CORS](https://www.npmjs.com/package/cors)** node.js package for providing a Connect/Express middleware that can be used to enable CORS:
 
 `npm install cors`
 
+Install **[bcrypt](https://www.npmjs.com/package/bcrypt)** for passwords hash encryption:
+
+`npm install bcrypt`
+
+Install **[fs](https://nodejs.org/api/fs.html)** for file system operation in node:
+
+`npm install fs`
+
+Install **[https](https://www.npmjs.com/package/https)** for run node server in a safe port with a SSL certificate:
+
+`npm install https`
+
+Install **[passport](http://www.passportjs.org/)** for authentication config:
+
+`npm install passport`
+
+Install **[passport-http](https://www.npmjs.com/package/passport-http)** for HTTP requests authentication config:
+
+`npm install passport-http`
+
+Install **[passport-jwt](http://www.passportjs.org/packages/passport-jwt/)** for JSON Web Token authentication config:
+
+`npm install passport-jwt`
+
+Install **[jsonwebtoken](https://jwt.io/)** for JSON Web Token implementation:
+
+`npm install jsonwebtoken`
+
+
 ## Install DevDepencencies
-Install **Jest** for testing:
+Install **[Jest](https://jestjs.io/en/)** for testing:
 
 `npm install --save-dev jest`
 
-Install **SuperTest** for REST API Testing:
+and set this config on scripts key on `package.json` file to run tests:
+
+`
+"scripts": {
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+        "test:coverage": "jest --collect-coverage"
+    }
+`
+
+Install **[jest-mongodb](https://jestjs.io/docs/en/mongodb)** for mocking db connection:
+
+`npm install --save-dev @shelf/jest-mongodb`
+
+and set this config on `package.json` file:
+
+`
+"jest": {
+        "preset": "@shelf/jest-mongodb"
+    }
+`
+
+Install **[SuperTest](https://www.npmjs.com/package/supertest)** for REST API Testing:
 
 `npm install --save-dev supertest`
 
-Install **esLint** for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs:
+Install **[esLint](https://eslint.org/docs/user-guide/getting-started)** for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs:
 
 `npm install --save-dev eslint`
 
