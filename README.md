@@ -238,3 +238,11 @@ Open **MongoDB Compass app** to interact with app database and collections. Conn
 ## Run testing
 Use `npm run test` to see tests running.
 
+Use `npm run test:watch` to see changes code in tests running.
+
+Use `npm run test:coverage` to see test coverage.
+
+Use `npm run test:debug` to see break points debuuger in your code when you run tests.
+
+
+
