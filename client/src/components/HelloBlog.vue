@@ -24,12 +24,11 @@
           </div>
         </div>
 
-        <div>
-        </div>
+        <div></div>
 
         <div class="py-5">
           <p class="subheading font-weight-regular">You can read posts and comments freely.</p>
-          <v-btn depressed color="primary" href="/posts">View posts</v-btn>
+          <v-btn depressed color="primary" @click="goToBooks()">View posts</v-btn>
         </div>
       </v-flex>
     </v-layout>
@@ -38,7 +37,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'HelloBlog',
 
   data: () => ({
     Links: [
@@ -55,7 +54,12 @@ export default {
         href: '/posts'
       }
     ]
-  })
+  }),
+  methods: {
+    goToBooks() {
+      this.$router.push('/posts')
+    }
+  }
 }
 </script>
 

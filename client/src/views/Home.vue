@@ -1,17 +1,37 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="Welcome Patricia" />
-  </div>
+  <HelloBlog />
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import HelloBlog from '../components/HelloBlog'
 
 export default {
-  name: 'home',
+  name: 'Home',
+  data: () => ({
+    Links: [
+      {
+        text: 'Sign up',
+        href: '/signup'
+      },
+      {
+        text: 'Login',
+        href: '/login'
+      },
+      {
+        text: 'View Posts',
+        href: '/posts'
+      }
+    ]
+  }),
   components: {
-    HelloWorld
+    HelloBlog
   }
 }
 </script>
+
+<style scoped>
+.indigo {
+  color: #b2ebf2;
+  height: 100%;
+}
+</style>
