@@ -156,6 +156,8 @@ describe('posts controller', () => {
     expect(response.body._id).toBe(mockPostID);
     expect(response.body.content).toBe(mockedPosts[0].content);
     expect(response.body.userInfo).toEqual(mockedUsers[0]);
+    expect(response.body.userInfo.passwordHash).toBeFalsy();
+    expect(response.body.userInfo.email).toBeFalsy();
     expect(response.body.comments).toEqual(mockedComments);
   });
 
