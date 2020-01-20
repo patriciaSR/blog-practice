@@ -1,45 +1,39 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
+  <v-app class="app">
+    <v-toolbar app color="#1A237E" dark class="d-flex align-center">
       <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+        <a class="app-home__link" href="/">
+          <v-img
+            alt="Blog Logo"
+            class="blog__logo mr-2"
+            contain
+            src="./assets/blog-logo-transparent.png"
+            width="100"
+          />
+        </a>
       </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+    </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <HelloWorld />
     </v-content>
+
+    <v-footer dark padless>
+      <v-card flat tile class="indigo darken-4 white--text text-center" width="100%">
+        <v-card-text>
+          <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
+            <v-icon size="24px">{{ icon }}</v-icon>
+          </v-btn>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-text class="white--text">
+          {{ new Date().getFullYear() }} —
+          <a href="https://github.com/patriciaSR" class="github__link secondary--text" ><strong>@patriciaSR</strong></a>
+        </v-card-text>
+      </v-card>
+    </v-footer>
   </v-app>
 </template>
 
@@ -54,7 +48,25 @@ export default {
   },
 
   data: () => ({
-    //
+    icons: [
+      'fab fa-facebook',
+      'fab fa-twitter',
+      'fab fa-google-plus',
+      'fab fa-linkedin',
+      'fab fa-instagram'
+    ]
   })
 }
 </script>
+
+<style>
+#app {
+  height: 100vh;
+  background-color: #5C6BC0;
+  color: #E8EAF6;
+}
+.github__link {
+  text-decoration: none;
+  color: white;
+}
+</style>
