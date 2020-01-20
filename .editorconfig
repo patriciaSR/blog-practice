@@ -1,0 +1,7 @@
+[*]
+charset = utf-8
+
+# Indentation override for all JS
+[*]
+indent_style = space
+indent_size = 2
