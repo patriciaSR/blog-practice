@@ -52,6 +52,8 @@ describe('auth controller', () => {
 
     expect(response.body.message).toBe('Auth Passed');
     expect(typeof response.body.token).toBe('string');
+    expect(response.body.userData.username).toBe('dumbo555');
+    expect(response.body.userData.passwordHash).toBeFalsy();
   });
 });
 
