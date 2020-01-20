@@ -30,4 +30,9 @@ module.exports = class Posts {
     // Delete resource by _id
     return this.collection.deleteOne({ _id: new ObjectId(id) });
   }
+
+  deleteAllPost() {
+    // Delete resource by _id
+    return this.collection.deleteMany();
+  }
 };

@@ -56,15 +56,21 @@
 							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{DOMAIN}}/posts/5e1ccaf6ddbb7c3083a43c8e",
+							"raw": "{{DOMAIN}}/posts/{{POST_ID}}",
 							"host": [
 								"{{DOMAIN}}"
 							],
 							"path": [
 								"posts",
-								"5e1ccaf6ddbb7c3083a43c8e"
+								"{{POST_ID}}"
 							]
 						}
 					},
@@ -72,6 +78,18 @@
 				},
 				{
 					"name": "post newPost POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7630d6c1-e080-4a8f-adc4-b8f4517c0987",
+								"exec": [
+									"pm.environment.set(\"POST_ID\", pm.response.json()._id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -94,7 +112,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"newpostauthhhhhComents\",\n    \"content\": \"loremmmmmmmmm\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\"\n}",
+							"raw": "{\n\t\"title\": \"newpost\",\n    \"content\": \"loremmmmmmmmm\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -145,13 +163,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{DOMAIN}}/posts/5e1ccaf6ddbb7c3083a43c8e",
+							"raw": "{{DOMAIN}}/posts/{{POST_ID}}",
 							"host": [
 								"{{DOMAIN}}"
 							],
 							"path": [
 								"posts",
-								"5e1ccaf6ddbb7c3083a43c8e"
+								"{{POST_ID}}"
 							]
 						}
 					},
@@ -171,15 +189,22 @@
 							]
 						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/plain",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
-							"raw": "{{DOMAIN}}/posts/5e1ccaf6ddbb7c3083a43c8e",
+							"raw": "{{DOMAIN}}/posts/{{POST_ID}}",
 							"host": [
 								"{{DOMAIN}}"
 							],
 							"path": [
 								"posts",
-								"5e1ccaf6ddbb7c3083a43c8e"
+								"{{POST_ID}}"
 							]
 						}
 					},
@@ -194,6 +219,18 @@
 			"item": [
 				{
 					"name": "post a comment POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fa4232c8-a369-44f7-8a2b-1a2605ef3d1f",
+								"exec": [
+									"pm.environment.set(\"COMMENT_ID\", pm.response.json()._id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -216,7 +253,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"content\": \"hola me llamo plutox4!!!\"\n}",
+							"raw": "{\n\t\"content\": \"hola me llamo pluto!!!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -224,13 +261,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{DOMAIN}}/posts/5e1ccaf6ddbb7c3083a43c8e/comments",
+							"raw": "{{DOMAIN}}/posts/{{POST_ID}}/comments",
 							"host": [
 								"{{DOMAIN}}"
 							],
 							"path": [
 								"posts",
-								"5e1ccaf6ddbb7c3083a43c8e",
+								"{{POST_ID}}",
 								"comments"
 							]
 						}
@@ -269,15 +306,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{DOMAIN}}/posts/5e1ccaf6ddbb7c3083a43c8e/comments/5e1ccc57ddbb7c3083a43c92",
+							"raw": "{{DOMAIN}}/posts/{{POST_ID}}/comments/{{COMMENT_ID}}",
 							"host": [
 								"{{DOMAIN}}"
 							],
 							"path": [
 								"posts",
-								"5e1ccaf6ddbb7c3083a43c8e",
+								"{{POST_ID}}",
 								"comments",
-								"5e1ccc57ddbb7c3083a43c92"
+								"{{COMMENT_ID}}"
 							]
 						}
 					},
@@ -299,15 +336,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{DOMAIN}}/posts/5e1ccaf6ddbb7c3083a43c8e/comments/5e1ccc57ddbb7c3083a43c92",
+							"raw": "{{DOMAIN}}/posts/{{POST_ID}}/comments/{{COMMENT_ID}}",
 							"host": [
 								"{{DOMAIN}}"
 							],
 							"path": [
 								"posts",
-								"5e1ccaf6ddbb7c3083a43c8e",
+								"{{POST_ID}}",
 								"comments",
-								"5e1ccc57ddbb7c3083a43c92"
+								"{{COMMENT_ID}}"
 							]
 						}
 					},
@@ -371,6 +408,18 @@
 				},
 				{
 					"name": "post an offensive word POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "89fb4e4a-63e7-4f1b-8d57-b9a82200b9ec",
+								"exec": [
+									"pm.environment.set(\"WORD_NAME\", pm.response.json().word)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -444,13 +493,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{DOMAIN}}/offensive-words/tonto",
+							"raw": "{{DOMAIN}}/offensive-words/{{WORD_NAME}}",
 							"host": [
 								"{{DOMAIN}}"
 							],
 							"path": [
 								"offensive-words",
-								"tonto"
+								"{{WORD_NAME}}"
 							]
 						}
 					},
@@ -472,13 +521,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{DOMAIN}}/offensive-words/tolai",
+							"raw": "{{DOMAIN}}/offensive-words/{{WORD_NAME}}",
 							"host": [
 								"{{DOMAIN}}"
 							],
 							"path": [
 								"offensive-words",
-								"tolai"
+								"{{WORD_NAME}}"
 							]
 						}
 					},
@@ -554,6 +603,18 @@
 				},
 				{
 					"name": "signup newUser POST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f30e1fb4-5934-4de9-bead-7c244b74a528",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [

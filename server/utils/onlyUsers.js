@@ -12,7 +12,12 @@ function getOnlyUsersIDs(post, comments) {
 }
 
 function getUserPostInfo(userID, onlyUsersInfo) {
-  const userPostInfo = onlyUsersInfo.find((user) => user._id === userID);
+  const userPostInfo = onlyUsersInfo.find((user) => user._id.toString() === userID.toString());
+
+  if (userPostInfo) {
+    delete userPostInfo.passwordHash;
+    delete userPostInfo.email;
+  }
 
   return userPostInfo;
 }

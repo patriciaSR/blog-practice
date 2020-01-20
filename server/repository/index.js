@@ -1,24 +1,14 @@
-// Módulo que contendrá el código de acceso a la base de datos.
-const MongoClient = require('mongodb').MongoClient;
-
-const Posts = require('./posts');
-const Comments = require('./comments');
-const OffensiveWords = require('./offensiveWords');
-const Users = require('./users');
+const Posts = require('./Posts');
+const Comments = require('./Comments');
+const OffensiveWords = require('./OffensiveWords');
+const Users = require('./Users');
 
 
 const defaultWords = require('../utils/data/defaultWords');
 const defaultUsers = require('../utils/data/defaultUsers');
 
-const url = 'mongodb://localhost:27017/blogDB';
-
 module.exports = {
-  async connect() {
-    const connection = await MongoClient.connect(url, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    });
-
+  async connect(connection) {
     console.log("Connected to Mongo");
 
     this.posts = new Posts(connection);
@@ -37,9 +27,9 @@ module.exports = {
     const users = await this.users.getAllUsers();
 
     if (!users.length) {
-      defaultUsers.forEach(async (user) => {
-        this.users.addUser(user);
-      });
+      await Promise.all(
+        defaultUsers.map((user) => this.users.addUser(user)),
+      );
     }
   },
 };

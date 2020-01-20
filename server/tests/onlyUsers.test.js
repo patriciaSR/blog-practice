@@ -1,43 +1,8 @@
 const { getOnlyUsersIDs, getUserPostInfo, getUserCommentsInfo } = require('../utils/onlyUsers');
-
-const mockComments = [{
-  _id: '2',
-  userID: '1a',
-},
-{
-  _id: '2',
-  userID: '1a',
-},
-{
-  _id: '2',
-  userID: '2a',
-},
-];
-
-const mockUsersInfo = [{
-  _id: '1a',
-  firstname: 'lola',
-  username: 'lola22',
-},
-{
-  _id: '2a',
-  firstname: 'paco',
-  username: 'paco22',
-},
-{
-  _id: '3a',
-  firstname: 'marta',
-  username: 'marta22',
-},
-];
+const { mockPost, mockRepeatUserIDPost, mockComments, mockUsersInfo } = require('./fixtures/fixOnlyUserVariables');
 
 describe('getOnlyUserIDs method test', () => {
-  const mockPost = {
-    _id: '3',
-    userID: '3a',
-  };
-
-  test('get onlyUserIDs into an Array', () => {
+  test('return onlyUserIDs from post and comments into an Array', () => {
     const expectedResult = ['3a', '1a', '2a'];
 
     const result = getOnlyUsersIDs(mockPost, mockComments);
@@ -46,11 +11,7 @@ describe('getOnlyUserIDs method test', () => {
     expect(result).toEqual(expectedResult);
   });
 
-  test('get onlyUserIDs into an Array without repeated ids', () => {
-    const mockRepeatUserIDPost = {
-      _id: '3',
-      userID: '1a',
-    };
+  test('return onlyUserIDs from post and comments into an Array without repeated userIDs', () => {
     const expectedResult = ['1a', '2a'];
 
     const result = getOnlyUsersIDs(mockRepeatUserIDPost, mockComments);
@@ -64,12 +25,8 @@ describe('getOnlyUserIDs method test', () => {
 describe('getUserPostInfo method test', () => {
   const mockUserID = '3a';
 
-  test('get userPostInfo from userPostID and onlyUsersInfo Array', () => {
-    const expectedResult = {
-      _id: '3a',
-      firstname: 'marta',
-      username: 'marta22',
-    };
+  test('return an object with userPostInfo from userPostID and onlyUsersInfo Array', () => {
+    const expectedResult = mockUsersInfo[2];
 
     const result = getUserPostInfo(mockUserID, mockUsersInfo);
 
@@ -87,10 +44,11 @@ describe('getUserPostInfo method test', () => {
 
 
 describe('getUserCommentsInfo method test', () => {
-  test('get getUserCommentsInfo from userPostID and onlyUsersInfo Array', () => {
+  test('return an array with comments and their userInfo from userID and onlyUsersInfo Array', () => {
     const expectedResult = [{
       _id: '2',
       userID: '1a',
+      content: 'hola',
       userInfo: {
         userID: '1a',
         username: 'lola22',
@@ -99,6 +57,7 @@ describe('getUserCommentsInfo method test', () => {
     {
       _id: '2',
       userID: '1a',
+      content: 'hola',
       userInfo: {
         userID: '1a',
         username: 'lola22',
@@ -107,6 +66,7 @@ describe('getUserCommentsInfo method test', () => {
     {
       _id: '2',
       userID: '2a',
+      content: 'hola',
       userInfo: {
         userID: '2a',
         username: 'paco22',
