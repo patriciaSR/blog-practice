@@ -2,6 +2,7 @@
   <v-app class="app">
     <v-toolbar app color="#1A237E" dark class="d-flex align-center">
       <div class="d-flex align-center">
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
         <a class="app-home__link" href="/">
           <v-img
             alt="Blog Logo"
@@ -21,8 +22,8 @@
     <v-footer dark padless>
       <v-card flat tile class="indigo darken-4 white--text text-center" width="100%">
         <v-card-text>
-          <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
-            <v-icon size="24px">{{ icon }}</v-icon>
+          <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon  :href="icon.url" target="_blanck">
+            <v-icon size="24px">{{ icon.class }}</v-icon>
           </v-btn>
         </v-card-text>
 
@@ -49,11 +50,22 @@ export default {
 
   data: () => ({
     icons: [
-      'fab fa-facebook',
-      'fab fa-twitter',
-      'fab fa-google-plus',
-      'fab fa-linkedin',
-      'fab fa-instagram'
+      {
+        class: 'fab fa-facebook',
+        url: 'https://www.facebook.com/'
+      },
+      {
+        class: 'fab fa-twitter',
+        url: 'https://twitter.com/'
+      },
+      {
+        class: 'fab fa-linkedin',
+        url: 'https://www.linkedin.com/'
+      },
+      {
+        class: 'fab fa-instagram',
+        url: 'https://www.instagram.com/'
+      }
     ]
   })
 }
@@ -67,6 +79,8 @@ export default {
 }
 .github__link {
   text-decoration: none;
-  color: white;
+}
+strong:hover {
+  color: #5C6BC0;
 }
 </style>
