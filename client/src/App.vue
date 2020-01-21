@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app">
+  <v-app app class="app">
     <Header />
 
     <v-content>

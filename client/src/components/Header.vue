@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar app color="#1A237E" dark>
+  <v-app-bar app color="#1A237E" dark>
     <div class="header__container d-flex align-center justify-space-between flex-grow-1">
       <a class="app-home__link" href="/">
         <v-img
@@ -12,7 +12,7 @@
       </a>
       <v-app-bar-nav-icon class="align-self-end"></v-app-bar-nav-icon>
     </div>
-  </v-toolbar>
+  </v-app-bar>
 </template>
 
 <script>

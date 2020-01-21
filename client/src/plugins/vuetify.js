@@ -10,7 +10,7 @@ const vuetify = new Vuetify({
         primary: '#1A237E',
         secondary: '#E8EAF6',
         accent: '#8C9EFF',
-        error: 'red'
+        error: '#D50000'
       }
     }
   }
