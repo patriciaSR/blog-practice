@@ -24,7 +24,7 @@
         </v-card-actions>
 
         <v-card-actions>
-          <v-btn color="orange" text @click="toggle()">Comments</v-btn>
+          <v-btn color="orange" text @click="toggle()"> Show Comments ({{postData.comments.length}})</v-btn>
         </v-card-actions>
       </v-card>
 </template>
@@ -35,12 +35,14 @@ export default {
   name: 'PostCard',
   props: {
     postData: undefined,
-    isClickedComments: undefined,
+    isCommentsOpen: undefined,
     token: undefined
   },
   methods: {
     toggle() {
-      return (this.isClickedComments = !this.isClickedComments)
+      const newValue = !this.isCommentsOpen
+
+      this.$emit('comment-clicked', newValue)
     }
   }
 }

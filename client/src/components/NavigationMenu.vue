@@ -7,7 +7,7 @@
     :src="bg"
     absolute
     dark
-    :class="{open: clickMenu, hidden: !clickMenu}"
+    :class="{open: isOpen, hidden: !isOpen}"
   >
     <v-list dense nav class="py-0">
       <v-list-item two-line :class="miniVariant && 'px-0 my-0'">
@@ -45,7 +45,7 @@
 export default {
   name: 'NavigationMenu',
   props: {
-    clickMenu: undefined
+    isOpen: undefined
   },
   data() {
     return {
@@ -59,9 +59,8 @@ export default {
       colors: ['primary', 'blue', 'success', 'red', 'teal'],
       right: true,
       miniVariant: true,
-      expandOnHover: true,
+      expandOnHover: false,
       background: false,
-      nohover: true
     }
   },
   computed: {
@@ -73,29 +72,18 @@ export default {
   },
   methods: {
     close() {
-      return (this.clickMenu = false)
+
+      this.$emit('toggle-menu', false)
     }
   }
 }
 </script>
 
 <style scoped>
-@media all and (max-width: 720px) {
   aside.hidden {
     display: none;
   }
   aside.open {
     display: block;
-    transform: none !important;
   }
-}
-@media all and (min-width: 720px) {
-  aside.hidden {
-    display: block;
-  }
-  aside.open {
-    display: block;
-    transform: none !important;
-  }
-}
 </style>

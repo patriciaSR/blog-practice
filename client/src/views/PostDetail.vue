@@ -2,9 +2,12 @@
   <v-container>
     <v-layout text-left class="d-flex flex-column mx-5">
 
-      <PostCard :postData="postData" :isClickedComments="isClickedComments"/>
+      <PostCard
+        :postData="postData"
+        :isCommentsOpen="isCommentsOpen"
+        @comment-clicked="toggleComments"/>
 
-      <v-card max-width="800" :class="{ hidden: isClickedComments }" class="mt-5">
+      <v-card max-width="800" :class="{ hidden: isCommentsOpen }" class="mt-5">
         <v-card-title>{{postData.comments.length}} COMMENTS</v-card-title>
 
         <div v-if="postData.comments.length !== 0">
@@ -40,7 +43,7 @@ export default {
   name: 'PostDetail',
   data: () => ({
     postData: {},
-    isClickedComments: true,
+    isCommentsOpen: true,
     token: undefined
   }),
   components: {
@@ -49,6 +52,11 @@ export default {
   async mounted() {
     let id = this.$route.params.id
     this.postData = await loadPostDetail(id)
+  },
+  methods: {
+    toggleComments(isCommentsOpen) {
+      this.isCommentsOpen = isCommentsOpen
+    }
   }
 }
 </script>

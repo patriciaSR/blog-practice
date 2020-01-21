@@ -12,9 +12,9 @@
           />
         </a>
       </div>
-      <v-app-bar-nav-icon @click="toggle()"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="toggleMenu(true)"></v-app-bar-nav-icon>
     </v-app-bar>
-    <NavigationMenu :clickMenu="this.clickMenu"/>
+    <NavigationMenu :isOpen="this.isOpen" @toggle-menu="toggleMenu"/>
   </div>
 </template>
 
@@ -25,14 +25,14 @@ export default {
   name: 'Header',
 
   data: () => ({
-    clickMenu: false
+    isOpen: false
   }),
   components: {
     NavigationMenu
   },
   methods: {
-    toggle() {
-      return this.clickMenu = !this.clickMenu
+    toggleMenu(isOpen) {
+      return this.isOpen = isOpen
     }
   }
 }
