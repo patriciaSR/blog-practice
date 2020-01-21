@@ -12,8 +12,9 @@
           />
         </a>
       </div>
+      <v-app-bar-nav-icon @click="toggle()"></v-app-bar-nav-icon>
     </v-app-bar>
-    <NavigationMenu />
+    <NavigationMenu :clickMenu="this.clickMenu"/>
   </div>
 </template>
 
@@ -23,9 +24,16 @@ import NavigationMenu from '../components/NavigationMenu'
 export default {
   name: 'Header',
 
-  data: () => ({}),
+  data: () => ({
+    clickMenu: false
+  }),
   components: {
     NavigationMenu
+  },
+  methods: {
+    toggle() {
+      return this.clickMenu = !this.clickMenu
+    }
   }
 }
 </script>
