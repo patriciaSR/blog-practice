@@ -12,7 +12,6 @@
 
 <script>
 import Header from './components/Header'
-// import Home from './views/Home'
 import Footer from './components/Footer'
 
 export default {
@@ -20,7 +19,6 @@ export default {
 
   components: {
     Header,
-    // Home,
     Footer
   },
 
@@ -32,7 +30,7 @@ export default {
 
 <style>
   #app {
-    height: 100vh;
+    min-height: 100vh;
     background-color: #5c6bc0;
     color: #e8eaf6;
   }
