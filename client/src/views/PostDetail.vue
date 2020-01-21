@@ -20,6 +20,11 @@
         </div>
         <v-card-text class="text--primary">{{postData.content}}</v-card-text>
 
+        <v-card-actions v-if="token">
+          <v-btn color="orange" text>Update</v-btn>
+          <v-btn color="orange" text>Delete</v-btn>
+        </v-card-actions>
+
         <v-card-actions>
           <v-btn color="orange" text @click="toggle()">Comments</v-btn>
         </v-card-actions>
@@ -35,13 +40,13 @@
                 <img src="https://cdn.vuetifyjs.com/images/john.jpg" :alt="comment.username" />
               </v-avatar>
               <div class="d-flex-column justify-center py-3">
-                <v-card-subtitle class="py-0 mb-1 primary--text">@{{comment.username}}</v-card-subtitle>
+                <v-card-subtitle class="py-0 mb-1 primary--text">@{{comment.userInfo.username}}</v-card-subtitle>
                 <v-card-subtitle class="py-0 caption">date: {{comment.date}}</v-card-subtitle>
               </div>
             </div>
             <v-card-text class="text--primary">{{comment.content}}</v-card-text>
 
-            <v-card-actions>
+            <v-card-actions v-if="token">
               <v-btn color="orange" text>Update</v-btn>
               <v-btn color="orange" text>Delete</v-btn>
             </v-card-actions>
@@ -59,7 +64,8 @@ export default {
   name: 'PostDetail',
   data: () => ({
     postData: {},
-    isClickedComments: true
+    isClickedComments: true,
+    token: undefined
   }),
   async mounted() {
     let id = this.$route.params.id
