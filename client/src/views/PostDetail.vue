@@ -1,34 +1,8 @@
 <template>
   <v-container>
     <v-layout text-left class="d-flex flex-column mx-5">
-      <v-card max-width="800">
-        <v-img
-          class="white--text align-end"
-          height="200px"
-          src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-        >
-          <v-card-title>{{postData.title}}</v-card-title>
-        </v-img>
-        <div class="d-flex">
-          <v-avatar size="70" class="ma-2">
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-          </v-avatar>
-          <div class="d-flex-column justify-center py-3">
-            <v-card-subtitle class="py-0 mb-1 primary--text">@{{postData.userInfo.username}}</v-card-subtitle>
-            <v-card-subtitle class="py-0 caption">date: {{postData.date}}</v-card-subtitle>
-          </div>
-        </div>
-        <v-card-text class="text--primary">{{postData.content}}</v-card-text>
 
-        <v-card-actions v-if="token">
-          <v-btn color="orange" text>Update</v-btn>
-          <v-btn color="orange" text>Delete</v-btn>
-        </v-card-actions>
-
-        <v-card-actions>
-          <v-btn color="orange" text @click="toggle()">Comments</v-btn>
-        </v-card-actions>
-      </v-card>
+      <PostCard :postData="postData" :isClickedComments="isClickedComments"/>
 
       <v-card max-width="800" :class="{ hidden: isClickedComments }" class="mt-5">
         <v-card-title>{{postData.comments.length}} COMMENTS</v-card-title>
@@ -59,6 +33,8 @@
 
 <script>
 import loadPostDetail from '../resources/loadPostDetail'
+import PostCard from '../components/PostCard'
+
 
 export default {
   name: 'PostDetail',
@@ -67,14 +43,12 @@ export default {
     isClickedComments: true,
     token: undefined
   }),
+  components: {
+    PostCard
+  },
   async mounted() {
     let id = this.$route.params.id
     this.postData = await loadPostDetail(id)
-  },
-  methods: {
-    toggle() {
-      return (this.isClickedComments = !this.isClickedComments)
-    }
   }
 }
 </script>
