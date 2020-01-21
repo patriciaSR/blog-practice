@@ -85,5 +85,6 @@ export default {
   }
   aside.open {
     display: block;
+    transform: none !important;
   }
 </style>
