@@ -11,9 +11,8 @@
   >
     <v-list dense nav class="py-0">
       <v-list-item two-line :class="miniVariant && 'px-0 my-0'">
-        <v-list-item-avatar>
-          <img v-if="userStore.token && userStore.data.image" :src="userStore.data.image" />
-          <img v-else src="../assets/avatar-pengin.png" />
+        <v-list-item-avatar v-if="userStore.token">
+          <img :src="userStore.data.image || defaultAvatar" />
         </v-list-item-avatar>
 
         <v-list-item-content class="d-flex" v-if="userStore.token">
@@ -61,6 +60,7 @@
 
 <script>
 import userStore from '../stores/user'
+import defaultAvatar from '../assets/avatar-pengin.png'
 
 export default {
   name: 'NavigationMenu',
@@ -70,6 +70,7 @@ export default {
   data() {
     return {
       userStore: userStore.state,
+      defaultAvatar: defaultAvatar,
       drawer: true,
       items: [
         { title: 'Home', icon: 'mdi-home-city', path: '/' },
