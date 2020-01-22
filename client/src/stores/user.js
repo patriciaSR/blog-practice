@@ -13,5 +13,7 @@ export default {
       this.state.token = result.token
       this.state.data = result.userData
     }
+
+    return result
   }
 }
