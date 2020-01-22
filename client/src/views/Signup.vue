@@ -2,9 +2,9 @@
   <v-container mx-auto py-12 fill-height class="signup__box">
     <v-layout text-center class="flex-column">
       <v-card color="#C5CAE9" class="px-6 py-10 mb-4">
-        <v-text-field v-model="newUser.firstName" :rules="[rules.required]" label="First name *"></v-text-field>
+        <v-text-field v-model="newUser.firstname" :rules="[rules.required]" label="First name *"></v-text-field>
 
-        <v-text-field v-model="newUser.lastName" label="Last Name"></v-text-field>
+        <v-text-field v-model="newUser.lastname" label="Last Name"></v-text-field>
 
         <v-text-field
           v-model="newUser.username"
@@ -49,8 +49,8 @@ export default {
   data() {
     return {
       newUser: {
-        firstName: '',
-        lastName: '',
+        firstname: '',
+        lastname: '',
         username: '',
         email: '',
         image: '',
@@ -78,8 +78,8 @@ export default {
       let resultSignUp
       try {
         resultSignUp = await registNewUser(this.newUser)
-      } catch {
-        alert('algo fue mal...')
+      } catch (e) {
+        alert(e.response.data)
       }
 
       if (resultSignUp) {

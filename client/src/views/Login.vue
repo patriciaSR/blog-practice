@@ -3,9 +3,9 @@
     <v-layout text-center class="flex-column">
       <v-card color="#C5CAE9" class="px-6 py-10 mb-4">
         <v-text-field
-          v-model="usernameORemail"
-          :rules="[rules.required, rules.min, rules.email]"
-          label="E-mail o username"
+          v-model="username"
+          :rules="[rules.required, rules.min]"
+          label="Username"
         ></v-text-field>
 
         <v-text-field
@@ -40,39 +40,34 @@ export default {
   name: 'Login',
   data() {
     return {
-      usernameORemail: '',
+      username: '',
       password: '',
       rules: {
         required: value => !!value || 'Required.',
         min: v => v.length >= 6 || 'Min 6 characters',
-        email: value => {
-          const patternEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          const patternUsername = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/
-
-          return (
-            patternEmail.test(value) ||
-            patternUsername.test(value) ||
-            'Invalid username or e-mail.'
-          )
-        }
+        max: v => v.length <= 10 || 'Max 10 characters'
       },
       show2: false
     }
   },
   methods: {
     async login() {
-      let resultAuth
-      try {
-        resultAuth = await userStore.authenticate(
-          this.usernameORemail,
-          this.password
-        )
-      } catch {
-        alert('Invalid username or password')
-      }
+      if (!this.username || !this.password) {
+        alert('Introduce your username and password')
+      } else {
+        let resultAuth
+        try {
+          resultAuth = await userStore.authenticate(
+            this.username,
+            this.password
+          )
+        } catch {
+          alert('Unvalid username or password')
+        }
 
-      if (resultAuth) {
-        return this.$router.go(-1)
+        if (resultAuth) {
+          return this.$router.push('/')
+        }
       }
     }
   }
@@ -80,10 +75,10 @@ export default {
 </script>
 
 <style scoped>
-  .signup__link {
-    text-decoration: none;
-  }
-  .login__box {
-    max-width: 400px;
-  }
+.signup__link {
+  text-decoration: none;
+}
+.login__box {
+  max-width: 400px;
+}
 </style>
