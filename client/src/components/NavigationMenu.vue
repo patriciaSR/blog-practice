@@ -38,13 +38,22 @@
           </v-list-item-content>
         </v-list-item>
       </router-link>
+      <v-list-item link @click="logout()">
+          <v-list-item-icon>
+            <v-icon>fas fa-sign-out-alt</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content class="white--text">
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </div>
 
       <div v-else>
         <router-link :to="'/login'">
         <v-list-item link>
           <v-list-item-icon>
-            <v-icon>mdi-home-city</v-icon>
+            <v-icon>fas fa-sign-in-alt</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content class="white--text">
@@ -94,7 +103,11 @@ export default {
   },
   methods: {
     close() {
-      this.$emit('toggle-menu', false)
+      this.$emit('toggle-menu', false);
+    },
+    logout(){
+      localStorage.clear();
+      return this.$router.go();
     }
   }
 }
