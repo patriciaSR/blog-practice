@@ -26,7 +26,7 @@
       <v-container>
         <v-content>
           ¿No estas registrado?, Registrate
-          <a @click="signup()" href="#">aquí</a>
+          <router-link :to="'/signup'">aquí</router-link>
         </v-content>
       </v-container>
     </v-layout>
@@ -74,9 +74,6 @@ export default {
       if (resultAuth) {
       return this.$router.go(-2)
       }
-    },
-    signup() {
-      return this.$router.push('/signup')
     }
   }
 }
