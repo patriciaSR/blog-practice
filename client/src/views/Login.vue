@@ -26,7 +26,7 @@
       <v-container>
         <v-content>
           ¿No estas registrado?, Registrate
-          <a @click="signup()">aquí</a>
+          <a @click="signup()" href="#">aquí</a>
         </v-content>
       </v-container>
     </v-layout>

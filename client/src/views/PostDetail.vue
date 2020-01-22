@@ -7,7 +7,9 @@
         @comment-clicked="toggleComments"
       />
 
-      <v-card max-width="800" :class="{ hidden: isCommentsOpen }" class="mt-5">
+      <CommentsCard :comments="postData.comments" :isCommentsOpen="isCommentsOpen"/>
+
+      <!-- <v-card max-width="800" :class="{ hidden: isCommentsOpen }" class="mt-5">
         <v-card-title>{{postData.comments.length}} COMMENTS</v-card-title>
 
         <div v-if="!userStore.token">
@@ -34,15 +36,17 @@
             </v-card-actions>
           </v-card>
         </div>
-      </v-card>
+      </v-card> -->
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import loadPostDetail from '../resources/loadPostDetail'
-import PostCard from '../components/PostCard'
 import userStore from '../stores/user'
+import loadPostDetail from '../resources/loadPostDetail'
+
+import PostCard from '../components/PostCard'
+import CommentsCard from '../components/CommentsCard'
 
 export default {
   name: 'PostDetail',
@@ -55,7 +59,8 @@ export default {
     userStore: userStore.state
   }),
   components: {
-    PostCard
+    PostCard,
+    CommentsCard
   },
   async mounted() {
     let id = this.$route.params.id
@@ -65,9 +70,6 @@ export default {
     toggleComments(isCommentsOpen) {
       this.isCommentsOpen = isCommentsOpen
     },
-    login() {
-      userStore.authenticate('dumbo555', 'dumbo22')
-    }
   }
 }
 </script>
