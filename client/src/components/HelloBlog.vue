@@ -19,8 +19,8 @@
           >For create new posts and comments you need sign in.</p>
 
           <div class="py-5">
-            <v-btn class="mr-4" depressed color="primary" href="/login">Login</v-btn>
-            <v-btn depressed color="primary" href="/signup">Sign up</v-btn>
+            <v-btn class="mr-4" depressed color="primary" @click="goToLogin()">Login</v-btn>
+            <v-btn depressed color="primary" @click="goToSignup()">Sign up</v-btn>
           </div>
         </div>
 
@@ -56,6 +56,12 @@ export default {
     ]
   }),
   methods: {
+    goToLogin() {
+      this.$router.push('/login')
+    },
+    goToSignup() {
+      this.$router.push('/signup')
+    },
     goToBooks() {
       this.$router.push('/posts')
     }

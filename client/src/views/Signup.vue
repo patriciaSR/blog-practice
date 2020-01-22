@@ -1,7 +1,7 @@
 <template>
-  <v-container>
-    <v-layout text-center wrap>
-      <v-container>
+  <v-container mx-auto py-12 fill-height class="signup__box">
+    <v-layout text-center class="flex-column">
+      <v-card color="#C5CAE9" class="px-6 py-10 mb-4">
         <v-text-field v-model="newUser.firstName" :rules="[rules.required]" label="First name *"></v-text-field>
 
         <v-text-field v-model="newUser.lastName" label="Last Name"></v-text-field>
@@ -34,9 +34,9 @@
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
-      </v-container>
+      </v-card>
 
-      <v-btn depressed color="primary" @click="signup()">Sign up</v-btn>
+      <v-btn depressed color="primary" @click="signup()" max-width="100px">Sign up</v-btn>
     </v-layout>
   </v-container>
 </template>
@@ -92,4 +92,7 @@ export default {
 </script>
 
 <style scoped>
+  .signup__box {
+    max-width: 600px;
+  }
 </style>

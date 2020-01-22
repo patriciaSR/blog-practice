@@ -1,7 +1,7 @@
 <template>
-  <v-container>
-    <v-layout text-center wrap>
-      <v-container>
+  <v-container mx-auto py-12 fill-height class="login__box">
+    <v-layout text-center class="flex-column">
+      <v-card color="#C5CAE9" class="px-6 py-10 mb-4">
         <v-text-field
           v-model="usernameORemail"
           :rules="[rules.required, rules.min, rules.email]"
@@ -19,14 +19,14 @@
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
-      </v-container>
+      </v-card>
 
-      <v-btn depressed color="primary" @click="login()">Sign in</v-btn>
+      <v-btn depressed color="primary" @click="login()" max-width="100">Sign in</v-btn>
 
       <v-container>
         <v-content>
-          ¿No estas registrado?, Registrate
-          <router-link :to="'/signup'">aquí</router-link>
+          Don't have an account?, Sign up
+          <router-link :to="'/signup'" class="signup__link">here >></router-link>
         </v-content>
       </v-container>
     </v-layout>
@@ -72,7 +72,7 @@ export default {
       }
 
       if (resultAuth) {
-      return this.$router.go(-2)
+        return this.$router.go(-2)
       }
     }
   }
@@ -80,4 +80,10 @@ export default {
 </script>
 
 <style scoped>
+  .signup__link {
+    text-decoration: none;
+  }
+  .login__box {
+    max-width: 400px;
+  }
 </style>
