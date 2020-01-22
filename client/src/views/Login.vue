@@ -10,12 +10,12 @@
 
         <v-text-field
           :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="[rules.required, rules.min]"
-          :type="show2 ? 'text' : 'password'"
-          name="input-password"
-          label="Password"
-          hint="At least 8 characters"
           v-model="password"
+          :rules="[rules.required, rules.min]"
+          name="input-password"
+          :type="show2 ? 'text' : 'password'"
+          label="Password"
+          hint="At least 6 characters"
           class="input-group--focused"
           @click:append="show2 = !show2"
         ></v-text-field>
@@ -56,11 +56,11 @@ export default {
           )
         }
       },
-      show2: true
+      show2: false
     }
   },
   methods: {
-    async login(usernameORemail, password) {
+    async login() {
       let resultAuth
       try {
         resultAuth = await userStore.authenticate(
