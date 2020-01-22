@@ -3,7 +3,7 @@
     <v-layout text-center wrap>
       <v-container>
         <v-text-field
-          v-model="usernameEmail"
+          v-model="usernameORemail"
           :rules="[rules.required, rules.min, rules.email]"
           label="E-mail o username"
         ></v-text-field>
@@ -40,7 +40,7 @@ export default {
   name: 'Login',
   data() {
     return {
-      usernameEmail: '',
+      usernameORemail: '',
       password: '',
       rules: {
         required: value => !!value || 'Required.',
@@ -60,11 +60,11 @@ export default {
     }
   },
   methods: {
-    async login(usernameEmail, password) {
+    async login(usernameORemail, password) {
       let resultAuth
       try {
         resultAuth = await userStore.authenticate(
-          this.usernameEmail,
+          this.usernameORemail,
           this.password
         )
       } catch {
