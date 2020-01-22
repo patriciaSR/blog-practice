@@ -72,7 +72,7 @@ export default {
       }
 
       if (resultAuth) {
-        return this.$router.go(-2)
+        return this.$router.go(-1)
       }
     }
   }

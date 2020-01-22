@@ -6,11 +6,13 @@
       <router-view />
     </v-content>
 
-    <Footer/>
+    <Footer />
   </v-app>
 </template>
 
 <script>
+import userStore from './stores/user'
+
 import Header from './components/Header'
 import Footer from './components/Footer'
 
@@ -22,16 +24,17 @@ export default {
     Footer
   },
 
-  data: () => ({
-
-  })
+  data: () => ({}),
+  mounted() {
+    return userStore.getFromLocalStorage()
+  }
 }
 </script>
 
 <style>
-  #app {
-    min-height: 100vh;
-    background-color: #5c6bc0;
-    color: #e8eaf6;
-  }
+#app {
+  min-height: 100vh;
+  background-color: #5c6bc0;
+  color: #e8eaf6;
+}
 </style>

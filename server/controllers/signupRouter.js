@@ -16,8 +16,8 @@ signupRouter.post('/', async (req, res) => {
     password,
   } = newUser;
 
-  if (!firstname && !username && !email && !password) {
-    res.sendStatus(400);
+  if (!firstname || !username || !email || !password) {
+    res.status(400).json('faltan datos');
   } else {
     const findUser = await repository.users.findUser(username, email);
 
