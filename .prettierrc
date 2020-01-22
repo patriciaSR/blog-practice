@@ -1,5 +1,6 @@
 {
 	"useTabs": false,
   "singleQuote": true,
-  "semi": false
+  "semi": false,
+  "no-console":"off"
 }

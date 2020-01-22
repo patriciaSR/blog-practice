@@ -72,7 +72,7 @@ export default {
       }
 
       if (resultAuth) {
-        return this.$router.push('/posts')
+      return this.$router.go(-2)
       }
     },
     signup() {
