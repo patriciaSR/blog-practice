@@ -1,16 +1,13 @@
-import * as axios from 'axios'
+import * as axios from 'axios';
 
-const ENDPOINT = 'https://localhost:3443/'
+const ENDPOINT = 'https://localhost:3443/';
 
 async function loadPosts() {
-  const result = await axios.get(ENDPOINT + 'posts')
+  const result = await axios.get(ENDPOINT + 'posts');
 
-  let posts = []
-  for (let post of result.data) {
-    posts.push(post)
-  }
+  const lastPostsFirst = result.data.reverse();
 
-  return posts
+  return lastPostsFirst;
 }
 
-export default loadPosts
+export default loadPosts;
