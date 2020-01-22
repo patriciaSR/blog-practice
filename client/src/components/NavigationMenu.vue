@@ -12,12 +12,13 @@
     <v-list dense nav class="py-0">
       <v-list-item two-line :class="miniVariant && 'px-0 my-0'">
         <v-list-item-avatar>
-          <img src="https://randomuser.me/api/portraits/men/81.jpg" />
+          <img v-if="userStore.token && userStore.data.image" :src="userStore.data.image" />
+          <img v-else src="../assets/avatar-pengin.png" />
         </v-list-item-avatar>
 
-        <v-list-item-content class="d-flex">
-          <v-list-item-title>FirstName + LastName</v-list-item-title>
-          <v-list-item-subtitle>@username</v-list-item-subtitle>
+        <v-list-item-content class="d-flex" v-if="userStore.token">
+          <v-list-item-title>{{userStore.data.firstname}} {{userStore.data.lastname || ''}}</v-list-item-title>
+          <v-list-item-subtitle>@{{userStore.data.username}}</v-list-item-subtitle>
         </v-list-item-content>
         <v-btn text icon color="pink" @click="close()">
           <v-icon>fa-times</v-icon>
@@ -26,8 +27,9 @@
 
       <v-divider></v-divider>
 
-        <router-link :to="item.path" v-for="item in items" :key="item.title">
-      <v-list-item link>
+      <div v-if="userStore.token">
+      <router-link :to="item.path" v-for="item in items" :key="item.title">
+        <v-list-item link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -35,13 +37,31 @@
           <v-list-item-content class="white--text">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
-      </v-list-item>
-        </router-link>
+        </v-list-item>
+      </router-link>
+      </div>
+
+      <div v-else>
+        <router-link :to="'/login'">
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>mdi-home-city</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content class="white--text">
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </router-link>
+      </div>
+
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
+import userStore from '../stores/user'
+
 export default {
   name: 'NavigationMenu',
   props: {
@@ -49,18 +69,19 @@ export default {
   },
   data() {
     return {
+      userStore: userStore.state,
       drawer: true,
       items: [
         { title: 'Home', icon: 'mdi-home-city', path: '/' },
-        { title: 'My Account', icon: 'mdi-account', path: '/user' },
         { title: 'Posts', icon: 'mdi-view-dashboard', path: '/posts' },
+        { title: 'My Account', icon: 'mdi-account', path: '/user' }
       ],
       color: 'primary',
       colors: ['primary', 'blue', 'success', 'red', 'teal'],
       right: true,
       miniVariant: true,
       expandOnHover: false,
-      background: false,
+      background: false
     }
   },
   computed: {
@@ -72,7 +93,6 @@ export default {
   },
   methods: {
     close() {
-
       this.$emit('toggle-menu', false)
     }
   }
@@ -80,11 +100,11 @@ export default {
 </script>
 
 <style scoped>
-  aside.hidden {
-    display: none;
-  }
-  aside.open {
-    display: block;
-    transform: none !important;
-  }
+aside.hidden {
+  display: none;
+}
+aside.open {
+  display: block;
+  transform: none !important;
+}
 </style>
