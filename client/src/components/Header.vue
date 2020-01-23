@@ -7,7 +7,7 @@
             alt="Blog Logo"
             class="blog__logo mr-2"
             contain
-            src="../assets/blog-logo-transparent.png"
+            src="../assets/logo-rocket.png"
             width="100"
           />
         </a>
