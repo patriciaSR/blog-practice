@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="800" :class="{ 'd-none': isCommentsOpen }" class="mt-5">
+  <v-card max-width="800" :class="{ 'd-none': isCommentsOpen }" class="mt-5" color="#E8EAF6">
     <v-card-title>{{comments.length}} COMMENTS</v-card-title>
 
     <div v-if="!userStore.token">
@@ -7,7 +7,7 @@
       <router-link :to="'/login'">aquí</router-link>
     </div>
 
-    <div v-if="comments.length !== 0">
+    <div v-if="comments.length !== 0" class="px-4 pb-4">
       <v-card class="pa-4 my-4">
         <v-text-field
           v-model="newComment"
@@ -20,7 +20,7 @@
 
         <PrimaryBtn btnText="+ Comment" @go-to="addNewComment" />
       </v-card>
-      <v-card max-width="800" v-for="comment in comments" :key="comment._id">
+      <v-card max-width="800" v-for="comment in comments" :key="comment._id" class="mb-1">
         <div class="d-flex">
           <v-avatar size="70" class="ma-2">
             <img
@@ -78,6 +78,8 @@ export default {
           if (e.response.status === 401) {
             alert('Your session has expired. Please, login again!')
             this.$router.push('/login')
+          }else {
+            alert(e.response.data.errorText)
           }
         }
 
