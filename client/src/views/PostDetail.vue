@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout class="d-flex flex-row justify-space-between align-center my-4" wrap>
-      <div>
+      <div class="v-card v-card--shadow-none">
         <PostCard
           :postData="postData"
           :isCommentsOpen="isCommentsOpen"
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style scoped>
-.v-card.hidden {
-  display: none;
-}
+  .v-card--shadow-none {
+    box-shadow: none;
+  }
 </style>
