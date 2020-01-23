@@ -82,8 +82,17 @@ export default {
         }
 
         if (resultSendComment) {
-          this.$emit('comment-clicked')
-          this.$router.go()
+          const { _id, username, image } = this.userStore.data
+
+          const userInfo = {
+            userID: _id,
+            username,
+            image
+          }
+
+          resultSendComment.userInfo = userInfo
+
+          this.comments.unshift(resultSendComment)
         }
       } else {
         alert('Fill required fields')
