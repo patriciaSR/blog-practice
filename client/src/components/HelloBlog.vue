@@ -14,27 +14,28 @@
           >For create new posts and comments you need sign in.</p>
 
           <div class="py-5">
-            <v-btn class="mr-4" depressed color="primary" @click="goToLogin()">Login</v-btn>
-            <v-btn depressed color="primary" @click="goToSignup()">Sign up</v-btn>
+            <PrimaryBtn btnText="Login" @go-to="goToView('/login')" class="mr-4" />
+            <PrimaryBtn btnText="Sign up" @go-to="goToView('/signup')" />
           </div>
         </div>
 
-        <div v-else class="mt-10">
+        <div v-else class="mt-12">
           <p>
             Welcome
             <span class="username">@{{userStore.data.username}}</span>
           </p>
-          <div>
-            <v-btn depressed class="mr-4" color="primary" @click="goToBooks()">View posts</v-btn>
-            <v-btn depressed color="primary" @click="goToProfile()">My Profile</v-btn>
+
+          <div class="mt-8">
+            <PrimaryBtn btnText="View posts" @go-to="goToView('/posts')" class="mr-4"/>
+            <PrimaryBtn btnText="My Profile" @go-to="goToView('/myprofile')" />
           </div>
 
-          <v-btn depressed color="primary mt-8" @click="goToNewPost()">New Post</v-btn>
+          <PrimaryBtn btnText="New Post" @go-to="goToView('/myprofile/newpost')" class="mt-10"/>
         </div>
 
         <div class="py-5" v-if="!userStore.token">
           <p class="subheading font-weight-regular">You can read posts and comments freely.</p>
-          <v-btn depressed color="primary" @click="goToBooks()">View posts</v-btn>
+          <PrimaryBtn btnText="View posts" @go-to="goToView('/posts')"/>
         </div>
       </v-flex>
     </v-layout>
@@ -44,9 +45,13 @@
 <script>
 import userStore from '../stores/user'
 
+import PrimaryBtn from '../components/Btns/PrimaryBtn'
+
 export default {
   name: 'HelloBlog',
-
+  components: {
+    PrimaryBtn
+  },
   data: () => ({
     userStore: userStore.state,
     Links: [
@@ -65,20 +70,8 @@ export default {
     ]
   }),
   methods: {
-    goToLogin() {
-      this.$router.push('/login')
-    },
-    goToSignup() {
-      this.$router.push('/signup')
-    },
-    goToBooks() {
-      this.$router.push('/posts')
-    },
-    goToProfile() {
-      this.$router.push('/myprofile')
-    },
-    goToNewPost() {
-      this.$router.push('/myprofile/newpost')
+    goToView(path) {
+      this.$router.push(path)
     }
   }
 }
