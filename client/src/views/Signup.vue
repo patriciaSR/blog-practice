@@ -51,7 +51,7 @@ import PrimaryBtn from '../components/Btns/PrimaryBtn'
 
 
 export default {
-  name: 'Sign up',
+  name: 'Signup',
   components: {
     PrimaryBtn
   },

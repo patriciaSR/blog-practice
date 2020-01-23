@@ -1,17 +1,32 @@
 <template>
-  <v-card max-width="800" :class="{ hidden: isCommentsOpen }" class="mt-5">
+  <v-card max-width="800" :class="{ 'd-none': isCommentsOpen }" class="mt-5">
     <v-card-title>{{comments.length}} COMMENTS</v-card-title>
 
     <div v-if="!userStore.token">
       Para comentar haz login
-      <a @click="login()" href="#">aquí</a>
+      <router-link :to="'/login'">aquí</router-link>
     </div>
 
     <div v-if="comments.length !== 0">
+      <v-card class="pa-4 my-4">
+        <v-text-field
+          v-model="newComment"
+          filled
+          label="Write your comment"
+          rows="3"
+          :rules="[rules.required]"
+          @keyup.enter="addNewComment()"
+        ></v-text-field>
+
+        <PrimaryBtn btnText="+ Comment" @go-to="addNewComment" />
+      </v-card>
       <v-card max-width="800" v-for="comment in comments" :key="comment._id">
         <div class="d-flex">
           <v-avatar size="70" class="ma-2">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsc5Kf9fpgukpXftCaCxHgghEzGXtHPOoxirg5H1Psq8imumfI5Q&s" :alt="comment.username" />
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsc5Kf9fpgukpXftCaCxHgghEzGXtHPOoxirg5H1Psq8imumfI5Q&s"
+              :alt="comment.username"
+            />
           </v-avatar>
           <div class="d-flex-column justify-center py-3">
             <v-card-subtitle class="py-0 mb-1 primary--text">@{{comment.userInfo.username}}</v-card-subtitle>
@@ -32,25 +47,51 @@
 <script>
 import userStore from '../stores/user'
 
+import sendNewComment from '../resources/sendNewComment'
+
+import PrimaryBtn from '../components/Btns/PrimaryBtn'
+
 export default {
   name: 'CommentsCard',
+  components: {
+    PrimaryBtn
+  },
   data: () => ({
-    userStore: userStore.state
+    userStore: userStore.state,
+    newComment: undefined,
+    rules: {
+      required: value => !!value || 'The field is required.'
+    }
   }),
   props: {
+    postID: undefined,
     comments: undefined,
-    isCommentsOpen: undefined,
+    isCommentsOpen: undefined
   },
   methods: {
-    login() {
-      return this.$router.push('/login')
+    async addNewComment() {
+      if (this.newComment) {
+        let resultSendComment
+        try {
+          resultSendComment = await sendNewComment(this.postID, this.newComment)
+        } catch (e) {
+          if (e.response.status === 401) {
+            alert('Your session has expired. Please, login again!')
+            this.$router.push('/login')
+          }
+        }
+
+        if (resultSendComment) {
+          this.$emit('comment-clicked')
+          this.$router.go()
+        }
+      } else {
+        alert('Fill required fields')
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.v-card.hidden {
-  display: none;
-}
 </style>

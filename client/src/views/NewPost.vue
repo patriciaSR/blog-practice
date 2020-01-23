@@ -69,7 +69,7 @@ export default {
   methods: {
     async addNewPost() {
       const { title, content } = this.newPost
-      if ((title, content)) {
+      if (title, content) {
         let resultSendPost
         try {
           resultSendPost = await sendNewPost(this.newPost)

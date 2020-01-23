@@ -7,7 +7,7 @@
         @comment-clicked="toggleComments"
       />
 
-      <CommentsCard :comments="postData.comments" :isCommentsOpen="isCommentsOpen"/>
+      <CommentsCard :postID="postData._id" :comments="postData.comments" :isCommentsOpen="isCommentsOpen"/>
 
     </v-layout>
   </v-container>
