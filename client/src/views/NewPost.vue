@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto my-10">
-    <v-card class="mx-auto" style="max-width: 500px" v-if="userStore.token">
+    <v-card class="mx-4" style="max-width: 500px" v-if="userStore.token">
       <v-form ref="form" class="pa-4 pt-6">
         <v-text-field
           v-model="newPost.title"

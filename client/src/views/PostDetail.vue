@@ -1,14 +1,26 @@
 <template>
   <v-container>
-    <v-layout text-left class="d-flex flex-column mx-5">
-      <PostCard
-        :postData="postData"
-        :isCommentsOpen="isCommentsOpen"
-        @comment-clicked="toggleComments"
+    <v-layout class="d-flex flex-row justify-space-between align-center my-4" wrap>
+      <div>
+        <PostCard
+          :postData="postData"
+          :isCommentsOpen="isCommentsOpen"
+          @comment-clicked="toggleComments"
+        />
+
+        <CommentsCard
+          :postID="postData._id"
+          :comments="postData.comments"
+          :isCommentsOpen="isCommentsOpen"
+        />
+      </div>
+
+      <PrimaryBtn
+        v-if="userStore.token"
+        btnText="New Post"
+        @go-to="goToView('/myprofile/newpost')"
+        class="mt-10 align-self-start"
       />
-
-      <CommentsCard :postID="postData._id" :comments="postData.comments" :isCommentsOpen="isCommentsOpen"/>
-
     </v-layout>
   </v-container>
 </template>
@@ -17,6 +29,7 @@
 import userStore from '../stores/user'
 import loadPostDetail from '../resources/loadPostDetail'
 
+import PrimaryBtn from '../components/Btns/PrimaryBtn'
 import PostCard from '../components/PostCard'
 import CommentsCard from '../components/CommentsCard'
 
@@ -31,6 +44,7 @@ export default {
     userStore: userStore.state
   }),
   components: {
+    PrimaryBtn,
     PostCard,
     CommentsCard
   },
@@ -42,12 +56,15 @@ export default {
     toggleComments(isCommentsOpen) {
       this.isCommentsOpen = isCommentsOpen
     },
+    goToView(path) {
+      this.$router.push(path)
+    }
   }
 }
 </script>
 
 <style scoped>
-  .v-card.hidden {
-    display: none;
-  }
+.v-card.hidden {
+  display: none;
+}
 </style>
