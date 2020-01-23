@@ -1,40 +1,42 @@
 <template>
   <v-container mx-auto py-12 fill-height class="signup__box">
     <v-layout text-center class="flex-column">
-      <v-card color="#C5CAE9" class="px-6 py-10 mb-4">
-        <v-text-field v-model="newUser.firstname" :rules="[rules.required]" label="First name *"></v-text-field>
+      <v-card class="px-6 py-10 mb-4 indigo lighten-4">
+        <v-form>
+          <v-text-field v-model="newUser.firstname" :rules="[rules.required]" label="First name *"></v-text-field>
 
-        <v-text-field v-model="newUser.lastname" label="Last Name"></v-text-field>
+          <v-text-field v-model="newUser.lastname" label="Last Name"></v-text-field>
 
-        <v-text-field
-          v-model="newUser.username"
-          value
-          :rules="[rules.required, rules.min, rules.max, rules.username]"
-          label="Username *"
-        ></v-text-field>
+          <v-text-field
+            v-model="newUser.username"
+            value
+            :rules="[rules.required, rules.min, rules.max, rules.username]"
+            label="Username *"
+          ></v-text-field>
 
-        <v-text-field
-          v-model="newUser.email"
-          value
-          :rules="[rules.required, rules.email]"
-          label="E-mail *"
-        ></v-text-field>
+          <v-text-field
+            v-model="newUser.email"
+            value
+            :rules="[rules.required, rules.email]"
+            label="E-mail *"
+          ></v-text-field>
 
-        <v-text-field v-model="newUser.image" label="Profile Image url"></v-text-field>
+          <v-text-field v-model="newUser.image" label="Profile Image url"></v-text-field>
 
-        <v-text-field
-          :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="[rules.required, rules.min]"
-          :type="show2 ? 'text' : 'password'"
-          name="input-password"
-          label="Password"
-          hint="At least 6 characters"
-          v-model="newUser.password"
-          value
-          class="input-group--focused"
-          @click:append="show2 = !show2"
-          @keyup.enter="signup()"
-        ></v-text-field>
+          <v-text-field
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show2 ? 'text' : 'password'"
+            name="input-password"
+            label="Password"
+            hint="At least 6 characters"
+            v-model="newUser.password"
+            value
+            class="input-group--focused"
+            @click:append="show2 = !show2"
+            @keyup.enter="signup()"
+          ></v-text-field>
+        </v-form>
       </v-card>
 
       <v-btn depressed color="primary" @click="signup()" max-width="100px">Sign up</v-btn>

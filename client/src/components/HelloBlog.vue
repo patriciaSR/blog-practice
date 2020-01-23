@@ -24,9 +24,12 @@
             Welcome
             <span class="username">@{{userStore.data.username}}</span>
           </p>
+          <div>
+            <v-btn depressed class="mr-4" color="primary" @click="goToBooks()">View posts</v-btn>
+            <v-btn depressed color="primary" @click="goToProfile()">My Profile</v-btn>
+          </div>
 
-          <v-btn depressed class="mr-4" color="primary" @click="goToBooks()">View posts</v-btn>
-          <v-btn depressed color="primary" @click="goToProfile()">My Profile</v-btn>
+          <v-btn depressed color="primary mt-8" @click="goToNewPost()">New Post</v-btn>
         </div>
 
         <div class="py-5" v-if="!userStore.token">
@@ -72,7 +75,10 @@ export default {
       this.$router.push('/posts')
     },
     goToProfile() {
-      this.$router.push('/myProfile')
+      this.$router.push('/myprofile')
+    },
+    goToNewPost() {
+      this.$router.push('/myprofile/newpost')
     }
   }
 }
