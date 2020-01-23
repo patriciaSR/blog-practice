@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout text-left class="d-flex flex-column align-center mx-5">
-      <v-card max-width="800" tile color="secondary">
+      <v-card max-width="800" color="secondary">
         <v-card-title class>Lista de posts</v-card-title>
         <v-list-item three-line class="d-block pb-3">
           <v-card

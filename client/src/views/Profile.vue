@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap>
-    <div v-if="userStore.token" class="mx-auto my-10">
+    <div v-if="userStore.token" class="mx-auto my-10 v-card--shadow-none">
       <v-card max-width="800" class="mb-6">
         <v-img
           class="white--text align-end"
@@ -30,9 +30,18 @@
           <v-btn color="orange" text>Update Profile</v-btn>
           <v-btn color="orange" text>Delete Profile</v-btn>
         </v-card-actions>
+
+        <v-card-actions v-if="userStore.token" class="justify-end">
+          <v-btn
+            class="white--text"
+            color="deep-purple accent-4"
+            @click="addNewPost()"
+            >Add New Post
+          </v-btn>
+        </v-card-actions>
       </v-card>
 
-      <v-card max-width="800" tile color="secondary">
+      <v-card max-width="800" color="secondary">
         <v-card-title class>Your posts</v-card-title>
         <v-list-item three-line class="d-block pb-3" v-if="userPosts.length > 0">
           <v-card
@@ -94,13 +103,19 @@ export default {
       const newValue = !this.isCommentsOpen
 
       this.$emit('comment-clicked', newValue)
+    },
+    addNewPost() {
+      this.$router.push('/myprofile/newpost')
     }
   }
 }
 </script>
 
 <style scoped>
-.no-underline {
-  text-decoration: none;
-}
+  .no-underline {
+    text-decoration: none;
+  }
+  .v-card--shadow-none {
+    box-shadow: none;
+  }
 </style>

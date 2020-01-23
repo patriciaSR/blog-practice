@@ -24,7 +24,9 @@
       <v-divider></v-divider>
       <v-card-actions>
         <v-btn text @click="$refs.form.reset()">Clear</v-btn>
+
         <v-spacer></v-spacer>
+
         <v-btn
           class="white--text"
           color="deep-purple accent-4"
@@ -36,7 +38,7 @@
 
     <v-card class="mx-auto pa-10" max-width="500px" v-else>
       Login to add New Post
-      <router-link :to="'/login'"> here >> </router-link>
+      <router-link :to="'/login'">here >></router-link>
     </v-card>
   </div>
 </template>
@@ -72,7 +74,10 @@ export default {
         try {
           resultSendPost = await sendNewPost(this.newPost)
         } catch (e) {
-          alert(e.response)
+          if (e.response.status === 401) {
+            alert('Your session has expired. Please, login again!')
+            this.$router.push('/login')
+          }
         }
 
         if (resultSendPost) {
