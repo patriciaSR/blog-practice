@@ -5,6 +5,8 @@ import Posts from '../views/Posts.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import PostDetail from '../views/PostDetail.vue'
+import Profile from '../views/Profile.vue'
+
 
 Vue.use(VueRouter)
 
@@ -33,6 +35,11 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: Signup
+  },
+  {
+    path: '/myprofile',
+    name: 'profile',
+    component: Profile
   }
 ]
 

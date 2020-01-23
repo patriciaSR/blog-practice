@@ -16,6 +16,11 @@ module.exports = class Posts {
     return this.collection.find().toArray();
   }
 
+  getUserPost(userID) {
+    // Find resource by _id
+    return this.collection.find({ userID: new ObjectId(userID) }).toArray();
+  }
+
   getPost(id) {
     // Find resource by _id
     return this.collection.findOne({ _id: new ObjectId(id) });

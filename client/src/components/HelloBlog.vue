@@ -2,12 +2,7 @@
   <v-container>
     <v-layout text-center wrap>
       <v-flex xs12>
-        <v-img
-          :src="require('../assets/logo-rocket.png')"
-          class="my-3"
-          contain
-          height="180"
-        ></v-img>
+        <v-img :src="require('../assets/logo-rocket.png')" class="my-3" contain height="180"></v-img>
       </v-flex>
 
       <v-flex py-15>
@@ -25,10 +20,13 @@
         </div>
 
         <div v-else class="mt-10">
-          <p>Welcome <span class="username"> @{{userStore.data.username}} </span></p>
+          <p>
+            Welcome
+            <span class="username">@{{userStore.data.username}}</span>
+          </p>
 
           <v-btn depressed class="mr-4" color="primary" @click="goToBooks()">View posts</v-btn>
-          <v-btn depressed color="primary">Account</v-btn>
+          <v-btn depressed color="primary" @click="goToProfile()">My Profile</v-btn>
         </div>
 
         <div class="py-5" v-if="!userStore.token">
@@ -72,6 +70,9 @@ export default {
     },
     goToBooks() {
       this.$router.push('/posts')
+    },
+    goToProfile() {
+      this.$router.push('/myProfile')
     }
   }
 }
@@ -83,7 +84,7 @@ export default {
   height: 100%;
 }
 .username {
-  color: #1A237E;
+  color: #1a237e;
   font-weight: bold;
 }
 </style>

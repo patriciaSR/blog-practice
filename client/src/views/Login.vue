@@ -18,6 +18,7 @@
           hint="At least 6 characters"
           class="input-group--focused"
           @click:append="show2 = !show2"
+          @keyup.enter="login()"
         ></v-text-field>
       </v-card>
 
@@ -66,7 +67,7 @@ export default {
         }
 
         if (resultAuth) {
-          return this.$router.push('/')
+          return this.$router.push('/myprofile')
         }
       }
     }

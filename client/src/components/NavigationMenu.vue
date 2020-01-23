@@ -82,9 +82,8 @@ export default {
       defaultAvatar: defaultAvatar,
       drawer: true,
       items: [
-        { title: 'Home', icon: 'mdi-home-city', path: '/' },
         { title: 'Posts', icon: 'mdi-view-dashboard', path: '/posts' },
-        { title: 'My Account', icon: 'mdi-account', path: '/user' }
+        { title: 'My Profile', icon: 'mdi-account', path: '/myprofile' }
       ],
       color: 'primary',
       colors: ['primary', 'blue', 'success', 'red', 'teal'],
@@ -107,7 +106,10 @@ export default {
     },
     logout(){
       localStorage.clear();
-      return this.$router.go();
+      userStore.state.token = '';
+      userStore.state.data = {};
+
+      return this.$router.push('/');
     }
   }
 }

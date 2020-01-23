@@ -3,7 +3,7 @@
     <v-layout text-left class="d-flex flex-column align-center mx-5">
       <v-card max-width="800" tile color="secondary">
         <v-card-title class>Lista de posts</v-card-title>
-        <v-list-item three-line class="d-block">
+        <v-list-item three-line class="d-block pb-3">
           <v-card
             class="mx-1 my-3 px-2"
             max-width="800"

@@ -33,6 +33,7 @@
           value
           class="input-group--focused"
           @click:append="show2 = !show2"
+          @keyup.enter="signup()"
         ></v-text-field>
       </v-card>
 
@@ -92,7 +93,7 @@ export default {
 </script>
 
 <style scoped>
-  .signup__box {
-    max-width: 600px;
-  }
+.signup__box {
+  max-width: 600px;
+}
 </style>
