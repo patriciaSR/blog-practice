@@ -27,12 +27,7 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn
-          class="white--text"
-          color="deep-purple accent-4"
-          depressed
-          @click="addNewPost()"
-        >Add New Post</v-btn>
+        <PrimaryBtn btnText="+ Add Post" @go-to="addNewPost" />
       </v-card-actions>
     </v-card>
 
@@ -47,8 +42,13 @@
 import sendNewPost from '../resources/sendNewPost'
 import userStore from '../stores/user'
 
+import PrimaryBtn from '../components/Btns/PrimaryBtn'
+
 export default {
   name: 'NewPost',
+  components: {
+    PrimaryBtn
+  },
   data() {
     return {
       userStore: userStore.state,

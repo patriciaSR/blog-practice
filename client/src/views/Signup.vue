@@ -39,7 +39,7 @@
         </v-form>
       </v-card>
 
-      <v-btn depressed color="primary" @click="signup()" max-width="100px">Sign up</v-btn>
+      <PrimaryBtn btnText="Sign up" @go-to="signup" />
     </v-layout>
   </v-container>
 </template>
@@ -47,8 +47,14 @@
 <script>
 import registNewUser from '../resources/registNewUser'
 
+import PrimaryBtn from '../components/Btns/PrimaryBtn'
+
+
 export default {
-  name: 'Login',
+  name: 'Sign up',
+  components: {
+    PrimaryBtn
+  },
   data() {
     return {
       newUser: {

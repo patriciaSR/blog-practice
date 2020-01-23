@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap>
-    <div v-if="userStore.token" class="mx-auto my-10 v-card--shadow-none">
+    <div v-if="userStore.token" class="mx-auto my-10 v-card v-card--shadow-none">
       <v-card max-width="800" class="mb-6">
         <v-img
           class="white--text align-end"
@@ -32,18 +32,13 @@
         </v-card-actions>
 
         <v-card-actions v-if="userStore.token" class="justify-end">
-          <v-btn
-            class="white--text"
-            color="deep-purple accent-4"
-            @click="addNewPost()"
-            >Add New Post
-          </v-btn>
+          <PrimaryBtn btnText="+ New Post" @go-to="goToView('/myprofile/newpost')"/>
         </v-card-actions>
       </v-card>
 
       <v-card max-width="800" color="secondary">
         <v-card-title class>Your posts</v-card-title>
-        <v-list-item three-line class="d-block pb-3" v-if="userPosts.length > 0">
+        <v-list-item three-line class="d-block pb-3" v-if="userPosts.length !== 0">
           <v-card
             class="mx-1 my-3 px-2"
             max-width="800"
@@ -82,15 +77,20 @@ import loadUserPosts from '../resources/loadUserPosts'
 import userStore from '../stores/user'
 import defaultAvatar from '../assets/avatar-pengin.png'
 
+import PrimaryBtn from '../components/Btns/PrimaryBtn'
+
 export default {
   name: 'Profile',
+  components: {
+    PrimaryBtn
+  },
   data: () => ({
     userStore: userStore.state,
     defaultAvatar: defaultAvatar,
     userPosts: []
   }),
   async mounted() {
-    const userData = userStore.state.data
+    const userData = this.userStore.data
 
     if (userData) {
       const result = await loadUserPosts(userData._id)
@@ -104,18 +104,18 @@ export default {
 
       this.$emit('comment-clicked', newValue)
     },
-    addNewPost() {
-      this.$router.push('/myprofile/newpost')
+    goToView(path) {
+      this.$router.push(path)
     }
   }
 }
 </script>
 
 <style scoped>
-  .no-underline {
-    text-decoration: none;
-  }
-  .v-card--shadow-none {
-    box-shadow: none;
-  }
+.no-underline {
+  text-decoration: none;
+}
+.v-card--shadow-none {
+  box-shadow: none;
+}
 </style>

@@ -22,7 +22,7 @@
         ></v-text-field>
       </v-card>
 
-      <v-btn depressed color="primary" @click="login()" max-width="100">Sign in</v-btn>
+      <PrimaryBtn btnText="Sign in" @go-to="login" />
 
       <v-container>
         <v-content>
@@ -37,8 +37,14 @@
 <script>
 import userStore from '../stores/user'
 
+import PrimaryBtn from '../components/Btns/PrimaryBtn'
+
+
 export default {
   name: 'Login',
+  components: {
+    PrimaryBtn
+  },
   data() {
     return {
       username: '',

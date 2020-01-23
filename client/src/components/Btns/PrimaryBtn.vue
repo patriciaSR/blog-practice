@@ -1,5 +1,5 @@
 <template>
-  <v-btn depressed color="primary" @click="goTo()">{{btnText}}</v-btn>
+  <v-btn depressed color="primary" @click="goTo()" max-width="120">{{btnText}}</v-btn>
 </template>
 
 <script>
@@ -19,12 +19,4 @@ export default {
 </script>
 
 <style scoped>
-.indigo {
-  color: #b2ebf2;
-  height: 100%;
-}
-.username {
-  color: #1a237e;
-  font-weight: bold;
-}
 </style>
