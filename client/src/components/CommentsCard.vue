@@ -48,7 +48,7 @@
         </v-card>
         <v-card-text v-else class="text--primary">{{comment.content}}</v-card-text>
 
-        <v-card-actions v-if="userStore.token">
+        <v-card-actions v-if="userStore.token && (userStore.data._id === comment.userInfo.userID || userStore.data.role === 'admin')">
           <v-btn color="orange" text @click="editComment(comment)">Edit</v-btn>
           <v-btn color="orange" text @click="deleteComment(comment._id)">Delete</v-btn>
         </v-card-actions>

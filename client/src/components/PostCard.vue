@@ -21,7 +21,7 @@
     </div>
     <v-card-text class="text--primary">{{postData.content}}</v-card-text>
 
-    <v-card-actions v-if="userStore.token" class="justify-end">
+    <v-card-actions v-if="userStore.token && (userStore.data._id === postData.userID || userStore.data.role === 'admin')" class="justify-end">
       <v-btn color="orange" text @click="editPost(postData._id)">Edit</v-btn>
       <v-btn color="orange" text @click="deletePost(postData._id)">Delete</v-btn>
     </v-card-actions>
