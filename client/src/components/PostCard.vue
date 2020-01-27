@@ -23,7 +23,7 @@
 
     <v-card-actions v-if="userStore.token" class="justify-end">
       <v-btn color="orange" text @click="editPost(postData._id)">Edit</v-btn>
-      <v-btn color="orange" text>Delete</v-btn>
+      <v-btn color="orange" text @click="deletePost(postData._id)">Delete</v-btn>
     </v-card-actions>
 
     <v-divider class="mx-3"></v-divider>
@@ -36,6 +36,8 @@
 
 <script>
 import userStore from '../stores/user'
+
+import deletePost from '../resources/deletePost'
 
 export default {
   name: 'PostCard',
@@ -54,7 +56,28 @@ export default {
       this.$emit('comment-clicked', newValue)
     },
     editPost(postID) {
-      this.$router.push({ path: '/myprofile/newpost/', query: { edit: postID } })
+      this.$router.push({
+        path: '/myprofile/newpost/',
+        query: { edit: postID }
+      })
+    },
+    async deletePost(postID) {
+      let resultSendDelete
+      try {
+        resultSendDelete = await deletePost(postID)
+      } catch (e) {
+        if (e.response.status === 401) {
+          alert('Your session has expired. Please, login again!')
+          this.$router.push('/login')
+        } else {
+          alert(e.response.data)
+        }
+      }
+
+      if (resultSendDelete) {
+        alert('Your post has deleted correctly')
+        this.$router.push('/posts')
+      }
     }
   }
 }
