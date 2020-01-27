@@ -33,10 +33,23 @@
             <v-card-subtitle class="py-0 caption">date: {{comment.date}}</v-card-subtitle>
           </div>
         </div>
-        <v-card-text class="text--primary">{{comment.content}}</v-card-text>
+
+        <v-card class="pa-4 my-4" v-if="comment._id === commentToEdit.id">
+          <v-text-field
+            v-model="commentToEdit.content"
+            filled
+            label="Write your comment"
+            rows="3"
+            :rules="[rules.required]"
+            @keyup.enter="sendEditComment()"
+          ></v-text-field>
+
+          <PrimaryBtn btnText="Edit" @go-to="sendEditComment" />
+        </v-card>
+        <v-card-text v-else class="text--primary">{{comment.content}}</v-card-text>
 
         <v-card-actions v-if="userStore.token">
-          <v-btn color="orange" text>Update</v-btn>
+          <v-btn color="orange" text @click="editComment(comment)">Edit</v-btn>
           <v-btn color="orange" text>Delete</v-btn>
         </v-card-actions>
       </v-card>
@@ -48,6 +61,7 @@
 import userStore from '../stores/user'
 
 import sendNewComment from '../resources/sendNewComment'
+import sendEditComment from '../resources/sendEditComment'
 
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
 
@@ -59,6 +73,10 @@ export default {
   data: () => ({
     userStore: userStore.state,
     newComment: undefined,
+    commentToEdit: {
+      id: '',
+      content: ''
+    },
     rules: {
       required: value => !!value || 'The field is required.'
     }
@@ -67,6 +85,18 @@ export default {
     postID: undefined,
     comments: undefined,
     isCommentsOpen: undefined
+  },
+  computed: {
+    idToEdit: {
+      get: function() {
+        return this.commentToEdit
+      },
+      set: function(comment) {
+        this.commentToEdit.id = comment._id
+        this.commentToEdit.content = comment.content
+        return this.commentToEdit
+      }
+    }
   },
   methods: {
     async addNewComment() {
@@ -78,8 +108,8 @@ export default {
           if (e.response.status === 401) {
             alert('Your session has expired. Please, login again!')
             this.$router.push('/login')
-          }else {
-            alert(e.response.data.errorText)
+          } else {
+            alert(e.response.data)
           }
         }
 
@@ -93,8 +123,50 @@ export default {
           }
 
           resultSendComment.userInfo = userInfo
+          this.newComment = ' '
 
           this.comments.unshift(resultSendComment)
+        }
+      } else {
+        alert('Fill required fields')
+      }
+    },
+    editComment(comment) {
+      return (this.idToEdit = comment)
+    },
+    async sendEditComment() {
+      if (this.commentToEdit) {
+        let resultSendComment
+        try {
+          resultSendComment = await sendEditComment(
+            this.postID,
+            this.commentToEdit
+          )
+        } catch (e) {
+          if (e.response.status === 401) {
+            alert('Your session has expired. Please, login again!')
+            this.$router.push('/login')
+          } else {
+            alert(e.response.data)
+          }
+        }
+
+        if (resultSendComment) {
+          const { _id, username, image } = this.userStore.data
+
+          const userInfo = {
+            userID: _id,
+            username,
+            image
+          }
+
+          resultSendComment.userInfo = userInfo
+          this.commentToEdit.id = ''
+
+          const indexComment = this.comments.findIndex(
+            comment => comment._id === resultSendComment._id
+          )
+          this.comments.splice(indexComment, 1, resultSendComment)
         }
       } else {
         alert('Fill required fields')

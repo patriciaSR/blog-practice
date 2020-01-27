@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style scoped>
-  .v-card--shadow-none {
-    box-shadow: none;
-  }
+.v-card--shadow-none {
+  box-shadow: none;
+}
 </style>
