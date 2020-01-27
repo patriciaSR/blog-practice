@@ -26,9 +26,6 @@ async function main() {
       {
         key: fs.readFileSync('server.key'),
         cert: fs.readFileSync('server.cert'),
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false,
-        }),
       },
       app,
     )

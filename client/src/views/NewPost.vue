@@ -1,6 +1,6 @@
 <template>
-  <div class="mx-auto my-10">
-    <v-card class="mx-4" style="max-width: 500px" v-if="userStore.token">
+  <v-container fluid mx-auto my-6 pa-0>
+    <v-card class="mx-4" v-if="userStore.token">
       <v-form ref="form" class="pa-4 pt-6">
         <v-text-field
           v-model="newPost.title"
@@ -17,7 +17,7 @@
           auto-grow
           filled
           label="Write your post"
-          rows="5"
+          rows="6"
           :rules="[rules.required]"
         ></v-textarea>
       </v-form>
@@ -35,7 +35,8 @@
       Login to add New Post
       <router-link :to="'/login'">here >></router-link>
     </v-card>
-  </div>
+
+  </v-container>
 </template>
 
 <script>
@@ -69,7 +70,7 @@ export default {
   methods: {
     async addNewPost() {
       const { title, content } = this.newPost
-      if (title, content) {
+      if ((title, content)) {
         let resultSendPost
         try {
           resultSendPost = await sendNewPost(this.newPost)
@@ -93,4 +94,7 @@ export default {
 </script>
 
 <style scoped>
+  .container {
+    max-width: 800px;
+  }
 </style>
