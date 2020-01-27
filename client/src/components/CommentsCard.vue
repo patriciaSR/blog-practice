@@ -50,7 +50,7 @@
 
         <v-card-actions v-if="userStore.token">
           <v-btn color="orange" text @click="editComment(comment)">Edit</v-btn>
-          <v-btn color="orange" text>Delete</v-btn>
+          <v-btn color="orange" text @click="deleteComment(comment._id)">Delete</v-btn>
         </v-card-actions>
       </v-card>
     </div>
@@ -62,6 +62,7 @@ import userStore from '../stores/user'
 
 import sendNewComment from '../resources/sendNewComment'
 import sendEditComment from '../resources/sendEditComment'
+import deleteComment from '../resources/deleteComment'
 
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
 
@@ -170,6 +171,26 @@ export default {
         }
       } else {
         alert('Fill required fields')
+      }
+    },
+    async deleteComment(id) {
+      let resultSendDelete
+      try {
+        resultSendDelete = await deleteComment(this.postID, id)
+      } catch (e) {
+        if (e.response.status === 401) {
+          alert('Your session has expired. Please, login again!')
+          this.$router.push('/login')
+        } else {
+          alert(e.response.data)
+        }
+      }
+
+      if (resultSendDelete) {
+        const indexComment = this.comments.findIndex(
+          comment => comment._id === id
+        )
+        this.comments.splice(indexComment, 1)
       }
     }
   }
