@@ -27,7 +27,9 @@
 
         <v-spacer></v-spacer>
 
-        <PrimaryBtn btnText="+ Add Post" @go-to="addNewPost" />
+        <PrimaryBtn v-if="this.$route.query.edit" btnText="Edit Post" @go-to="editPost" />
+
+        <PrimaryBtn v-else btnText="+ Add Post" @go-to="addNewPost" />
       </v-card-actions>
     </v-card>
 
@@ -35,7 +37,6 @@
       Login to add New Post
       <router-link :to="'/login'">here >></router-link>
     </v-card>
-
   </v-container>
 </template>
 
@@ -44,6 +45,8 @@ import sendNewPost from '../resources/sendNewPost'
 import userStore from '../stores/user'
 
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
+import loadPostDetail from '../resources/loadPostDetail'
+import sendEditPost from '../resources/sendEditPost'
 
 export default {
   name: 'NewPost',
@@ -61,6 +64,7 @@ export default {
         categories: [''],
         image: ''
       },
+      postToEdit: '',
       rules: {
         required: value => !!value || 'The field is required.'
       },
@@ -88,13 +92,57 @@ export default {
       } else {
         alert('Fill required fields')
       }
+    },
+    async editPost() {
+      const postID = this.$route.query.edit
+
+      const { title, content } = this.newPost
+      if ((title, content)) {
+        let resultSendToEdit
+        try {
+          resultSendToEdit = await sendEditPost(this.newPost, postID)
+        } catch (e) {
+          if (e.response.status === 401) {
+            alert('Your session has expired. Please, login again!')
+            this.$router.push('/login')
+          }
+        }
+
+        if (resultSendToEdit) {
+          alert('Post registered correctly')
+          return this.$router.push('/posts/' + postID)
+        }
+      } else {
+        alert('Fill required fields')
+      }
+    }
+  },
+  async mounted() {
+    if (this.$route.query.edit) {
+      let postToEdit
+      const postID = this.$route.query.edit
+
+      try {
+        postToEdit = await loadPostDetail(postID)
+        delete postToEdit._id
+        delete postToEdit.comments
+        delete postToEdit.userInfo
+        delete postToEdit.userID
+
+        return (this.newPost = postToEdit)
+      } catch (e) {
+        if (e.response.status === 401) {
+          alert('Your session has expired. Please, login again!')
+          this.$router.push('/login')
+        }
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-  .container {
-    max-width: 800px;
-  }
+.container {
+  max-width: 800px;
+}
 </style>

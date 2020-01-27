@@ -105,7 +105,7 @@ postsRouter.put('/:id', passport.authenticate('jwt', { session: false }), async 
       res.status(200).json(postReq);
     }
   } else {
-    res.status(401).send('No puedes modificar un post que no es tuyo');
+    res.status(401).send('You cant edit this post');
   }
 });
 
