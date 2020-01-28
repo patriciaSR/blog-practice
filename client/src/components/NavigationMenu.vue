@@ -2,7 +2,6 @@
   <v-navigation-drawer
     v-model="drawer"
     :color="color"
-    :expand-on-hover="expandOnHover"
     :right="right"
     :src="bg"
     absolute
@@ -19,7 +18,7 @@
           <v-list-item-title>{{userStore.data.firstname}} {{userStore.data.lastname || ''}}</v-list-item-title>
           <v-list-item-subtitle>@{{userStore.data.username}}</v-list-item-subtitle>
         </v-list-item-content>
-        <v-btn text icon color="pink" @click="close()">
+        <v-btn text icon color="red" @click="close()">
           <v-icon>fa-times</v-icon>
         </v-btn>
       </v-list-item>

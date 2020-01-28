@@ -24,7 +24,8 @@ export default {
     Footer
   },
 
-  data: () => ({}),
+  data: () => ({
+  }),
   mounted() {
     return userStore.getFromLocalStorage()
   }
