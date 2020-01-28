@@ -7,7 +7,7 @@
       <router-link :to="'/login'">aquí</router-link>
     </div>
 
-    <div v-if="comments.length !== 0" class="px-4 pb-4">
+    <div v-else class="px-4 pb-4">
       <v-card class="pa-4 my-4">
         <v-text-field
           v-model="newComment"
@@ -24,7 +24,7 @@
         <div class="d-flex">
           <v-avatar size="70" class="ma-2">
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsc5Kf9fpgukpXftCaCxHgghEzGXtHPOoxirg5H1Psq8imumfI5Q&s"
+              :src="comment.userInfo.image || defaultAvatar"
               :alt="comment.username"
             />
           </v-avatar>
@@ -48,7 +48,7 @@
         </v-card>
         <v-card-text v-else class="text--primary">{{comment.content}}</v-card-text>
 
-        <v-card-actions v-if="userStore.token && (userStore.data._id === comment.userInfo.userID || userStore.data.role === 'admin')">
+        <v-card-actions v-if="userStore.token && (userStore.data._id === comment.userID || userStore.data.role === 'admin')">
           <v-btn color="orange" text @click="editComment(comment)">Edit</v-btn>
           <v-btn color="orange" text @click="deleteComment(comment._id)">Delete</v-btn>
         </v-card-actions>
@@ -59,6 +59,8 @@
 
 <script>
 import userStore from '../stores/user'
+import defaultAvatar from '../assets/avatar-pengin.png'
+
 
 import sendNewComment from '../resources/sendNewComment'
 import sendEditComment from '../resources/sendEditComment'
@@ -73,6 +75,7 @@ export default {
   },
   data: () => ({
     userStore: userStore.state,
+    defaultAvatar,
     newComment: undefined,
     commentToEdit: {
       id: '',

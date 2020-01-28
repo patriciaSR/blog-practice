@@ -112,7 +112,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"newpost\",\n    \"content\": \"loremmmmmmmmm\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\"\n}",
+							"raw": "{\n\t\"title\": \"newpost\",\n    \"content\": \"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, minima perferendis delectus cum aliquid suscipit hic itaque, sed eligendi modi magnam quod sit nihil commodi provident et ipsa cumque eius!Lorem\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"https://img1.goodfon.com/wallpaper/nbig/1/b9/nastroeniya-makro-cvety-6881.jpg\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -155,7 +155,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"postCHANGE345345E\",\n    \"content\": \"loremmmmmmmmm\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"url?¿\"\n}",
+							"raw": "{\n\t\"title\": \"postCHAAAAAAAANGEEEEEE\",\n    \"content\": \"loremmmmmmmmm loreeeemmmmmmmmm chaaaaaaaaaaaaaaaaaaaaaaaaaaange\",\n    \"tags\": [\"lala\", \"lalalal\", \"lalala\"],\n    \"categories\": [\"jasjas\"],\n    \"image\": \"https://image.winudf.com/v2/image/Y29tLnBhc3RvcmUubmF0dXJlLmltYWdlcy53YWxscGFwZXJfc2NyZWVuXzBfN3VrNnE2djU/screen-0.jpg?fakeurl=1&type=.jpg\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -627,7 +627,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstname\": \"mufasa\",\n    \"lastname\": \"lopez\",\n    \"username\": \"mufasa555\",\n    \"email\": \"mufasa@gmail.com\",\n    \"image\": \"kadasad\",\n    \"password\": \"mufasa22\",\n    \"rol\": \"publisher\"\n}",
+							"raw": "{\n    \"firstname\": \"mufasa\",\n    \"lastname\": \"lopez\",\n    \"username\": \"mufasa555\",\n    \"email\": \"mufasa@gmail.com\",\n    \"image\": \"https://i.pinimg.com/originals/a8/b3/d6/a8b3d61f1c857d80fff2096925198fce.jpg\",\n    \"password\": \"mufasa22\",\n    \"rol\": \"publisher\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

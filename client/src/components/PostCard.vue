@@ -3,15 +3,15 @@
     <v-img
       class="white--text align-end"
       height="200px"
-      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+      :src="postData.image || defaultPostImage"
     >
       <v-card-title>{{postData.title}}</v-card-title>
     </v-img>
     <div class="d-flex">
       <v-avatar size="70" class="ma-2">
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsc5Kf9fpgukpXftCaCxHgghEzGXtHPOoxirg5H1Psq8imumfI5Q&s"
-          alt="John"
+          :src="postData.userInfo.image || defaultAvatar"
+          :alt="postData.userInfo.username"
         />
       </v-avatar>
       <div class="d-flex-column justify-center py-3">
@@ -36,13 +36,18 @@
 
 <script>
 import userStore from '../stores/user'
+import defaultPostImage from '../assets/defaultPostImage.jpg'
+import defaultAvatar from '../assets/avatar-pengin.png'
+
 
 import deletePost from '../resources/deletePost'
 
 export default {
   name: 'PostCard',
   data: () => ({
-    userStore: userStore.state
+    userStore: userStore.state,
+    defaultPostImage,
+    defaultAvatar
   }),
   props: {
     postData: undefined,

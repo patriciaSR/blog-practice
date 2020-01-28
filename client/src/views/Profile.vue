@@ -11,8 +11,7 @@
         </v-img>
         <div class="d-flex">
           <v-avatar size="70" class="ma-2">
-            <img v-if="userStore.data.image" :src="userStore.data.image" alt="user avatar" />
-            <img v-else :src="defaultAvatar" alt="default avatar" />
+            <img :src="userStore.data.image || defaultAvatar" alt="user avatar" />
           </v-avatar>
           <div class="d-flex-column justify-center py-3">
             <v-card-subtitle class="py-0 mb-1 primary--text">
@@ -59,7 +58,7 @@
 
         <v-card-text v-else width="100%">
           You don't have any post yet. Create your first post
-          <router-link :to="'/'">here >></router-link>
+          <router-link :to="'/myprofile/newpost'">here >></router-link>
         </v-card-text>
       </v-card>
     </div>

@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       userStore: userStore.state,
-      defaultAvatar: defaultAvatar,
+      defaultAvatar,
       drawer: true,
       items: [
         { title: 'Posts', icon: 'mdi-view-dashboard', path: '/posts' },
