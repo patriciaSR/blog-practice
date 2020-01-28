@@ -32,7 +32,9 @@
 
         <v-card-actions v-if="userStore.token" class="justify-end">
           <PrimaryBtn btnText="+ New Post" @go-to="goToView('/myprofile/newpost')"/>
+          <PrimaryBtn v-if="userStore.data.role === 'admin'" btnText="⚙ Words" @go-to="goToView('/myprofile/words')"/>
         </v-card-actions>
+
       </v-card>
 
       <v-card max-width="800" color="secondary">
