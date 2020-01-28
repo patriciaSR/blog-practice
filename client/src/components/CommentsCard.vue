@@ -1,66 +1,63 @@
 <template>
-  <v-card max-width="800" :class="{ 'd-none': isCommentsOpen }" class="mt-5" color="#E8EAF6">
+  <v-card max-width="800" :class="{ 'd-none': isCommentsOpen }" class="mt-5 pa-4" color="#E8EAF6">
     <v-card-title>{{comments.length}} COMMENTS</v-card-title>
 
-    <div v-if="!userStore.token">
+    <div v-if="!userStore.token" class="pa-4">
       Para comentar haz login
       <router-link :to="'/login'">aquí</router-link>
     </div>
 
-    <div v-else class="px-4 pb-4">
-      <v-card class="pa-4 my-4">
+    <v-card v-else class="pa-4 my-4">
+      <v-text-field
+        v-model="newComment"
+        filled
+        label="Write your comment"
+        rows="3"
+        :rules="[rules.required]"
+        @keyup.enter="addNewComment()"
+      ></v-text-field>
+
+      <PrimaryBtn btnText="+ Comment" @go-to="addNewComment" />
+    </v-card>
+
+    <v-card max-width="800" v-for="comment in comments" :key="comment._id" class="mb-2">
+      <div class="d-flex">
+        <v-avatar size="70" class="ma-2">
+          <img :src="comment.userInfo.image || defaultAvatar" :alt="comment.username" />
+        </v-avatar>
+        <div class="d-flex-column justify-center py-3">
+          <v-card-subtitle class="py-0 mb-1 primary--text">@{{comment.userInfo.username}}</v-card-subtitle>
+          <v-card-subtitle class="py-0 caption">date: {{comment.date}}</v-card-subtitle>
+        </div>
+      </div>
+
+      <v-card class="pa-4 my-4" v-if="comment._id === commentToEdit.id">
         <v-text-field
-          v-model="newComment"
+          v-model="commentToEdit.content"
           filled
           label="Write your comment"
           rows="3"
           :rules="[rules.required]"
-          @keyup.enter="addNewComment()"
+          @keyup.enter="sendEditComment()"
         ></v-text-field>
 
-        <PrimaryBtn btnText="+ Comment" @go-to="addNewComment" />
+        <PrimaryBtn btnText="Edit" @go-to="sendEditComment" />
       </v-card>
-      <v-card max-width="800" v-for="comment in comments" :key="comment._id" class="mb-1">
-        <div class="d-flex">
-          <v-avatar size="70" class="ma-2">
-            <img
-              :src="comment.userInfo.image || defaultAvatar"
-              :alt="comment.username"
-            />
-          </v-avatar>
-          <div class="d-flex-column justify-center py-3">
-            <v-card-subtitle class="py-0 mb-1 primary--text">@{{comment.userInfo.username}}</v-card-subtitle>
-            <v-card-subtitle class="py-0 caption">date: {{comment.date}}</v-card-subtitle>
-          </div>
-        </div>
+      <v-card-text v-else class="text--primary">{{comment.content}}</v-card-text>
 
-        <v-card class="pa-4 my-4" v-if="comment._id === commentToEdit.id">
-          <v-text-field
-            v-model="commentToEdit.content"
-            filled
-            label="Write your comment"
-            rows="3"
-            :rules="[rules.required]"
-            @keyup.enter="sendEditComment()"
-          ></v-text-field>
-
-          <PrimaryBtn btnText="Edit" @go-to="sendEditComment" />
-        </v-card>
-        <v-card-text v-else class="text--primary">{{comment.content}}</v-card-text>
-
-        <v-card-actions v-if="userStore.token && (userStore.data._id === comment.userID || userStore.data.role === 'admin')">
-          <v-btn color="orange" text @click="editComment(comment)">Edit</v-btn>
-          <v-btn color="orange" text @click="deleteComment(comment._id)">Delete</v-btn>
-        </v-card-actions>
-      </v-card>
-    </div>
+      <v-card-actions
+        v-if="userStore.token && (userStore.data._id === comment.userID || userStore.data.role === 'admin')"
+      >
+        <v-btn color="orange" text @click="editComment(comment)">Edit</v-btn>
+        <v-btn color="orange" text @click="deleteComment(comment._id)">Delete</v-btn>
+      </v-card-actions>
+    </v-card>
   </v-card>
 </template>
 
 <script>
 import userStore from '../stores/user'
 import defaultAvatar from '../assets/avatar-pengin.png'
-
 
 import sendNewComment from '../resources/sendNewComment'
 import sendEditComment from '../resources/sendEditComment'
