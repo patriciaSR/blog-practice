@@ -2,9 +2,7 @@
   <v-container>
     <v-layout text-left class="d-flex flex-column justify-space-between align-center my-4" wrap>
       <v-card width="800" color="secondary">
-
-          <AddWordCard @go-addNewWord="addNewWord" />
-
+        <WordCardInput @go-sendWord="addNewWord" btnText="+ Word" :word="newWord" />
 
         <v-card-title class>Lista de palabras</v-card-title>
         <v-list-item three-line class="d-flex flex-wrap pb-3">
@@ -16,24 +14,12 @@
             :key="word._id"
             :id="word._id"
           >
-            <v-card class="pa-4 my-4" v-if="word._id === wordToEdit.id">
-              <v-text-field
-                v-model="wordToEdit.word"
-                filled
-                label="Word"
-                rows="3"
-                @keyup.enter="sendEditWord(word.word)"
-              ></v-text-field>
-
-              <v-text-field
-                v-model="wordToEdit.level"
-                filled
-                label="Level"
-                @keyup.enter="sendEditWord(word.word)"
-              ></v-text-field>
-
-              <PrimaryBtn btnText="Edit" @go-to="sendEditWord(word.word)" />
-            </v-card>
+            <WordCardInput
+              v-if="word._id === wordToEdit.id"
+              @go-sendWord="sendEditWord"
+              btnText="Edit"
+              :word="wordToEdit"
+            />
 
             <v-list-item-content v-else class="word__box">
               <v-list-item-title class="mb-2">
@@ -65,21 +51,22 @@ import sendNewWord from '../resources/sendNewWord'
 import sendEditWord from '../resources/sendEditWord'
 import deleteWord from '../resources/deleteWord'
 
-import AddWordCard from '../components/AddWordCard'
-import PrimaryBtn from '../components/Btns/PrimaryBtn'
+import WordCardInput from '../components/WordCardInput'
 import SecondaryBtn from '../components/Btns/SecondaryBtn'
-
 
 export default {
   name: 'Posts',
   components: {
-    AddWordCard,
-    PrimaryBtn,
+    WordCardInput,
     SecondaryBtn
   },
   data: () => ({
     userStore: userStore.state,
     offensiveWords: [],
+    newWord: {
+      word: '',
+      level: ''
+    },
     wordToEdit: {
       id: '',
       word: '',
@@ -112,7 +99,6 @@ export default {
       this.$router.push(path)
     },
     async addNewWord(newWord) {
-      console.log(newWord)
       if (newWord.word && newWord.level) {
         const noSpaceWord = newWord.word.trim()
         newWord.word = noSpaceWord
@@ -139,14 +125,15 @@ export default {
     editWord(word) {
       return (this.idToEdit = word)
     },
-    async sendEditWord(wordToChange) {
+    async sendEditWord(newWord) {
       if (this.wordToEdit) {
-        const noSpaceWord = this.wordToEdit.word.trim()
-        this.wordToEdit.word = noSpaceWord
+        const noSpaceWord = newWord.word.trim()
+        newWord.word = noSpaceWord
+
         let resultSendWord
 
         try {
-          resultSendWord = await sendEditWord(wordToChange, this.wordToEdit)
+          resultSendWord = await sendEditWord(this.wordToEdit.word, newWord)
         } catch (e) {
           if (e.response.status === 401) {
             alert('Your session has expired. Please, login again!')
