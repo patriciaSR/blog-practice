@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-layout class="d-flex flex-row justify-space-between align-center my-4" wrap>
+    <v-layout wrap class="d-flex flex-row justify-space-between align-center my-4">
       <div class="v-card v-card--shadow-none">
         <PostCard
           :postData="postData"
@@ -35,6 +35,11 @@ import CommentsCard from '../components/CommentsCard'
 
 export default {
   name: 'PostDetail',
+  components: {
+    PrimaryBtn,
+    PostCard,
+    CommentsCard
+  },
   data: () => ({
     postData: {
       comments: [],
@@ -43,11 +48,6 @@ export default {
     isCommentsOpen: true,
     userStore: userStore.state
   }),
-  components: {
-    PrimaryBtn,
-    PostCard,
-    CommentsCard
-  },
   async mounted() {
     let id = this.$route.params.id
     this.postData = await loadPostDetail(id)

@@ -1,20 +1,20 @@
 <template>
-  <v-card class="pa-4 ma-4" max-width="400px">
+  <v-card max-width="400px" class="pa-4 ma-4">
     <v-text-field
       v-model="newWord.word"
+      :rules="[rules.required]"
       filled
       label="Write your word"
-      :rules="[rules.required]"
       @keyup.enter="sendWord"
     ></v-text-field>
 
     <v-text-field
-      type="number"
-      min="1"
-      max="5"
       v-model="newWord.level"
       :rules="[rules.required]"
+      type="number"
       filled
+      min="1"
+      max="5"
       label="level"
     ></v-text-field>
 
@@ -45,7 +45,6 @@ export default {
       }
     }
   },
-
   methods: {
     sendWord() {
       this.$emit('go-sendWord', this.newWord)

@@ -1,24 +1,23 @@
 <template>
   <v-container fluid mx-auto my-6 pa-0>
-    <v-card class="mx-4" v-if="userStore.token">
+    <v-card v-if="userStore.token" class="mx-4">
       <v-form ref="form" class="pa-4 pt-6">
         <v-text-field
           v-model="newPost.title"
           :rules="[rules.required]"
           filled
           label="Title"
-          style="min-height: 96px"
         ></v-text-field>
 
         <v-text-field v-model="newPost.image" filled label="Background image URL"></v-text-field>
 
         <v-textarea
           v-model="newPost.content"
+          :rules="[rules.required]"
           auto-grow
           filled
           label="Write your post"
           rows="6"
-          :rules="[rules.required]"
         ></v-textarea>
       </v-form>
       <v-divider></v-divider>
@@ -33,7 +32,7 @@
       </v-card-actions>
     </v-card>
 
-    <v-card class="mx-auto pa-10" max-width="500px" v-else>
+    <v-card v-else class="mx-auto pa-10" max-width="500px">
       Login to add New Post
       <router-link :to="'/login'">here >></router-link>
     </v-card>
@@ -69,6 +68,11 @@ export default {
         required: value => !!value || 'The field is required.'
       },
       agreement: false
+    }
+  },
+  async mounted() {
+    if (this.$route.query.edit) {
+      this.newPost = await this.loadPostToEdit()
     }
   },
   methods: {
@@ -115,10 +119,8 @@ export default {
       } else {
         alert('Fill required fields')
       }
-    }
-  },
-  async mounted() {
-    if (this.$route.query.edit) {
+    },
+    async loadPostToEdit() {
       let postToEdit
       const postID = this.$route.query.edit
 
@@ -129,7 +131,7 @@ export default {
         delete postToEdit.userInfo
         delete postToEdit.userID
 
-        return (this.newPost = postToEdit)
+        return postToEdit
       } catch (e) {
         if (e.response.status === 401) {
           alert('Your session has expired. Please, login again!')

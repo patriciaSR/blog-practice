@@ -1,6 +1,5 @@
 <template>
   <div class="d-flex">
-
     <v-avatar size="70" class="ma-2">
       <img v-if="userData" :src="userData.image || defaultAvatar" :alt="userData.username" />
 
@@ -10,7 +9,11 @@
         :alt="commentUserData.username"
       />
 
-      <img v-if="postData" :src="postData.userInfo.image || defaultAvatar" :alt="postData.userInfo.username" />
+      <img
+        v-if="postData"
+        :src="postData.userInfo.image || defaultAvatar"
+        :alt="postData.userInfo.username"
+      />
     </v-avatar>
 
     <div v-if="userData" class="d-flex-column justify-center py-3">
@@ -42,18 +45,15 @@ import defaultAvatar from '../assets/avatar-pengin.png'
 
 export default {
   name: 'PrimaryBtn',
-  data: () => ({
-    defaultAvatar
-  }),
   props: {
     postData: undefined,
     commentUserData: undefined,
     commentDate: undefined,
-    userData: undefined,
+    userData: undefined
   },
-  mounted() {
-  },
-  methods: {}
+  data: () => ({
+    defaultAvatar
+  })
 }
 </script>
 

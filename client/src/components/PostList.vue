@@ -1,14 +1,14 @@
 <template>
-  <v-card max-width="800" color="secondary" wrap>
+  <v-card wrap max-width="800" color="secondary">
     <v-card-title class>{{listTitle}}</v-card-title>
-    <v-list-item three-line class="d-block pb-3" v-if="posts">
+    <v-list-item v-if="posts.length !==0" three-line class="d-block pb-3">
       <v-card
-        class="mx-1 my-3 px-2"
-        max-width="800"
-        tile
         v-for="post in posts"
-        :key="post._id"
         :id="post._id"
+        :key="post._id"
+        tile
+        max-width="800"
+        class="mx-1 my-3 px-2"
       >
         <router-link :to="'/posts/' + post._id" class="no-underline">
           <v-list-item-content>
@@ -28,16 +28,14 @@
 </template>
 
 <script>
-
 export default {
   name: 'PostList',
   components: {},
-  data: () => ({
-  }),
   props: {
     listTitle: undefined,
-    posts: undefined,
+    posts: undefined
   },
+  data: () => ({}),
   methods: {}
 }
 </script>

@@ -4,7 +4,6 @@
       <Hero />
 
       <WelcomeCard :userStore="userStore" />
-
     </v-layout>
   </v-container>
 </template>

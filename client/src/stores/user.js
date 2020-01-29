@@ -19,6 +19,7 @@ export default {
 
     return result;
   },
+
   getFromLocalStorage(){
     this.state.token = localStorage.getItem('userToken');
     this.state.data = JSON.parse(localStorage.getItem('userData'));

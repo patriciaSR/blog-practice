@@ -5,10 +5,10 @@
         <v-btn
           v-for="icon in icons"
           :key="icon.class"
-          class="mx-4 white--text"
           icon
           :href="icon.url"
-          target="_blanck"
+          target="_blank"
+          class="mx-4 white--text"
         >
           <v-icon size="24px">{{ icon.class }}</v-icon>
         </v-btn>
@@ -20,6 +20,7 @@
         {{ new Date().getFullYear() }} —
         <a
           href="https://github.com/patriciaSR"
+          target="_blank"
           class="github__link secondary--text"
         >
           <strong>@patriciaSR</strong>
@@ -32,7 +33,6 @@
 <script>
 export default {
   name: 'Footer',
-
   data: () => ({
     icons: [
       {
@@ -57,10 +57,10 @@ export default {
 </script>
 
 <style>
-  .github__link {
-     text-decoration: none;
-  }
-  strong:hover {
-    color: #5c6bc0;
-  }
+.github__link {
+  text-decoration: none;
+}
+strong:hover {
+  color: #5c6bc0;
+}
 </style>

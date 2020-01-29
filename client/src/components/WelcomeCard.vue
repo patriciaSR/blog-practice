@@ -1,6 +1,6 @@
 <template>
   <v-flex py-15>
-    <div class="py-5" v-if="!userStore.token">
+    <div v-if="!userStore.token" class="py-5">
       <p class="subheading font-weight-regular">For create new posts and comments you need sign in.</p>
 
       <div class="py-5">
@@ -37,10 +37,10 @@ export default {
   components: {
     PrimaryBtn
   },
-  data: () => ({}),
   props: {
     userStore: undefined
   },
+  data: () => ({}),
   methods: {
     goToView(path) {
       this.$router.push(path)

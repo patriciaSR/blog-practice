@@ -3,9 +3,9 @@
     <div v-if="userStore.token" class="mx-auto my-10 v-card v-card--shadow-none">
       <v-card max-width="800" class="mb-6">
         <v-img
-          class="white--text align-end"
-          height="200px"
           src="https://i.pinimg.com/originals/11/3b/a4/113ba4f4a6ab9817069ca3a3bb4a1b1b.jpg"
+          height="200px"
+          class="white--text align-end"
         >
           <v-card-title>Hello, {{userStore.data.firstname}}</v-card-title>
         </v-img>
@@ -29,7 +29,7 @@
         </v-card-actions>
       </v-card>
 
-      <PostList listTitle="Your Posts" :posts="userPosts" />
+      <PostList :posts="userPosts" listTitle="Your Posts"/>
     </div>
 
     <v-card v-else class="pa-10">
@@ -40,9 +40,8 @@
 </template>
 
 <script>
-import loadUserPosts from '../resources/loadUserPosts'
-
 import userStore from '../stores/user'
+import loadUserPosts from '../resources/loadUserPosts'
 
 import AvatarCard from '../components/AvatarCard'
 import PostList from '../components/PostList'
@@ -61,7 +60,6 @@ export default {
     userStore: userStore.state,
     userPosts: [],
   }),
-  props: {},
   async mounted() {
     this.userPosts = await this.getUserPosts()
   },

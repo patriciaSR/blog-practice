@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="800" :class="{ 'd-none': isCommentsOpen }" class="mt-5 pa-4" color="#E8EAF6">
+  <v-card max-width="800" color="#E8EAF6" :class="{ 'd-none': isCommentsOpen }" class="mt-5 pa-4">
     <v-card-title>{{comments.length}} COMMENTS</v-card-title>
 
     <div v-if="!userStore.token" class="pa-4">
@@ -10,26 +10,26 @@
     <v-card v-else class="pa-4 my-4">
       <v-text-field
         v-model="newComment"
+        :rules="[rules.required]"
         filled
         label="Write your comment"
         rows="3"
-        :rules="[rules.required]"
         @keyup.enter="addNewComment()"
       ></v-text-field>
 
       <PrimaryBtn btnText="+ Comment" @go-to="addNewComment" />
     </v-card>
 
-    <v-card max-width="800" v-for="comment in comments" :key="comment._id" class="mb-2">
+    <v-card v-for="comment in comments" :key="comment._id" max-width="800" class="mb-2">
       <AvatarCard :commentUserData="comment.userInfo" :commentDate="comment.date" />
 
-      <v-card class="pa-4 my-4" v-if="comment._id === commentToEdit.id">
+      <v-card v-if="comment._id === commentToEdit.id" class="pa-4 my-4">
         <v-text-field
           v-model="commentToEdit.content"
+          :rules="[rules.required]"
           filled
           label="Write your comment"
           rows="3"
-          :rules="[rules.required]"
           @keyup.enter="sendEditComment()"
         ></v-text-field>
 
@@ -66,6 +66,11 @@ export default {
     PrimaryBtn,
     SecondaryBtn
   },
+  props: {
+    postID: undefined,
+    comments: undefined,
+    isCommentsOpen: undefined
+  },
   data: () => ({
     userStore: userStore.state,
     defaultAvatar,
@@ -78,11 +83,6 @@ export default {
       required: value => !!value || 'The field is required.'
     }
   }),
-  props: {
-    postID: undefined,
-    comments: undefined,
-    isCommentsOpen: undefined
-  },
   computed: {
     idToEdit: {
       get: function() {

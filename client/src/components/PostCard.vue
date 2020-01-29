@@ -1,10 +1,7 @@
 <template>
   <v-card max-width="800">
-    <v-img
-      class="white--text align-end"
-      height="200px"
-      :src="postData.image || defaultPostImage">
-        <v-card-title>{{postData.title}}</v-card-title>
+    <v-img :src="postData.image || defaultPostImage" class="white--text align-end" height="200px">
+      <v-card-title>{{postData.title}}</v-card-title>
     </v-img>
 
     <AvatarCard :postData="postData" />
@@ -22,7 +19,7 @@
     <v-divider class="mx-3"></v-divider>
 
     <v-card-actions>
-      <v-btn color="orange" text @click="toggle()">Show Comments ({{postData.comments.length}})</v-btn>
+      <v-btn text color="orange" @click="toggle()">Show Comments ({{postData.comments.length}})</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -38,10 +35,6 @@ import deletePost from '../resources/deletePost'
 
 export default {
   name: 'PostCard',
-  data: () => ({
-    userStore: userStore.state,
-    defaultPostImage
-  }),
   components: {
     AvatarCard,
     SecondaryBtn
@@ -51,6 +44,10 @@ export default {
     isCommentsOpen: undefined,
     token: undefined
   },
+  data: () => ({
+    userStore: userStore.state,
+    defaultPostImage
+  }),
   methods: {
     toggle() {
       const newValue = !this.isCommentsOpen

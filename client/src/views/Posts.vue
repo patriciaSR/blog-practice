@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-layout text-left class="d-flex flex-row justify-space-between align-center" wrap>
+    <v-layout text-left wrap class="d-flex flex-row justify-space-between align-center">
       <div class="mx-auto my-10 v-card">
-        <PostList listTitle="Post List" :posts="posts" />
+        <PostList :posts="posts" listTitle="Post List"/>
       </div>
 
       <PrimaryBtn

@@ -9,11 +9,11 @@
         ></v-text-field>
 
         <v-text-field
-          :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
           v-model="password"
+          :type="show2 ? 'text' : 'password'"
+          :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
           :rules="[rules.required, rules.min]"
           name="input-password"
-          :type="show2 ? 'text' : 'password'"
           label="Password"
           hint="At least 6 characters"
           class="input-group--focused"
@@ -38,7 +38,6 @@
 import userStore from '../stores/user'
 
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
-
 
 export default {
   name: 'Login',

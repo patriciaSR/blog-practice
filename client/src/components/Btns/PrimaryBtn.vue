@@ -1,15 +1,14 @@
 <template>
-  <v-btn depressed color="primary" @click="goTo()" max-width="120" class="ma-2">{{btnText}}</v-btn>
+  <v-btn depressed color="primary" max-width="120" class="ma-2" @click="goTo()">{{btnText}}</v-btn>
 </template>
 
 <script>
-
 export default {
   name: 'PrimaryBtn',
-  data: () => ({}),
   props: {
     btnText: undefined
   },
+  data: () => ({}),
   methods: {
     goTo() {
       this.$emit('go-to')

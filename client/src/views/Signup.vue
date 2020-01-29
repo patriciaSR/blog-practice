@@ -9,14 +9,12 @@
 
           <v-text-field
             v-model="newUser.username"
-            value
             :rules="[rules.required, rules.min, rules.max, rules.username]"
             label="Username *"
           ></v-text-field>
 
           <v-text-field
             v-model="newUser.email"
-            value
             :rules="[rules.required, rules.email]"
             label="E-mail *"
           ></v-text-field>
@@ -24,14 +22,13 @@
           <v-text-field v-model="newUser.image" label="Profile Image url"></v-text-field>
 
           <v-text-field
+            v-model="newUser.password"
             :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show2 ? 'text' : 'password'"
             name="input-password"
             label="Password"
             hint="At least 6 characters"
-            v-model="newUser.password"
-            value
             class="input-group--focused"
             @click:append="show2 = !show2"
             @keyup.enter="signup()"
@@ -48,7 +45,6 @@
 import registNewUser from '../resources/registNewUser'
 
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
-
 
 export default {
   name: 'Signup',

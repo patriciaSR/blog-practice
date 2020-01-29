@@ -6,7 +6,7 @@
     :src="bg"
     absolute
     dark
-    :class="{open: isOpen, hidden: !isOpen}"
+    :class="{open: isOpen, 'd-none': !isOpen}"
   >
     <v-list dense nav class="py-0">
       <v-list-item two-line :class="miniVariant && 'px-0 my-0'">
@@ -14,7 +14,7 @@
           <img :src="userStore.data.image || defaultAvatar" />
         </v-list-item-avatar>
 
-        <v-list-item-content class="d-flex" v-if="userStore.token">
+        <v-list-item-content v-if="userStore.token" class="d-flex">
           <v-list-item-title>{{userStore.data.firstname}} {{userStore.data.lastname || ''}}</v-list-item-title>
           <v-list-item-subtitle>@{{userStore.data.username}}</v-list-item-subtitle>
         </v-list-item-content>
@@ -117,9 +117,6 @@ export default {
 </script>
 
 <style scoped>
-aside.hidden {
-  display: none;
-}
 aside.open {
   display: block;
   transform: none !important;

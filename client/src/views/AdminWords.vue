@@ -1,24 +1,24 @@
 <template>
   <v-container>
-    <v-layout text-left class="d-flex flex-column justify-space-between align-center my-4" wrap>
+    <v-layout text-left wrap class="d-flex flex-column justify-space-between align-center my-4">
       <v-card width="800" color="secondary">
-        <WordCardInput @go-sendWord="addNewWord" btnText="+ Word" :word="newWord" />
+        <WordCardInput btnText="+ Word" :word="newWord" @go-sendWord="addNewWord" />
 
         <v-card-title class>Lista de palabras</v-card-title>
         <v-list-item three-line class="d-flex flex-wrap pb-3">
           <v-card
+            v-for="word in offensiveWords"
+            :id="word._id"
+            :key="word._id"
+            tile
             class="mx-2 my-3 px-2"
             max-width="800"
-            tile
-            v-for="word in offensiveWords"
-            :key="word._id"
-            :id="word._id"
           >
             <WordCardInput
               v-if="word._id === wordToEdit.id"
-              @go-sendWord="sendEditWord"
               btnText="Edit"
               :word="wordToEdit"
+              @go-sendWord="sendEditWord"
             />
 
             <v-list-item-content v-else class="word__box">
@@ -55,7 +55,7 @@ import WordCardInput from '../components/WordCardInput'
 import SecondaryBtn from '../components/Btns/SecondaryBtn'
 
 export default {
-  name: 'Posts',
+  name: 'AdminWords',
   components: {
     WordCardInput,
     SecondaryBtn
@@ -76,10 +76,6 @@ export default {
       required: value => !!value || 'The field is required.'
     }
   }),
-  async mounted() {
-    const result = await loadWords()
-    this.offensiveWords = result
-  },
   computed: {
     idToEdit: {
       get: function() {
@@ -93,6 +89,10 @@ export default {
         return this.wordToEdit
       }
     }
+  },
+  async mounted() {
+    const result = await loadWords()
+    this.offensiveWords = result
   },
   methods: {
     async addNewWord(newWord) {
