@@ -5,7 +5,6 @@
       <PostList listTitle="Post List" :posts="posts" />
 
       <PrimaryBtn
-        v-if="userStore.token"
         btnText="New Post"
         @go-to="goToView('/myprofile/newpost')"
         class="mt-10 align-self-start"

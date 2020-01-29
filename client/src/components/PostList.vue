@@ -20,8 +20,8 @@
       </v-card>
     </v-list-item>
 
-    <v-card-text v-else width="100%">
-      You don't have any post yet. Create your first post
+    <v-card-text v-else width="100%" class="ma-4">
+      There is no post yet. Create your first post
       <router-link :to="'/myprofile/newpost'">here >></router-link>
     </v-card-text>
   </v-card>
