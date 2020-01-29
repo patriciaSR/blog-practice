@@ -85,6 +85,12 @@ import deleteWord from '../resources/deleteWord'
 
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
 
+if (typeof String.prototype.trim === 'undefined') {
+  String.prototype.trim = function() {
+    return String(this).replace(/^\s+|\s+$/g, '')
+  }
+}
+
 export default {
   name: 'Posts',
   components: {
@@ -130,7 +136,10 @@ export default {
     },
     async addNewWord() {
       if (this.newWord.word && this.newWord.level) {
+        const noSpaceWord = this.newWord.word.trim()
+        this.newWord.word = noSpaceWord
         let resultSendWord
+
         try {
           resultSendWord = await sendNewWord(this.newWord)
         } catch (e) {
@@ -159,7 +168,10 @@ export default {
     },
     async sendEditWord(wordToChange) {
       if (this.wordToEdit) {
+        const noSpaceWord = this.wordToEdit.word.trim()
+        this.wordToEdit.word = noSpaceWord
         let resultSendWord
+
         try {
           resultSendWord = await sendEditWord(wordToChange, this.wordToEdit)
         } catch (e) {
@@ -195,7 +207,7 @@ export default {
 
       if (resultSendDelete) {
         const indexWord = this.offensiveWords.findIndex(
-          word => word.word === word
+          arrayWord => arrayWord.word === word
         )
         this.offensiveWords.splice(indexWord, 1)
       }
@@ -205,7 +217,7 @@ export default {
 </script>
 
 <style scoped>
-  .word__box {
-    max-width: 200px;
-  }
+.word__box {
+  max-width: 200px;
+}
 </style>
