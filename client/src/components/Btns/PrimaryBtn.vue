@@ -1,5 +1,5 @@
 <template>
-  <v-btn depressed color="primary" @click="goTo()" max-width="120">{{btnText}}</v-btn>
+  <v-btn depressed color="primary" @click="goTo()" max-width="120" class="ma-2">{{btnText}}</v-btn>
 </template>
 
 <script>

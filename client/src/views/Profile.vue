@@ -12,47 +12,24 @@
 
         <AvatarCard :userData="userStore.data" />
 
-        <v-card-actions v-if="userStore.token">
-          <SecondaryBtn btnText="Update Profile"/>
-          <SecondaryBtn btnText="Delete Profile"/>
-        </v-card-actions>
+        <v-card-actions v-if="userStore.token" class="flex-column align-start">
+          <div>
+            <SecondaryBtn btnText="Update Profile" />
+            <SecondaryBtn btnText="Delete Profile" />
+          </div>
 
-        <v-card-actions v-if="userStore.token" class="justify-end">
-          <PrimaryBtn btnText="+ New Post" @go-to="goToView('/myprofile/newpost')" />
-          <PrimaryBtn
-            v-if="userStore.data.role === 'admin'"
-            btnText="⚙ Words"
-            @go-to="goToView('/myprofile/words')"
-          />
+          <div class="align-self-end">
+            <PrimaryBtn btnText="+ New Post" @go-to="goToView('/myprofile/newpost')" />
+            <PrimaryBtn
+              v-if="userStore.data.role === 'admin'"
+              btnText="⚙ Words"
+              @go-to="goToView('/myprofile/words')"
+            />
+          </div>
         </v-card-actions>
       </v-card>
 
-      <v-card max-width="800" color="secondary">
-        <v-card-title class>Your posts</v-card-title>
-        <v-list-item three-line class="d-block pb-3" v-if="isLoaded && userPosts">
-          <v-card
-            class="mx-1 my-3 px-2"
-            max-width="800"
-            tile
-            v-for="post in userPosts"
-            :key="post._id"
-            :id="post._id"
-          >
-            <router-link :to="'/posts/' + post._id" class="no-underline">
-              <v-list-item-content>
-                <v-list-item-title class="mb-2">{{post.title}}</v-list-item-title>
-                <v-list-item-subtitle class="caption">{{post.date}}</v-list-item-subtitle>
-                <v-list-item-subtitle class="mt-2">{{post.content}}</v-list-item-subtitle>
-              </v-list-item-content>
-            </router-link>
-          </v-card>
-        </v-list-item>
-
-        <v-card-text v-else width="100%">
-          You don't have any post yet. Create your first post
-          <router-link :to="'/myprofile/newpost'">here >></router-link>
-        </v-card-text>
-      </v-card>
+      <PostList listTitle="Your Posts" :posts="userPosts" />
     </div>
 
     <v-card v-else class="pa-10">
@@ -66,9 +43,9 @@
 import loadUserPosts from '../resources/loadUserPosts'
 
 import userStore from '../stores/user'
-import defaultAvatar from '../assets/avatar-pengin.png'
 
 import AvatarCard from '../components/AvatarCard'
+import PostList from '../components/PostList'
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
 import SecondaryBtn from '../components/Btns/SecondaryBtn'
 
@@ -76,19 +53,17 @@ export default {
   name: 'Profile',
   components: {
     AvatarCard,
+    PostList,
     PrimaryBtn,
     SecondaryBtn
   },
   data: () => ({
     userStore: userStore.state,
-    defaultAvatar: defaultAvatar,
     userPosts: [],
-    isLoaded: false
   }),
   props: {},
   async mounted() {
     this.userPosts = await this.getUserPosts()
-    this.isLoaded = true
   },
   methods: {
     toggle() {
@@ -112,9 +87,6 @@ export default {
 </script>
 
 <style scoped>
-.no-underline {
-  text-decoration: none;
-}
 .v-card--shadow-none {
   box-shadow: none;
 }
