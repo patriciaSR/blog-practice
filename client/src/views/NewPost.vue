@@ -32,7 +32,7 @@
       </v-card-actions>
     </v-card>
 
-    <v-card v-else class="mx-auto pa-10" max-width="500px">
+    <v-card v-else class="mx-auto pa-10" max-width="500px" color="secondary">
       Login to add New Post
       <router-link :to="'/login'">here >></router-link>
     </v-card>

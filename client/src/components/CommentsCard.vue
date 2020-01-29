@@ -3,8 +3,8 @@
     <v-card-title>{{comments.length}} COMMENTS</v-card-title>
 
     <div v-if="!userStore.token" class="pa-4">
-      Para comentar haz login
-      <router-link :to="'/login'">aquí</router-link>
+       Login to add new comment
+      <router-link :to="'/login'">here >></router-link>
     </div>
 
     <v-card v-else class="pa-4 my-4">

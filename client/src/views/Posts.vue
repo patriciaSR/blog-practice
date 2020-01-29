@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mx-auto d-flex justify-center">
     <v-layout text-left wrap class="d-flex flex-row justify-space-between align-center">
       <div class="mx-auto my-10 v-card">
         <PostList :posts="posts" listTitle="Post List"/>
@@ -8,7 +8,7 @@
       <PrimaryBtn
         btnText="New Post"
         @go-to="goToView('/myprofile/newpost')"
-        class="mt-10 align-self-start"
+        class="mt-12 align-self-start"
       />
     </v-layout>
   </v-container>

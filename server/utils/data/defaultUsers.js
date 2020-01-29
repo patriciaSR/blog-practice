@@ -2,19 +2,19 @@ const defaultUsers = [
   {
     firstname: 'dumbo',
     lastname: 'perez',
-    username: 'dumbo555',
+    username: 'dumbo111',
     email: 'dumbo555@gmail.com',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1yfb9tceOaaohkLwICCg6g8sGMLtOAE4UqrcH3vLBYPKQGnAITw&s',
-    password: 'dumbo22',
+    password: 'dumbo111',
     role: 'admin',
   },
   {
     firstname: 'bambi',
     lastname: 'lopez',
-    username: 'bambi555',
+    username: 'bambi222',
     email: 'bambi@gmail.com',
     image: 'https://cdn2.actitudfem.com/media/files/styles/big_img/public/images/2019/08/disney-prepara-live-action-de-bambi.jpg',
-    password: 'bambi22',
+    password: 'bambi222',
     role: 'publisher',
   },
   {
@@ -29,10 +29,10 @@ const defaultUsers = [
   {
     firstname: 'simba',
     lastname: 'perez',
-    username: 'simba11',
+    username: 'simba444',
     email: 'simba11@gmail.com',
     image: '',
-    password: 'simba11',
+    password: 'simba444',
     role: 'admin',
   },
 ];

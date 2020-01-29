@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mx-auto d-flex justify-center">
     <v-layout wrap class="d-flex flex-row justify-space-between align-center my-4">
       <div class="v-card v-card--shadow-none">
         <PostCard
@@ -16,7 +16,6 @@
       </div>
 
       <PrimaryBtn
-        v-if="userStore.token"
         btnText="New Post"
         @go-to="goToView('/myprofile/newpost')"
         class="mt-10 align-self-start"
@@ -64,6 +63,9 @@ export default {
 </script>
 
 <style scoped>
+.layout {
+  max-width: 1000px;
+}
 .v-card--shadow-none {
   box-shadow: none;
 }
