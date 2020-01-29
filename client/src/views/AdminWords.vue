@@ -64,8 +64,8 @@
               </v-list-item-subtitle>
 
               <v-card-actions class="justify-end">
-                <v-btn color="orange" text @click="editWord(word)">Edit</v-btn>
-                <v-btn color="orange" text @click="deleteWord(word.word)">Delete</v-btn>
+                <SecondaryBtn btnText="Edit" @go-to="editWord(word)" />
+                <SecondaryBtn btnText="Delete" @go-to="deleteWord(word.word)" />
               </v-card-actions>
             </v-list-item-content>
           </v-card>
@@ -84,6 +84,8 @@ import sendEditWord from '../resources/sendEditWord'
 import deleteWord from '../resources/deleteWord'
 
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
+import SecondaryBtn from '../components/Btns/SecondaryBtn'
+
 
 if (typeof String.prototype.trim === 'undefined') {
   String.prototype.trim = function() {
@@ -94,7 +96,8 @@ if (typeof String.prototype.trim === 'undefined') {
 export default {
   name: 'Posts',
   components: {
-    PrimaryBtn
+    PrimaryBtn,
+    SecondaryBtn
   },
   data: () => ({
     userStore: userStore.state,

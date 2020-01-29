@@ -21,7 +21,6 @@
     </v-card>
 
     <v-card max-width="800" v-for="comment in comments" :key="comment._id" class="mb-2">
-
       <AvatarCard :commentUserData="comment.userInfo" :commentDate="comment.date" />
 
       <v-card class="pa-4 my-4" v-if="comment._id === commentToEdit.id">
@@ -41,8 +40,8 @@
       <v-card-actions
         v-if="userStore.token && (userStore.data._id === comment.userID || userStore.data.role === 'admin')"
       >
-        <v-btn color="orange" text @click="editComment(comment)">Edit</v-btn>
-        <v-btn color="orange" text @click="deleteComment(comment._id)">Delete</v-btn>
+        <SecondaryBtn btnText="Edit" @go-to="editComment(comment)" />
+        <SecondaryBtn btnText="Delete" @go-to="deleteComment(comment._id)" />
       </v-card-actions>
     </v-card>
   </v-card>
@@ -58,12 +57,14 @@ import deleteComment from '../resources/deleteComment'
 
 import AvatarCard from '../components/AvatarCard'
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
+import SecondaryBtn from '../components/Btns/SecondaryBtn'
 
 export default {
   name: 'CommentsCard',
   components: {
     AvatarCard,
-    PrimaryBtn
+    PrimaryBtn,
+    SecondaryBtn
   },
   data: () => ({
     userStore: userStore.state,
