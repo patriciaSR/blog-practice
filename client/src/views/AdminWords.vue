@@ -2,27 +2,9 @@
   <v-container>
     <v-layout text-left class="d-flex flex-column justify-space-between align-center my-4" wrap>
       <v-card width="800" color="secondary">
-        <v-card class="pa-4 ma-4" max-width="400px">
-          <v-text-field
-            v-model="newWord.word"
-            filled
-            label="Write your word"
-            :rules="[rules.required]"
-            @keyup.enter="addNewWord()"
-          ></v-text-field>
 
-          <v-text-field
-            type="number"
-            min="1"
-            max="5"
-            v-model="newWord.level"
-            :rules="[rules.required]"
-            filled
-            label="level"
-          ></v-text-field>
+          <AddWordCard @go-addNewWord="addNewWord" />
 
-          <PrimaryBtn btnText="+ Word" @go-to="addNewWord" />
-        </v-card>
 
         <v-card-title class>Lista de palabras</v-card-title>
         <v-list-item three-line class="d-flex flex-wrap pb-3">
@@ -83,29 +65,21 @@ import sendNewWord from '../resources/sendNewWord'
 import sendEditWord from '../resources/sendEditWord'
 import deleteWord from '../resources/deleteWord'
 
+import AddWordCard from '../components/AddWordCard'
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
 import SecondaryBtn from '../components/Btns/SecondaryBtn'
 
 
-if (typeof String.prototype.trim === 'undefined') {
-  String.prototype.trim = function() {
-    return String(this).replace(/^\s+|\s+$/g, '')
-  }
-}
-
 export default {
   name: 'Posts',
   components: {
+    AddWordCard,
     PrimaryBtn,
     SecondaryBtn
   },
   data: () => ({
     userStore: userStore.state,
     offensiveWords: [],
-    newWord: {
-      word: '',
-      level: ''
-    },
     wordToEdit: {
       id: '',
       word: '',
@@ -137,14 +111,15 @@ export default {
     goToView(path) {
       this.$router.push(path)
     },
-    async addNewWord() {
-      if (this.newWord.word && this.newWord.level) {
-        const noSpaceWord = this.newWord.word.trim()
-        this.newWord.word = noSpaceWord
+    async addNewWord(newWord) {
+      console.log(newWord)
+      if (newWord.word && newWord.level) {
+        const noSpaceWord = newWord.word.trim()
+        newWord.word = noSpaceWord
         let resultSendWord
 
         try {
-          resultSendWord = await sendNewWord(this.newWord)
+          resultSendWord = await sendNewWord(newWord)
         } catch (e) {
           if (e.response.status === 401) {
             alert('Your session has expired. Please, login again!')
@@ -155,11 +130,6 @@ export default {
         }
 
         if (resultSendWord) {
-          this.newWord = {
-            word: ' ',
-            level: 1
-          }
-
           this.offensiveWords.unshift(resultSendWord)
         }
       } else {
