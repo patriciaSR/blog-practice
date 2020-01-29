@@ -26,8 +26,13 @@ export default {
 
   data: () => ({
   }),
-  mounted() {
-    return userStore.getFromLocalStorage()
+  created() {
+    this.getLocalData();
+  },
+  methods: {
+    getLocalData() {
+      return userStore.getFromLocalStorage()
+    }
   }
 }
 </script>

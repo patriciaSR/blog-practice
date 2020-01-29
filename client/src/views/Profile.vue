@@ -31,15 +31,18 @@
         </v-card-actions>
 
         <v-card-actions v-if="userStore.token" class="justify-end">
-          <PrimaryBtn btnText="+ New Post" @go-to="goToView('/myprofile/newpost')"/>
-          <PrimaryBtn v-if="userStore.data.role === 'admin'" btnText="⚙ Words" @go-to="goToView('/myprofile/words')"/>
+          <PrimaryBtn btnText="+ New Post" @go-to="goToView('/myprofile/newpost')" />
+          <PrimaryBtn
+            v-if="userStore.data.role === 'admin'"
+            btnText="⚙ Words"
+            @go-to="goToView('/myprofile/words')"
+          />
         </v-card-actions>
-
       </v-card>
 
       <v-card max-width="800" color="secondary">
         <v-card-title class>Your posts</v-card-title>
-        <v-list-item three-line class="d-block pb-3" v-if="userPosts.length !== 0">
+        <v-list-item three-line class="d-block pb-3" v-if="isLoaded && userPosts">
           <v-card
             class="mx-1 my-3 px-2"
             max-width="800"
@@ -88,17 +91,14 @@ export default {
   data: () => ({
     userStore: userStore.state,
     defaultAvatar: defaultAvatar,
-    userPosts: []
+    userPosts: [],
+    isLoaded: false
   }),
-  async mounted() {
-    const userData = this.userStore.data
-
-    if (userData) {
-      const result = await loadUserPosts(userData._id)
-      this.userPosts = result
-    }
-  },
   props: {},
+  async mounted() {
+    this.userPosts = await this.getUserPosts()
+    this.isLoaded = true
+  },
   methods: {
     toggle() {
       const newValue = !this.isCommentsOpen
@@ -107,6 +107,14 @@ export default {
     },
     goToView(path) {
       this.$router.push(path)
+    },
+    async getUserPosts() {
+      const userData = this.userStore.data
+
+      if (userData) {
+        const result = await loadUserPosts(userData._id)
+        return result
+      }
     }
   }
 }

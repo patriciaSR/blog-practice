@@ -50,12 +50,15 @@ export default {
     posts: []
   }),
   async mounted() {
-    const result = await loadPosts()
-    this.posts = result
+    this.posts = await this.getPosts()
   },
   methods: {
     goToView(path) {
       this.$router.push(path)
+    },
+    async getPosts() {
+      const result = await loadPosts()
+      return result
     }
   }
 }
