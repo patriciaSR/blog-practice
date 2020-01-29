@@ -108,7 +108,9 @@ export default {
       userStore.state.token = '';
       userStore.state.data = {};
 
+      if(this.$router.currentRoute.path !== '/') {
       return this.$router.push('/');
+      }
     }
   }
 }

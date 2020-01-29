@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="800" color="secondary">
+  <v-card max-width="800" color="secondary" wrap>
     <v-card-title class>{{listTitle}}</v-card-title>
     <v-list-item three-line class="d-block pb-3" v-if="posts">
       <v-card

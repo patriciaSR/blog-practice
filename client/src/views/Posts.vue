@@ -1,8 +1,9 @@
 <template>
   <v-container>
-    <v-layout text-left class="d-flex flex-row justify-space-between align-center my-4" wrap>
-
-      <PostList listTitle="Post List" :posts="posts" />
+    <v-layout text-left class="d-flex flex-row justify-space-between align-center" wrap>
+      <div class="mx-auto my-10 v-card">
+        <PostList listTitle="Post List" :posts="posts" />
+      </div>
 
       <PrimaryBtn
         btnText="New Post"

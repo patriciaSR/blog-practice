@@ -1,37 +1,36 @@
 <template>
-  <HelloBlog />
+  <v-container>
+    <v-layout text-center wrap>
+      <Hero />
+
+      <WelcomeCard :userStore="userStore" />
+
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
-import HelloBlog from '../components/HelloBlog'
+import userStore from '../stores/user'
+
+import Hero from '../components/Hero'
+import WelcomeCard from '../components/WelcomeCard'
 
 export default {
   name: 'Home',
-  data: () => ({
-    Links: [
-      {
-        text: 'Sign up',
-        href: '/signup'
-      },
-      {
-        text: 'Login',
-        href: '/login'
-      },
-      {
-        text: 'View Posts',
-        href: '/posts'
-      }
-    ]
-  }),
   components: {
-    HelloBlog
+    Hero,
+    WelcomeCard,
   },
+  data: () => ({
+    userStore: userStore.state,
+  }),
+  methods: {
+    goToView(path) {
+      this.$router.push(path)
+    }
+  }
 }
 </script>
 
 <style scoped>
-.indigo {
-  color: #b2ebf2;
-  height: 100%;
-}
 </style>
