@@ -95,9 +95,6 @@ export default {
     }
   },
   methods: {
-    goToView(path) {
-      this.$router.push(path)
-    },
     async addNewWord(newWord) {
       if (newWord.word && newWord.level) {
         const noSpaceWord = newWord.word.trim()
