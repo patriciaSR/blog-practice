@@ -16,6 +16,15 @@
         rows="3"
         @keyup.enter="addNewComment()"
       ></v-text-field>
+      <v-card v-if="offensiveError" color="#FAD9D3">
+        <v-card-text class="text--primary">{{offensiveError.errorText}}</v-card-text>
+        <v-list-item v-for="word in offensiveError.notAllowedWords" :key="word.word" three-line class="d-block pb-3">
+          <v-list-item-content>
+            <v-list-item-title class="mb-2"><strong>Word: </strong>{{word.word}}</v-list-item-title>
+            <v-list-item-subtitle class="caption"><strong>Level: </strong>{{word.level}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-card>
 
       <PrimaryBtn btnText="+ Comment" @go-to="addNewComment" />
     </v-card>
@@ -81,7 +90,8 @@ export default {
     },
     rules: {
       required: value => !!value || 'The field is required.'
-    }
+    },
+    offensiveError: undefined
   }),
   computed: {
     idToEdit: {
@@ -106,7 +116,8 @@ export default {
             alert('Your session has expired. Please, login again!')
             this.$router.push('/login')
           } else {
-            alert(e.response.data)
+            alert(e.response.data.errorText)
+            this.offensiveError = e.response.data
           }
         }
 
