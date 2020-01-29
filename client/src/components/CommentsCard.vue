@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     async addNewComment() {
+      this.offensiveError = undefined
       if (this.newComment) {
         let resultSendComment
         try {
