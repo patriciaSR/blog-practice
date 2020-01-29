@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mx-auto d-flex justify-center">
     <v-layout text-left wrap class="d-flex flex-column justify-space-between align-center my-4">
       <v-card width="800" color="secondary">
         <WordCardInput btnText="+ Word" :word="newWord" @go-sendWord="addNewWord" />
