@@ -21,15 +21,8 @@
     </v-card>
 
     <v-card max-width="800" v-for="comment in comments" :key="comment._id" class="mb-2">
-      <div class="d-flex">
-        <v-avatar size="70" class="ma-2">
-          <img :src="comment.userInfo.image || defaultAvatar" :alt="comment.username" />
-        </v-avatar>
-        <div class="d-flex-column justify-center py-3">
-          <v-card-subtitle class="py-0 mb-1 primary--text">@{{comment.userInfo.username}}</v-card-subtitle>
-          <v-card-subtitle class="py-0 caption">date: {{comment.date}}</v-card-subtitle>
-        </div>
-      </div>
+
+      <AvatarCard :commentUserData="comment.userInfo" :commentDate="comment.date" />
 
       <v-card class="pa-4 my-4" v-if="comment._id === commentToEdit.id">
         <v-text-field
@@ -63,11 +56,13 @@ import sendNewComment from '../resources/sendNewComment'
 import sendEditComment from '../resources/sendEditComment'
 import deleteComment from '../resources/deleteComment'
 
+import AvatarCard from '../components/AvatarCard'
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
 
 export default {
   name: 'CommentsCard',
   components: {
+    AvatarCard,
     PrimaryBtn
   },
   data: () => ({

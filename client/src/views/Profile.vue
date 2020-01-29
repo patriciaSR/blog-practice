@@ -10,21 +10,7 @@
           <v-card-title>Hello, {{userStore.data.firstname}}</v-card-title>
         </v-img>
 
-        <div class="d-flex">
-          <v-avatar size="70" class="ma-2">
-            <img :src="userStore.data.image || defaultAvatar" alt="user avatar" />
-          </v-avatar>
-          <div class="d-flex-column justify-center py-3">
-            <v-card-subtitle class="py-0 mb-1 primary--text">
-              <strong>Username:</strong>
-              @{{userStore.data.username}}
-            </v-card-subtitle>
-            <v-card-subtitle class="py-0 mb-1 primary--text">
-              <strong>Name:</strong>
-              {{userStore.data.firstname}} {{userStore.data.lastname || ''}}
-            </v-card-subtitle>
-          </div>
-        </div>
+        <AvatarCard :userData="userStore.data" />
 
         <v-card-actions v-if="userStore.token">
           <SecondaryBtn btnText="Update Profile"/>
@@ -82,12 +68,14 @@ import loadUserPosts from '../resources/loadUserPosts'
 import userStore from '../stores/user'
 import defaultAvatar from '../assets/avatar-pengin.png'
 
+import AvatarCard from '../components/AvatarCard'
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
 import SecondaryBtn from '../components/Btns/SecondaryBtn'
 
 export default {
   name: 'Profile',
   components: {
+    AvatarCard,
     PrimaryBtn,
     SecondaryBtn
   },
