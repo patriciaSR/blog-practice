@@ -4,7 +4,7 @@ const defaultUsers = [
     lastname: 'perez',
     username: 'dumbo555',
     email: 'dumbo555@gmail.com',
-    image: 'http://www.gifs-animados.es/avatares/disney/dumbo/gifs-animados-dumbo-651531.jpg',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1yfb9tceOaaohkLwICCg6g8sGMLtOAE4UqrcH3vLBYPKQGnAITw&s',
     password: 'dumbo22',
     role: 'admin',
   },

@@ -9,6 +9,7 @@
         >
           <v-card-title>Hello, {{userStore.data.firstname}}</v-card-title>
         </v-img>
+
         <div class="d-flex">
           <v-avatar size="70" class="ma-2">
             <img :src="userStore.data.image || defaultAvatar" alt="user avatar" />
@@ -26,8 +27,8 @@
         </div>
 
         <v-card-actions v-if="userStore.token">
-          <v-btn color="orange" text>Update Profile</v-btn>
-          <v-btn color="orange" text>Delete Profile</v-btn>
+          <SecondaryBtn btnText="Update Profile"/>
+          <SecondaryBtn btnText="Delete Profile"/>
         </v-card-actions>
 
         <v-card-actions v-if="userStore.token" class="justify-end">
@@ -82,11 +83,13 @@ import userStore from '../stores/user'
 import defaultAvatar from '../assets/avatar-pengin.png'
 
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
+import SecondaryBtn from '../components/Btns/SecondaryBtn'
 
 export default {
   name: 'Profile',
   components: {
-    PrimaryBtn
+    PrimaryBtn,
+    SecondaryBtn
   },
   data: () => ({
     userStore: userStore.state,
