@@ -206,7 +206,7 @@ describe('posts controller', () => {
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(401);
 
-    expect(response.text).toBe('No puedes modificar un post que no es tuyo');
+    expect(response.text).toBe('You cant edit this post');
   });
 
   test('reject request DELETE POST by false id and return not found post', async () => {
@@ -629,7 +629,7 @@ describe('signup controller', () => {
       .send(newUser)
       .expect(200);
 
-    expect(response.body.message).toBe('Usuario registrado correctamente');
+    expect(response.body.message).toBe('User successfully registered');
     expect(response.body.newUser.username).toBe(newUser.username);
     expect(response.body.newUser.role).toBe('publisher');
     expect(response.body.newUser.password).toBeFalsy();
@@ -645,7 +645,7 @@ describe('signup controller', () => {
       .send(existUserChangedEmail)
       .expect(400);
 
-    expect(response.text).toBe('Ese nombre de usuario ya existe');
+    expect(response.text).toBe('Username already exists');
   });
   test('reject request POST NEW USER if user email exist on DB', async () => {
     const existUserChangedName = { ...existUser };
@@ -656,6 +656,6 @@ describe('signup controller', () => {
       .send(existUserChangedName)
       .expect(400);
 
-    expect(response.text).toBe('Ese email ya existe');
+    expect(response.text).toBe('Email already exists');
   });
 });

@@ -4,16 +4,20 @@ const defaultWords = [
     level: 1,
   },
   {
-    word: 'culo',
-    level: 1,
+    word: 'pene',
+    level: 2,
   },
   {
-    word: 'pedo',
-    level: 1,
+    word: 'coño',
+    level: 3,
   },
   {
-    word: 'pis',
-    level: 1,
+    word: 'tonto',
+    level: 4,
+  },
+  {
+    word: 'puta',
+    level: 5,
   },
 ];
 

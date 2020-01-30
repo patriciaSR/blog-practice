@@ -34,6 +34,12 @@ postsRouter.get('/', async (req, res) => {
   res.status(200).json(allPosts);
 });
 
+postsRouter.get('/user/:id', async (req, res) => {
+  const userID = req.params.id;
+  const userPosts = await repository.posts.getUserPost(userID);
+  res.status(200).json(userPosts);
+});
+
 postsRouter.get('/:id', async (req, res) => {
   const id = req.params.id;
   const post = await repository.posts.getPost(id);
@@ -99,7 +105,7 @@ postsRouter.put('/:id', passport.authenticate('jwt', { session: false }), async 
       res.status(200).json(postReq);
     }
   } else {
-    res.status(401).send('No puedes modificar un post que no es tuyo');
+    res.status(401).send('You cant edit this post');
   }
 });
 

@@ -89,6 +89,7 @@ commentsRouter.put('/:commentID', passport.authenticate('jwt', { session: false 
           res.sendStatus(400);
         } else {
           await repository.comments.updateComment(commentID, commentReq);
+          commentReq._id = commentID;
           res.status(200).json(commentReq);
         }
       }
