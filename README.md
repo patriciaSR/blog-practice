@@ -70,6 +70,9 @@ Also you need to run the vue client in other terminal with:
 
 `npm run server`
 
+The client is running now on safe port [https://localhost:8080](https://localhost:8080).
+
+
 If you want to learn more about vue client structure you can see [client folder](./client/README.md).
 
 
