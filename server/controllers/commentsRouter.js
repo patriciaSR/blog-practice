@@ -23,7 +23,7 @@ commentsRouter.post('/', passport.authenticate('jwt', { session: false }), async
   if (!content && !userID) {
     res.sendStatus(400);
   } else if (notAllowedWords.length !== 0) {
-    const errorText = 'Tu comentario no puede contener palabras ofensivas';
+    const errorText = 'Your comment cannot contain offensive words';
     res.status(403).json({ errorText, notAllowedWords });
   } else {
     await repository.comments.addComment(comment);
@@ -55,7 +55,7 @@ commentsRouter.delete('/:commentID', passport.authenticate('jwt', { session: fal
         res.status(200).json(deletedComment);
       }
     } else {
-      res.status(401).send('No tienes permiso para borrar este comentario');
+      res.status(401).send('You are not allowed to delete this comment');
     }
   }
 });
@@ -77,7 +77,7 @@ commentsRouter.put('/:commentID', passport.authenticate('jwt', { session: false 
 
     if (req.user.role === 'admin' || reqUserID === commentUserID) {
       if (notAllowedWords.length !== 0) {
-        const errorText = 'Tu comentario no puede contener palabras ofensivas';
+        const errorText = 'Your comment cannot contain offensive words';
         res.status(403).json({ errorText, notAllowedWords });
       } else {
         const commentReq = req.body;
@@ -94,7 +94,7 @@ commentsRouter.put('/:commentID', passport.authenticate('jwt', { session: false 
         }
       }
     } else {
-      res.status(401).send('No puedes modificar este comentario');
+      res.status(401).send('You are not allowed to edit this comment');
     }
   }
 });

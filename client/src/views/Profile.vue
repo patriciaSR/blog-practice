@@ -19,7 +19,7 @@
           </div>
 
           <div class="align-self-end">
-            <PrimaryBtn btnText="+ New Post" @go-to="goToView('/myprofile/newpost')" />
+            <PrimaryBtn btnText="+ New Post" data-id="newpost-btn" @go-to="goToView('/myprofile/newpost')" />
             <PrimaryBtn
               v-if="userStore.data.role === 'admin'"
               btnText="⚙ Words"

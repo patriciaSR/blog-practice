@@ -14,7 +14,7 @@ offensiveRouter.post('/', async (req, res) => {
   if (!word && !level) {
     res.sendStatus(400);
   } else if (isWordIncluded) {
-    res.status(400).send('Esa palabra ya existe en la base de datos');
+    res.status(400).send('This word already exist on DB');
   } else {
     await repository.offensiveWords.addWord(newWord);
     res.status(200).json(newWord);

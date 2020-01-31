@@ -19,7 +19,13 @@
     <v-divider class="mx-3"></v-divider>
 
     <v-card-actions>
-      <v-btn text color="orange" @click="toggle()">Show Comments ({{postData.comments.length}})</v-btn>
+      <v-btn
+        text
+        color="orange"
+        @click="toggle()"
+        data-id="show-comments-btn"
+      >Show Comments ({{postData.comments.length}})
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
