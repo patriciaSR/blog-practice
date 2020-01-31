@@ -35,9 +35,12 @@ Also the blog has a `/myprofile` view to see your user profile data and your pos
 
 You can edit or delete only your posts and comments if you have "publisher role". 
 If you have "admin role" you have access to all blog functionalities.
+![profile view](./client/src/assets/profile-view.jpg)
+
 
 ## Default Users
 You can user these default users profiles to try de app, or create your own user:
+
 **Admin role**
 - username: dumbo111
 - pass: dumbo111
