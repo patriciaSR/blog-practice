@@ -2,7 +2,11 @@
   <v-container class="mx-auto d-flex justify-center">
     <v-layout text-left wrap class="d-flex flex-column justify-space-between align-center my-4">
       <v-card width="800" color="secondary">
-        <WordCardInput btnText="+ Word" :word="newWord" @go-sendWord="addNewWord" />
+        <WordCardInput
+          btnText="+ Word"
+          :word="newWord"
+          @go-sendWord="addNewWord"
+        />
 
         <v-card-title class>Lista de palabras</v-card-title>
         <v-list-item three-line class="d-flex flex-wrap pb-3">
@@ -32,8 +36,8 @@
               </v-list-item-subtitle>
 
               <v-card-actions class="justify-end">
-                <SecondaryBtn btnText="Edit" @go-to="editWord(word)" />
-                <SecondaryBtn btnText="Delete" @go-to="deleteWord(word.word)" />
+                <SecondaryBtn btnText="Edit" data-id="edit-word-btn" @go-to="editWord(word)" />
+                <SecondaryBtn btnText="Delete" data-id="delete-word-btn" @go-to="deleteWord(word.word)" />
               </v-card-actions>
             </v-list-item-content>
           </v-card>

@@ -23,6 +23,7 @@
             <PrimaryBtn
               v-if="userStore.data.role === 'admin'"
               btnText="⚙ Words"
+              data-id="words-btn"
               @go-to="goToView('/myprofile/words')"
             />
           </div>

@@ -12,8 +12,8 @@
       v-if="userStore.token && (userStore.data._id === postData.userID || userStore.data.role === 'admin')"
       class="justify-end"
     >
-      <SecondaryBtn btnText="Edit" @go-to="editPost(postData._id)" />
-      <SecondaryBtn btnText="Delete" @go-to="deletePost(postData._id)" />
+      <SecondaryBtn btnText="Edit" data-id="edit-post-btn" @go-to="editPost(postData._id)" />
+      <SecondaryBtn btnText="Delete" data-id="delete-post-btn" @go-to="deletePost(postData._id)" />
     </v-card-actions>
 
     <v-divider class="mx-3"></v-divider>

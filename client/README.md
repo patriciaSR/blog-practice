@@ -117,20 +117,24 @@ Install **[cypress](https://www.cypress.io/)** for E2E testing
 
 `npm install --save-dev cypress`
 
-
-### Compiles and hot-reloads for development
-```
+## Compiles and hot-reloads for development and run the app
+`
 npm run serve
-```
+`
+
+## Run End2End tests
+
+From `client/` folder, run End2End testing using:
+
+**Warning** Remember to run the fake server using: `npm run fake-server` from server/ folder
+
+`npm run test:e2e`
+
+
 
 ### Compiles and minifies for production
 ```
 npm run build
-```
-
-### Run your end-to-end tests
-```
-npm run test:e2e
 ```
 
 ### Lints and fixes files

@@ -58,11 +58,11 @@ You can install all dependencies in `package.json` files on one step using for `
 ## Run the App
 You need to run the server in a terminal with node from `server/` folder:
 
-`node app.js`
+`npm run start`
 
 The server is running now on safe port [https://localhost:3443](https://localhost:3443).
 
-Open **Postman app** and import `postman.json` file to interact with REST APIs endpoints
+Open **Postman app** and import `postman.json` and `enviroments.json` files to interact with REST APIs endpoints
 
 Open **MongoDB Compass app** to interact with app database and collections. Connect to [https://localhost:27017](https://localhost:27017). 
 
@@ -72,13 +72,28 @@ If you want to learn more about server structure you can see [server folder](./s
 
 Also you need to run the vue client in other terminal with:
 
-`npm run server`
+`npm run serve`
 
 The client is running now on safe port [https://localhost:8080](https://localhost:8080).
 
 
 If you want to learn more about vue client structure you can see [client folder](./client/README.md).
 
+## Run tests
+
+### Server tests
+
+From `server/` folder, run unit and API REST tests using:
+
+`npm run test`
+
+### Client tests
+
+From `client/` folder, run End2End testing using:
+
+**Warning** Remember to run the **fake server** using: **`npm run fake-server`** from `server/` folder
+
+`npm run test:e2e`
 
 
 

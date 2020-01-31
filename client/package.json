@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "recordatory": "echo Remember to run the fake server using 'npm run fake-server' in 'server/'",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e": "npm run recordatory && vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "mongodb": "^3.5.2",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-vuetify": "^2.0.3",
@@ -43,7 +45,7 @@
     ],
     "rules": {
       "@vue/prettier/semi": false,
-      "no-console":"off"
+      "no-console": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"

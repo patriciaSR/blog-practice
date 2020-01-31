@@ -32,7 +32,7 @@
 
         <v-spacer></v-spacer>
 
-        <PrimaryBtn v-if="this.$route.query.edit" btnText="Edit Post" @go-to="editPost" />
+        <PrimaryBtn v-if="this.$route.query.edit" data-id="editpost-btn" btnText="Edit Post" @go-to="editPost" />
 
         <PrimaryBtn v-else btnText="+ Add Post" data-id="addpost-btn" @go-to="addNewPost" />
       </v-card-actions>

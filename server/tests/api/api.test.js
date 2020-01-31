@@ -1,3 +1,5 @@
+/* eslint prefer-template: 0 */
+
 const supertest = require('supertest');
 const { MongoClient } = require('mongodb');
 const app = require('../../appServer');
