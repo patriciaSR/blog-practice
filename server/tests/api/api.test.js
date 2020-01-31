@@ -38,7 +38,7 @@ describe('auth controller', () => {
 
   test('reject request POST LOGIN if username is not on DB', async () => {
     const response = await request.post('/login')
-      .auth('lola11', 'bambi22')
+      .auth('lola11', 'bambi222')
       .expect(401);
 
     expect(response.text).toBe('Unauthorized');
@@ -46,13 +46,13 @@ describe('auth controller', () => {
 
   test('accept request POST LOGIN if auth header is send', async () => {
     const response = await request.post('/login')
-      .auth('dumbo555', 'dumbo22')
+      .auth('dumbo111', 'dumbo111')
       .expect('Content-Type', /json/)
       .expect(200);
 
     expect(response.body.message).toBe('Auth Passed');
     expect(typeof response.body.token).toBe('string');
-    expect(response.body.userData.username).toBe('dumbo555');
+    expect(response.body.userData.username).toBe('dumbo111');
     expect(response.body.userData.passwordHash).toBeFalsy();
   });
 });
@@ -79,13 +79,13 @@ describe('posts controller', () => {
     // login Admin
     const responseAdmin = await request
       .post('/login')
-      .auth('dumbo555', 'dumbo22');
+      .auth('dumbo111', 'dumbo111');
     tokenAdmin = responseAdmin.body.token;
 
     // login Publisher
     const responsePub = await request
       .post('/login')
-      .auth('bambi555', 'bambi22');
+      .auth('bambi222', 'bambi222');
     tokenPub = responsePub.body.token;
   });
 
@@ -228,7 +228,7 @@ describe('posts controller', () => {
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(401);
 
-    expect(response.text).toBe('No puedes borrar un post que no es tuyo');
+    expect(response.text).toBe('You are not allowed to delete this post');
   });
 
   test('accept request DELETE POST by id and returns correct delete json', async () => {
@@ -270,13 +270,13 @@ describe('comments controller', () => {
     // login Admin
     const responseAdmin = await request
       .post('/login')
-      .auth('dumbo555', 'dumbo22');
+      .auth('dumbo111', 'dumbo111');
     tokenAdmin = responseAdmin.body.token;
 
     // login Publisher
     const responsePub = await request
       .post('/login')
-      .auth('bambi555', 'bambi22');
+      .auth('bambi222', 'bambi222');
     tokenPub = responsePub.body.token;
   });
 
@@ -339,7 +339,7 @@ describe('comments controller', () => {
       .expect('Content-Type', /json/)
       .expect(403);
 
-    expect(response.body.errorText).toBe('Tu comentario no puede contener palabras ofensivas');
+    expect(response.body.errorText).toBe('Your comment cannot contain offensive words');
     expect(response.body.notAllowedWords[0].word).toBe(expectedWord.word);
     expect(response.body.notAllowedWords[0].level).toBe(expectedWord.level);
   });
@@ -365,7 +365,7 @@ describe('comments controller', () => {
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(401);
 
-    expect(response.text).toBe('No puedes modificar este comentario');
+    expect(response.text).toBe('You are not allowed to edit this comment');
   });
 
   test('accept request PUT COMMENT by id and return the new comment edited', async () => {
@@ -400,7 +400,7 @@ describe('comments controller', () => {
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(401);
 
-    expect(response.text).toBe('No tienes permiso para borrar este comentario');
+    expect(response.text).toBe('You are not allowed to delete this comment');
   });
 
   test('accept the request DELETE COMMENT by id and returns correct delete json', async () => {
@@ -438,13 +438,13 @@ describe('offensiveWords controller', () => {
     // login Admin
     const responseAdmin = await request
       .post('/login')
-      .auth('dumbo555', 'dumbo22');
+      .auth('dumbo111', 'dumbo111');
     tokenAdmin = responseAdmin.body.token;
 
     // login Publisher
     const responsePub = await request
       .post('/login')
-      .auth('bambi555', 'bambi22');
+      .auth('bambi222', 'bambi222');
     tokenPub = responsePub.body.token;
   });
 
@@ -518,7 +518,7 @@ describe('offensiveWords controller', () => {
       .expect('Content-Type', /json/)
       .expect(200);
 
-    expect(response.body.length).toBe(4);
+    expect(response.body.length).toBe(5);
     expect(response.body[0].word).toBe('caca');
     expect(response.body[0].level).toBe(1);
   });
@@ -555,7 +555,7 @@ describe('offensiveWords controller', () => {
   });
 
   test('reject request DELETE WORD by word name if you are not authenticated', async () => {
-    const response = await request.delete('/offensive-words/pedo')
+    const response = await request.delete('/offensive-words/caca')
       .set('Accept', 'application/json')
       .send(ChangeWord)
       .expect(401);
@@ -573,7 +573,7 @@ describe('offensiveWords controller', () => {
   });
 
   test('accept request DELETE WORD by name word and returns correct delete json', async () => {
-    const response = await request.delete('/offensive-words/pedo')
+    const response = await request.delete('/offensive-words/caca')
       .set('Accept', 'application/json')
       .set('Authorization', 'bearer ' + tokenAdmin)
       .expect('Content-Type', /json/)
@@ -601,10 +601,10 @@ describe('signup controller', () => {
   const existUser = {
     firstname: 'bambi',
     lastname: 'lopez',
-    username: 'bambi555',
+    username: 'bambi222',
     email: 'bambi@gmail.com',
     image: 'kadasad',
-    password: 'bambi22',
+    password: 'bambi222',
     role: 'publisher',
   };
 

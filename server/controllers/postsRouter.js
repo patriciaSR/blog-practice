@@ -74,7 +74,7 @@ postsRouter.delete('/:id', passport.authenticate('jwt', { session: false }), asy
     deletedPost.comments = comments;
     res.status(200).json(deletedPost);
   } else {
-    res.status(401).send('No puedes borrar un post que no es tuyo');
+    res.status(401).send('You are not allowed to delete this post');
   }
 });
 
