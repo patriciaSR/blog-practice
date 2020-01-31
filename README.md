@@ -1,4 +1,5 @@
 # Blog Practice
+![Patri's blog](./client/src/assets/home-view.jpg)
 
 ## Project's goal
 We want to implement a service for **blog management with persistence and REST API**. Blog entries may have comments and avoid the publication of those that may be offensive, the service must include a offensive-words validator.
@@ -34,9 +35,12 @@ Also the blog has a `/myprofile` view to see your user profile data and your pos
 
 You can edit or delete only your posts and comments if you have "publisher role". 
 If you have "admin role" you have access to all blog functionalities.
+![profile view](./client/src/assets/profile-view.jpg)
+
 
 ## Default Users
 You can user these default users profiles to try de app, or create your own user:
+
 **Admin role**
 - username: dumbo111
 - pass: dumbo111
@@ -52,13 +56,14 @@ You can install all dependencies in `package.json` files on one step using for `
 `npm install`
 
 ## Run the App
-You need to run the server in a terminal with node from `server/` folder:
 
-`node app.js`
+You need to **run the server** in a terminal with node from `server/` folder:
+
+`npm run start`
 
 The server is running now on safe port [https://localhost:3443](https://localhost:3443).
 
-Open **Postman app** and import `postman.json` file to interact with REST APIs endpoints
+Open **Postman app** and import `postman.json` and `enviroments.json` files to interact with REST APIs endpoints
 
 Open **MongoDB Compass app** to interact with app database and collections. Connect to [https://localhost:27017](https://localhost:27017). 
 
@@ -66,15 +71,32 @@ If you want to learn more about server structure you can see [server folder](./s
 
 ---
 
-Also you need to run the vue client in other terminal with:
+Also you need to **run the vue client** in other terminal with:
 
-`npm run server`
+`npm run serve`
 
 The client is running now on safe port [https://localhost:8080](https://localhost:8080).
 
 
 If you want to learn more about vue client structure you can see [client folder](./client/README.md).
 
+## Run tests
+
+### Server tests
+
+From `server/` folder, run unit and API REST tests using:
+
+`npm run test`
+
+### Client tests
+
+From `client/` folder, run End2End testing using:
+
+**Warning** Remember to run before the **fake server** using: **`npm run fake-server`** from `server/` folder
+
+`npm run test:e2e`
+
+## Enjoy it :)
 
 
 

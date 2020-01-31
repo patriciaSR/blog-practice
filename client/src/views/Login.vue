@@ -6,6 +6,7 @@
           v-model="username"
           :rules="[rules.required, rules.min]"
           label="Username"
+          data-id="username"
         ></v-text-field>
 
         <v-text-field
@@ -17,12 +18,13 @@
           label="Password"
           hint="At least 6 characters"
           class="input-group--focused"
+          data-id="password"
           @click:append="show2 = !show2"
           @keyup.enter="login()"
         ></v-text-field>
       </v-card>
 
-      <PrimaryBtn btnText="Sign in" @go-to="login" />
+      <PrimaryBtn btnText="Sign in" data-id="signin-btn" @go-to="login" />
 
       <v-container>
         <v-content>

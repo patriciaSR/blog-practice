@@ -8,6 +8,19 @@ The information entities that the blog should manage are:
 - **OffensiveWord**: Each word will have an associated "level" field indicating the severity of the word from 1 to 5.
 
 ## Views
+- **Home** on route `/`:
+  - If you are login, you can see myprofile, posts and new post buttons
+  - If you are not login, you can see login, signup and posts buttons
+- **Login** on route `/login` for user login and redirect to myprofile view
+- **Signup** on route `/signup` for new user registry and redirect to login view
+- **Profile** on route `/myprofile` for user panel with user information and user posts. You only can access to this view if you are login. If you are not login, this view redirect to login view.
+- **NewPost** on route `/myprofile/newpost`. You need login to access
+- **Posts** on route`/posts` to see all posts. You don't need login to access
+- **PostDetail** on route`/post/:id` to see the content of one post and all comments.
+  - If you are login, and you are owner of post/comment or you haveadmin role, you can see edit and delete buttons.
+  - If you are not login, you can only read the post and comments. You need login to comment.
+- **AdminWords** on route `/myprofile/words to see and add/edit/delete offensive words. Only you can access here if you have admin role.
+
 
 ## User control
 
@@ -27,6 +40,8 @@ To do this, a user creation endpoint will be created. --> `/signup`
 
 The app implement a Node.js script called defaultUsers.js that will connect to MongoDB and create admin and publisher users when it runs the first time.
 
+The user token and data is store on browser localStore.
+
 
 ## Client's Structure:
 
@@ -38,15 +53,15 @@ The app implement a Node.js script called defaultUsers.js that will connect to M
 │    │
 │    ├── /src (src folder)
 │    │   ├── /assets(image files)
-│    │   ├── /components
+│    │   ├── /components (app vue components)
 │    │   ├── /plugins(vuetify config)
 │    │   ├── /resources(AJAX requests)
 │    │   ├── /router(router vue config)
 │    │   ├── /stores(login data user management)
 │    │   └── /views(app views)
 │    │   
-│    ├── App.vue
-│    ├── main.js
+│    ├── App.vue (app root component)
+│    ├── main.js (config and render App.vue component)
 │    │   
 │    ├── /tests(cypress E2E tests)
 │    │   
@@ -67,105 +82,59 @@ You can install all dependencies in `package.json` file on one step using:
 
 Or you can install install separately one by one:
 
-Install **[Node.js](https://nodejs.org/es/)**:
+Install **[axios](https://github.com/axios/axios)**:
 
-`npm install -g node`
+`npm install axios`
 
-Install **[Express.js](https://expressjs.com/)** for building REST APIs:
+Install **[core-js](hhttps://github.com/zloirock/core-js/blob/master/README.md)** modular standard library for JavaScript:
 
-`npm install express`
+`npm install --save core-js@3.6.4`
 
-Install **[MongoDB](https://www.mongodb.com/)** for buildig Non-Relational(NoSQL) Database:
+Install **[Vue](https://vuejs.org/)**:
 
-`npm install mongodb`
+`npm install vue`
 
-Install **[CORS](https://www.npmjs.com/package/cors)** node.js package for providing a Connect/Express middleware that can be used to enable CORS:
+Install **[vue-router](https://router.vuejs.org/)** for router pages:
 
-`npm install cors`
+`npm install vue-router`
 
-Install **[bcrypt](https://www.npmjs.com/package/bcrypt)** for passwords hash encryption:
+Install **[vuetify](https://vuetifyjs.com/en/)** for user material design components:
 
-`npm install bcrypt`
+`npm install vuetify`
 
-Install **[fs](https://nodejs.org/api/fs.html)** for file system operation in node:
-
-`npm install fs`
-
-Install **[https](https://www.npmjs.com/package/https)** for run node server in a safe port with a SSL certificate:
-
-`npm install https`
-
-Install **[passport](http://www.passportjs.org/)** for authentication config:
-
-`npm install passport`
-
-Install **[passport-http](https://www.npmjs.com/package/passport-http)** for HTTP requests authentication config:
-
-`npm install passport-http`
-
-Install **[passport-jwt](http://www.passportjs.org/packages/passport-jwt/)** for JSON Web Token authentication config:
-
-`npm install passport-jwt`
-
-Install **[jsonwebtoken](https://jwt.io/)** for JSON Web Token implementation:
-
-`npm install jsonwebtoken`
 
 ## Install DevDepencencies
 
-Install **[Jest](https://jestjs.io/en/)** for testing:
+Install **[vue-cli](https://cli.vuejs.org/)**
 
-`npm install --save-dev jest`
-
-and set this config on scripts key on `package.json` file to run tests:
-
-```
-"scripts": {
-  "test": "jest",
-  "test:watch": "jest --watch",
-  "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
-  "test:coverage": "jest --collect-coverage"
-}
-```
-
-Install **[jest-mongodb](https://jestjs.io/docs/en/mongodb)** for mocking db connection:
-
-`npm install --save-dev @shelf/jest-mongodb`
-
-and set this config on `package.json` file:
-
-```
-"jest": {
-  "preset": "@shelf/jest-mongodb"
-}
-```
-
-Install **[SuperTest](https://www.npmjs.com/package/supertest)** for REST API Testing:
-
-`npm install --save-dev supertest`
+`npm install --save-dev vue-cli`
 
 Install **[esLint](https://eslint.org/docs/user-guide/getting-started)** for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs:
 
 `npm install --save-dev eslint`
 
-## Project setup
-```
-npm install
-```
+Install **[cypress](https://www.cypress.io/)** for E2E testing
 
-### Compiles and hot-reloads for development
-```
+`npm install --save-dev cypress`
+
+## Compiles and hot-reloads for development and run the app
+`
 npm run serve
-```
+`
+
+## Run End2End tests
+
+From `client/` folder, run End2End testing using:
+
+**Warning** Remember to run the fake server using: `npm run fake-server` from server/ folder
+
+`npm run test:e2e`
+
+
 
 ### Compiles and minifies for production
 ```
 npm run build
-```
-
-### Run your end-to-end tests
-```
-npm run test:e2e
 ```
 
 ### Lints and fixes files

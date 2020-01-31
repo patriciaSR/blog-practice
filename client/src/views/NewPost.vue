@@ -7,9 +7,15 @@
           :rules="[rules.required]"
           filled
           label="Title"
+          name="input-title"
         ></v-text-field>
 
-        <v-text-field v-model="newPost.image" filled label="Background image URL"></v-text-field>
+        <v-text-field
+          v-model="newPost.image"
+          filled
+          label="Background image URL"
+          name="input-image"
+        ></v-text-field>
 
         <v-textarea
           v-model="newPost.content"
@@ -26,9 +32,9 @@
 
         <v-spacer></v-spacer>
 
-        <PrimaryBtn v-if="this.$route.query.edit" btnText="Edit Post" @go-to="editPost" />
+        <PrimaryBtn v-if="this.$route.query.edit" data-id="editpost-btn" btnText="Edit Post" @go-to="editPost" />
 
-        <PrimaryBtn v-else btnText="+ Add Post" @go-to="addNewPost" />
+        <PrimaryBtn v-else btnText="+ Add Post" data-id="addpost-btn" @go-to="addNewPost" />
       </v-card-actions>
     </v-card>
 

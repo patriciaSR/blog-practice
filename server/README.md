@@ -66,7 +66,10 @@ You can import `Blog-Admin.postman_environment.json` and `Blog-Publisher.postman
 
 ```
 ├── /server (server folder)
-│    │
+│    ├── /bin (exec files)
+│    │   ├── app.js (principal server file)
+│    │   └── fake-server.js (users test API server for testing)
+│    │  
 │    ├── /controllers (router REST API)
 │    │   ├── authRouter.js (authentication login API methods)
 │    │   ├── commentsRouter.js (comments collection API methods)
@@ -92,9 +95,12 @@ You can import `Blog-Admin.postman_environment.json` and `Blog-Publisher.postman
 │    ├── /tests (testing js files with jest)
 │    │   ├── /api
 │    │   │   └── api.test.js (REST API testing with Supertest)
+│    │   │  
 │    │   ├── /fixtures (mock variables for testing)
 │    │   │   ├── fixApiVariables(mock variables for REST API testing)
-│    │   │   └── fixOnlyUsersVariables.js (mock variables for OnlyUsers methods testing)
+│    │   │   ├── fixOnlyUsersVariables.js (mock variables for OnlyUsers methods testing)
+│    │   │   └── /DB (default collections database for testing)
+│    │   │  
 │    │   ├── onlyUsers.test.js
 │    │   └── validator.test.js
 │    │
@@ -144,6 +150,22 @@ The user interface is created with **[Vue](https://vuejs.org/)** and has the fol
 - The post's page shows its **content and comments**
 - According to type of user, the interface will show the **vue components that allow to user performs all the operations that are available in the REST API** (create posts, create comments, delete comments...)
 - It allows the **new users signup**.
+
+## Run Server
+
+Run server from `/server` folder using:
+
+`npm run start`
+
+## Run tests
+
+For run unit and API REST tests use:
+
+`npm run test`
+
+To see coverage of tests use:
+
+`npm run test:coverage`
 
 ## Install Dependencies
 

@@ -10,7 +10,7 @@
         max-width="800"
         class="mx-1 my-3 px-2"
       >
-        <router-link :to="'/posts/' + post._id" class="no-underline">
+        <router-link :to="'/posts/' + post._id" class="no-underline" data-id="post-link">
           <v-list-item-content>
             <v-list-item-title class="mb-2">{{post.title}}</v-list-item-title>
             <v-list-item-subtitle class="caption">{{post.date}}</v-list-item-subtitle>

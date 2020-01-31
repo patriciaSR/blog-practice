@@ -7,6 +7,7 @@
     absolute
     dark
     :class="{open: isOpen, 'd-none': !isOpen}"
+    data-id="nav-menu-btn"
   >
     <v-list dense nav class="py-0">
       <v-list-item two-line :class="miniVariant && 'px-0 my-0'">

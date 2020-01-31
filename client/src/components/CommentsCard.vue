@@ -3,7 +3,7 @@
     <v-card-title>{{comments.length}} COMMENTS</v-card-title>
 
     <div v-if="!userStore.token" class="pa-4">
-       Login to add new comment
+      Login to add new comment
       <router-link :to="'/login'">here >></router-link>
     </div>
 
@@ -13,20 +13,32 @@
         :rules="[rules.required]"
         filled
         label="Write your comment"
+        name="input-comment"
         rows="3"
         @keyup.enter="addNewComment()"
       ></v-text-field>
       <v-card v-if="offensiveError" color="#FAD9D3">
-        <v-card-text class="text--primary">{{offensiveError.errorText}}</v-card-text>
-        <v-list-item v-for="word in offensiveError.notAllowedWords" :key="word.word" three-line class="d-block pb-3">
+        <v-card-text class="text--primary" data-id="error-text">{{offensiveError.errorText}}</v-card-text>
+        <v-list-item
+          v-for="word in offensiveError.notAllowedWords"
+          :key="word.word"
+          three-line
+          class="d-block pb-3"
+        >
           <v-list-item-content>
-            <v-list-item-title class="mb-2"><strong>Word: </strong>{{word.word}}</v-list-item-title>
-            <v-list-item-subtitle class="caption"><strong>Level: </strong>{{word.level}}</v-list-item-subtitle>
+            <v-list-item-title class="mb-2">
+              <strong>Word:</strong>
+              {{word.word}}
+            </v-list-item-title>
+            <v-list-item-subtitle class="caption">
+              <strong>Level:</strong>
+              {{word.level}}
+            </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-card>
 
-      <PrimaryBtn btnText="+ Comment" @go-to="addNewComment" />
+      <PrimaryBtn btnText="+ Comment" data-id="add-comment-btn" @go-to="addNewComment" />
     </v-card>
 
     <v-card v-for="comment in comments" :key="comment._id" max-width="800" class="mb-2">
@@ -38,19 +50,20 @@
           :rules="[rules.required]"
           filled
           label="Write your comment"
+          name="input-comment-edit"
           rows="3"
           @keyup.enter="sendEditComment()"
         ></v-text-field>
 
-        <PrimaryBtn btnText="Edit" @go-to="sendEditComment" />
+        <PrimaryBtn btnText="Edit" data-id="send-comment-btn" @go-to="sendEditComment" />
       </v-card>
       <v-card-text v-else class="text--primary">{{comment.content}}</v-card-text>
 
       <v-card-actions
         v-if="userStore.token && (userStore.data._id === comment.userID || userStore.data.role === 'admin')"
       >
-        <SecondaryBtn btnText="Edit" @go-to="editComment(comment)" />
-        <SecondaryBtn btnText="Delete" @go-to="deleteComment(comment._id)" />
+        <SecondaryBtn btnText="Edit" data-id="edit-comment-btn" @go-to="editComment(comment)" />
+        <SecondaryBtn btnText="Delete" data-id="delete-comment-btn" @go-to="deleteComment(comment._id)" />
       </v-card-actions>
     </v-card>
   </v-card>

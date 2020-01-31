@@ -5,6 +5,7 @@
       :rules="[rules.required]"
       filled
       label="Write your word"
+      name="input-word"
       @keyup.enter="sendWord"
     ></v-text-field>
 
@@ -16,9 +17,10 @@
       min="1"
       max="5"
       label="level"
+      name="input-level"
     ></v-text-field>
 
-    <PrimaryBtn :btnText="btnText" @go-to="sendWord" />
+    <PrimaryBtn :btnText="btnText" data-id="add-word-btn" @go-to="sendWord" />
   </v-card>
 </template>
 
