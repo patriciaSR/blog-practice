@@ -56,7 +56,8 @@ You can install all dependencies in `package.json` files on one step using for `
 `npm install`
 
 ## Run the App
-You need to run the server in a terminal with node from `server/` folder:
+
+You need to **run the server** in a terminal with node from `server/` folder:
 
 `npm run start`
 
@@ -70,7 +71,7 @@ If you want to learn more about server structure you can see [server folder](./s
 
 ---
 
-Also you need to run the vue client in other terminal with:
+Also you need to **run the vue client** in other terminal with:
 
 `npm run serve`
 
@@ -91,9 +92,11 @@ From `server/` folder, run unit and API REST tests using:
 
 From `client/` folder, run End2End testing using:
 
-**Warning** Remember to run the **fake server** using: **`npm run fake-server`** from `server/` folder
+**Warning** Remember to run before the **fake server** using: **`npm run fake-server`** from `server/` folder
 
 `npm run test:e2e`
+
+## Enjoy it :)
 
 
 
