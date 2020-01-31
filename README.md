@@ -1,4 +1,5 @@
 # Blog Practice
+![Patri's blog](./client/src/assets/home-view.jpg)
 
 ## Project's goal
 We want to implement a service for **blog management with persistence and REST API**. Blog entries may have comments and avoid the publication of those that may be offensive, the service must include a offensive-words validator.
