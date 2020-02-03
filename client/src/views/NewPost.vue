@@ -32,7 +32,12 @@
 
         <v-spacer></v-spacer>
 
-        <PrimaryBtn v-if="this.$route.query.edit" data-id="editpost-btn" btnText="Edit Post" @go-to="editPost" />
+        <PrimaryBtn
+          v-if="this.$route.query.edit"
+          data-id="editpost-btn"
+          btnText="Edit Post"
+          @go-to="editPost"
+        />
 
         <PrimaryBtn v-else btnText="+ Add Post" data-id="addpost-btn" @go-to="addNewPost" />
       </v-card-actions>
@@ -42,21 +47,26 @@
       Login to add New Post
       <router-link :to="'/login'">here >></router-link>
     </v-card>
+
+    <Dialog :offensiveError="offensiveError" :dialog="dialog" @close-dialog="dialog = false" />
   </v-container>
 </template>
 
 <script>
-import sendNewPost from '../resources/sendNewPost'
-import userStore from '../stores/user'
+import sendNewPost from '../resources/sendNewPost';
+import userStore from '../stores/user';
 
-import PrimaryBtn from '../components/Btns/PrimaryBtn'
-import loadPostDetail from '../resources/loadPostDetail'
-import sendEditPost from '../resources/sendEditPost'
+import PrimaryBtn from '../components/Btns/PrimaryBtn';
+import Dialog from '../components/Dialog';
+
+import loadPostDetail from '../resources/loadPostDetail';
+import sendEditPost from '../resources/sendEditPost';
 
 export default {
   name: 'NewPost',
   components: {
-    PrimaryBtn
+    PrimaryBtn,
+    Dialog
   },
   data() {
     return {
@@ -73,80 +83,85 @@ export default {
       rules: {
         required: value => !!value || 'The field is required.'
       },
-      agreement: false
-    }
+      offensiveError: {
+        errorText: undefined
+      },
+      dialog: false
+    };
   },
   async mounted() {
     if (this.$route.query.edit) {
-      this.newPost = await this.loadPostToEdit()
+      this.newPost = await this.loadPostToEdit();
     }
   },
   methods: {
     async addNewPost() {
-      const { title, content } = this.newPost
-      if ((title, content)) {
-        let resultSendPost
+      const { title, content } = this.newPost;
+      if (title && content) {
+        let resultSendPost;
         try {
-          resultSendPost = await sendNewPost(this.newPost)
+          resultSendPost = await sendNewPost(this.newPost);
         } catch (e) {
           if (e.response.status === 401) {
-            alert('Your session has expired. Please, login again!')
-            this.$router.push('/login')
+            alert('Your session has expired. Please, login again!');
+            this.$router.push('/login');
           }
         }
 
         if (resultSendPost) {
-          alert('Post registered correctly')
-          return this.$router.push('/posts/' + resultSendPost._id)
+          alert('Post registered correctly');
+          return this.$router.push('/posts/' + resultSendPost._id);
         }
       } else {
-        alert('Fill required fields')
+        this.offensiveError.errorText = 'Fill required fields';
+        this.dialog = true;
       }
     },
     async editPost() {
-      const postID = this.$route.query.edit
+      const postID = this.$route.query.edit;
 
-      const { title, content } = this.newPost
-      if ((title, content)) {
-        let resultSendToEdit
+      const { title, content } = this.newPost;
+      if (title && content) {
+        let resultSendToEdit;
         try {
-          resultSendToEdit = await sendEditPost(this.newPost, postID)
+          resultSendToEdit = await sendEditPost(this.newPost, postID);
         } catch (e) {
           if (e.response.status === 401) {
-            alert('Your session has expired. Please, login again!')
-            this.$router.push('/login')
+            alert('Your session has expired. Please, login again!');
+            this.$router.push('/login');
           }
         }
 
         if (resultSendToEdit) {
-          alert('Post registered correctly')
-          return this.$router.push('/posts/' + postID)
+          alert('Post registered correctly');
+          return this.$router.push('/posts/' + postID);
         }
       } else {
-        alert('Fill required fields')
+        this.offensiveError.errorText = 'Fill required fields';
+        this.dialog = true;
       }
     },
     async loadPostToEdit() {
-      let postToEdit
-      const postID = this.$route.query.edit
+      let postToEdit;
+      const postID = this.$route.query.edit;
 
       try {
-        postToEdit = await loadPostDetail(postID)
-        delete postToEdit._id
-        delete postToEdit.comments
-        delete postToEdit.userInfo
-        delete postToEdit.userID
+        postToEdit = await loadPostDetail(postID);
+        delete postToEdit._id;
+        delete postToEdit.comments;
+        delete postToEdit.userInfo;
+        delete postToEdit.userID;
 
-        return postToEdit
+        return postToEdit;
       } catch (e) {
         if (e.response.status === 401) {
-          alert('Your session has expired. Please, login again!')
-          this.$router.push('/login')
+          alert('Your session has expired. Please, login again!');
+          this.$router.push('/login');
         }
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

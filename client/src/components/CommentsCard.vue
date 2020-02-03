@@ -56,17 +56,17 @@
 </template>
 
 <script>
-import userStore from '../stores/user'
-import defaultAvatar from '../assets/avatar-pengin.png'
+import userStore from '../stores/user';
+import defaultAvatar from '../assets/avatar-pengin.png';
 
-import sendNewComment from '../resources/sendNewComment'
-import sendEditComment from '../resources/sendEditComment'
-import deleteComment from '../resources/deleteComment'
+import sendNewComment from '../resources/sendNewComment';
+import sendEditComment from '../resources/sendEditComment';
+import deleteComment from '../resources/deleteComment';
 
-import AvatarCard from '../components/AvatarCard'
-import PrimaryBtn from '../components/Btns/PrimaryBtn'
-import SecondaryBtn from '../components/Btns/SecondaryBtn'
-import Dialog from '../components/Dialog'
+import AvatarCard from '../components/AvatarCard';
+import PrimaryBtn from '../components/Btns/PrimaryBtn';
+import SecondaryBtn from '../components/Btns/SecondaryBtn';
+import Dialog from '../components/Dialog';
 
 export default {
   name: 'CommentsCard',
@@ -101,120 +101,123 @@ export default {
   computed: {
     idToEdit: {
       get: function() {
-        return this.commentToEdit
+        return this.commentToEdit;
       },
       set: function(comment) {
-        this.commentToEdit.id = comment._id
-        this.commentToEdit.content = comment.content
-        return this.commentToEdit
+        this.commentToEdit.id = comment._id;
+        this.commentToEdit.content = comment.content;
+        return this.commentToEdit;
       }
     }
   },
   methods: {
     async addNewComment() {
       if (this.newComment) {
-        let resultSendComment
+        let resultSendComment;
         try {
-          resultSendComment = await sendNewComment(this.postID, this.newComment)
+          resultSendComment = await sendNewComment(
+            this.postID,
+            this.newComment
+          );
         } catch (e) {
           if (e.response.status === 401) {
-            alert('Your session has expired. Please, login again!')
-            this.$router.push('/login')
+            alert('Your session has expired. Please, login again!');
+            this.$router.push('/login');
           } else {
-            this.offensiveError = e.response.data
-            this.dialog = true
+            this.offensiveError = e.response.data;
+            this.dialog = true;
           }
         }
 
         if (resultSendComment) {
-          const { _id, username, image } = this.userStore.data
+          const { _id, username, image } = this.userStore.data;
 
           const userInfo = {
             userID: _id,
             username,
             image
-          }
+          };
 
-          resultSendComment.userInfo = userInfo
-          this.newComment = ' '
-          this.offensiveError.errorText = undefined
-          this.offensiveError.notAllowedWords = undefined
+          resultSendComment.userInfo = userInfo;
+          this.newComment = ' ';
+          this.offensiveError.errorText = undefined;
+          this.offensiveError.notAllowedWords = undefined;
 
-          this.comments.unshift(resultSendComment)
+          this.comments.unshift(resultSendComment);
         }
       } else {
-        this.offensiveError.errorText = 'Fill required fields'
-        this.dialog = true
+        this.offensiveError.errorText = 'Fill required fields';
+        this.dialog = true;
       }
     },
     editComment(comment) {
-      return (this.idToEdit = comment)
+      return (this.idToEdit = comment);
     },
     async sendEditComment() {
       if (this.commentToEdit.content) {
-        let resultSendComment
+        let resultSendComment;
         try {
           resultSendComment = await sendEditComment(
             this.postID,
             this.commentToEdit
-          )
+          );
         } catch (e) {
           if (e.response.status === 401) {
-            alert('Your session has expired. Please, login again!')
-            this.$router.push('/login')
+            alert('Your session has expired. Please, login again!');
+            this.$router.push('/login');
           } else {
-            this.offensiveError = e.response.data
-            this.dialog = true
+            this.offensiveError = e.response.data;
+            this.dialog = true;
           }
         }
 
         if (resultSendComment) {
-          const { _id, username, image } = this.userStore.data
+          const { _id, username, image } = this.userStore.data;
 
           const userInfo = {
             userID: _id,
             username,
             image
-          }
+          };
 
-          resultSendComment.userInfo = userInfo
-          this.commentToEdit.id = ''
-          this.offensiveError.errorText = undefined
-          this.offensiveError.notAllowedWords = undefined
+          resultSendComment.userInfo = userInfo;
+          this.commentToEdit.id = '';
+          this.offensiveError.errorText = undefined;
+          this.offensiveError.notAllowedWords = undefined;
 
           const indexComment = this.comments.findIndex(
             comment => comment._id === resultSendComment._id
-          )
-          this.comments.splice(indexComment, 1, resultSendComment)
+          );
+          this.comments.splice(indexComment, 1, resultSendComment);
         }
       } else {
-        this.offensiveError.errorText = 'Fill required fields'
-        this.dialog = true
+        this.offensiveError.errorText = 'Fill required fields';
+        this.dialog = true;
       }
     },
     async deleteComment(id) {
-      let resultSendDelete
+      let resultSendDelete;
       try {
-        resultSendDelete = await deleteComment(this.postID, id)
+        resultSendDelete = await deleteComment(this.postID, id);
       } catch (e) {
         if (e.response.status === 401) {
-          alert('Your session has expired. Please, login again!')
-          this.$router.push('/login')
+          alert('Your session has expired. Please, login again!');
+          this.$router.push('/login');
         } else {
-          this.offensiveError.errorText = e.response.data
-          this.dialog = true
+          this.offensiveError.errorText = e.response.data;
+          this.dialog = true;
         }
       }
 
       if (resultSendDelete) {
         const indexComment = this.comments.findIndex(
           comment => comment._id === id
-        )
-        this.comments.splice(indexComment, 1)
+        );
+        this.comments.splice(indexComment, 1);
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
