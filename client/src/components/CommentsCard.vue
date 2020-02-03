@@ -51,7 +51,7 @@
       </v-card-actions>
     </v-card>
 
-    <Dialog :offensiveError="offensiveError" :dialog="dialog" @close-dialog="dialog = false"/>
+    <Dialog :offensiveError="offensiveError" :dialog="dialog" @close-dialog="dialog = false" />
   </v-card>
 </template>
 
@@ -67,7 +67,6 @@ import AvatarCard from '../components/AvatarCard'
 import PrimaryBtn from '../components/Btns/PrimaryBtn'
 import SecondaryBtn from '../components/Btns/SecondaryBtn'
 import Dialog from '../components/Dialog'
-
 
 export default {
   name: 'CommentsCard',
@@ -93,7 +92,10 @@ export default {
     rules: {
       required: value => !!value || 'The field is required.'
     },
-    offensiveError: undefined,
+    offensiveError: {
+      errorText: undefined,
+      notAllowedWords: undefined
+    },
     dialog: false
   }),
   computed: {
@@ -110,7 +112,6 @@ export default {
   },
   methods: {
     async addNewComment() {
-      this.offensiveError = undefined
       if (this.newComment) {
         let resultSendComment
         try {
@@ -136,19 +137,21 @@ export default {
 
           resultSendComment.userInfo = userInfo
           this.newComment = ' '
-          this.offensiveError = undefined
+          this.offensiveError.errorText = undefined
+          this.offensiveError.notAllowedWords = undefined
 
           this.comments.unshift(resultSendComment)
         }
       } else {
-        alert('Fill required fields')
+        this.offensiveError.errorText = 'Fill required fields'
+        this.dialog = true
       }
     },
     editComment(comment) {
       return (this.idToEdit = comment)
     },
     async sendEditComment() {
-      if (this.commentToEdit) {
+      if (this.commentToEdit.content) {
         let resultSendComment
         try {
           resultSendComment = await sendEditComment(
@@ -176,7 +179,8 @@ export default {
 
           resultSendComment.userInfo = userInfo
           this.commentToEdit.id = ''
-          this.offensiveError = undefined
+          this.offensiveError.errorText = undefined
+          this.offensiveError.notAllowedWords = undefined
 
           const indexComment = this.comments.findIndex(
             comment => comment._id === resultSendComment._id
@@ -184,7 +188,8 @@ export default {
           this.comments.splice(indexComment, 1, resultSendComment)
         }
       } else {
-        alert('Fill required fields')
+        this.offensiveError.errorText = 'Fill required fields'
+        this.dialog = true
       }
     },
     async deleteComment(id) {
@@ -196,7 +201,8 @@ export default {
           alert('Your session has expired. Please, login again!')
           this.$router.push('/login')
         } else {
-          alert(e.response.data)
+          this.offensiveError.errorText = e.response.data
+          this.dialog = true
         }
       }
 

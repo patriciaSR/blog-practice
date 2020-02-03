@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-if="offensiveError" v-model="dialog" max-width="500">
-    <v-card v-if="offensiveError" color="#FAD9D3" class="pa-4">
+    <v-card color="#FAD9D3" class="pa-4">
       <v-card-text class="text--primary" data-id="error-text">{{offensiveError.errorText}}</v-card-text>
       <v-list color="#FAD9D3">
         <v-list-item
