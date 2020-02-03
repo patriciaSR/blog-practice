@@ -113,8 +113,12 @@ export default {
   },
   methods: {
     async addNewComment() {
+      const noSpacesComment = this.newComment.trim();
+      this.newComment = noSpacesComment;
+
       if (this.newComment) {
         let resultSendComment;
+
         try {
           resultSendComment = await sendNewComment(
             this.postID,
@@ -157,6 +161,9 @@ export default {
       return (this.idToEdit = comment);
     },
     async sendEditComment() {
+      const noSpacesComment = this.commentToEdit.content.trim();
+      this.commentToEdit.content = noSpacesComment;
+
       if (this.commentToEdit.content) {
         let resultSendComment;
         try {
