@@ -14,12 +14,12 @@
       </div>
       <v-app-bar-nav-icon @click="toggleMenu(true)"></v-app-bar-nav-icon>
     </v-app-bar>
-    <NavigationMenu :isOpen="this.isOpen" @toggle-menu="toggleMenu" />
+    <NavigationMenu :isOpen="isOpen" @toggle-menu="toggleMenu" />
   </div>
 </template>
 
 <script>
-import NavigationMenu from '../components/NavigationMenu'
+import NavigationMenu from '../components/NavigationMenu';
 
 export default {
   name: 'Header',
@@ -31,10 +31,10 @@ export default {
   }),
   methods: {
     toggleMenu(isOpen) {
-      return (this.isOpen = isOpen)
+      return (this.isOpen = isOpen);
     }
   }
-}
+};
 </script>
 
 <style scoped>

@@ -32,19 +32,23 @@
           <router-link :to="'/signup'" class="signup__link">here >></router-link>
         </v-content>
       </v-container>
+
+      <Dialog :offensiveError="offensiveError" :dialog="dialog" @close-dialog="dialog = false" />
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import userStore from '../stores/user'
+import userStore from '../stores/user';
 
-import PrimaryBtn from '../components/Btns/PrimaryBtn'
+import PrimaryBtn from '../components/Btns/PrimaryBtn';
+import Dialog from '../components/Dialog';
 
 export default {
   name: 'Login',
   components: {
-    PrimaryBtn
+    PrimaryBtn,
+    Dialog
   },
   data() {
     return {
@@ -55,31 +59,37 @@ export default {
         min: v => v.length >= 6 || 'Min 6 characters',
         max: v => v.length <= 10 || 'Max 10 characters'
       },
-      show2: false
-    }
+      show2: false,
+      offensiveError: {
+        errorText: undefined
+      },
+      dialog: false
+    };
   },
   methods: {
     async login() {
       if (!this.username || !this.password) {
-        alert('Introduce your username and password')
+        this.offensiveError.errorText = 'Enter your username and password';
+        this.dialog = true;
       } else {
-        let resultAuth
+        let resultAuth;
         try {
           resultAuth = await userStore.authenticate(
             this.username,
             this.password
-          )
+          );
         } catch {
-          alert('Unvalid username or password')
+          this.offensiveError.errorText = 'Invalid username or password';
+          this.dialog = true;
         }
 
         if (resultAuth) {
-          return this.$router.push('/myprofile')
+          return this.$router.push('/myprofile');
         }
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

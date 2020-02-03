@@ -81,6 +81,7 @@ describe('Login with admin role', () => {
     )
     cy.contains('Word: puta')
     cy.contains('Level: 5')
+    cy.contains('Agree').click()
   })
 
   it('goes to edit post', () => {

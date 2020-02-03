@@ -30,12 +30,12 @@
 
     <div v-if="commentUserData" class="d-flex-column justify-center py-3">
       <v-card-subtitle class="py-0 mb-1 primary--text">@{{commentUserData.username}}</v-card-subtitle>
-      <v-card-subtitle class="py-0 caption">date: {{commentDate}}</v-card-subtitle>
+      <v-card-subtitle class="py-0 caption">Date: {{commentDate}}</v-card-subtitle>
     </div>
 
     <div v-if="postData" class="d-flex-column justify-center py-3">
       <v-card-subtitle class="py-0 mb-1 primary--text">@{{postData.userInfo.username}}</v-card-subtitle>
-      <v-card-subtitle class="py-0 caption">date: {{postData.date}}</v-card-subtitle>
+      <v-card-subtitle class="py-0 caption">Date: {{postData.date}}</v-card-subtitle>
     </div>
   </div>
 </template>

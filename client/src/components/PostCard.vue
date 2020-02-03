@@ -24,9 +24,10 @@
         color="orange"
         @click="toggle()"
         data-id="show-comments-btn"
-      >Show Comments ({{postData.comments.length}})
-      </v-btn>
+      >Show Comments ({{postData.comments.length}})</v-btn>
     </v-card-actions>
+
+    <Dialog :offensiveError="offensiveError" :dialog="dialog" @close-dialog="dialog = false" />
   </v-card>
 </template>
 
@@ -36,6 +37,7 @@ import defaultPostImage from '../assets/defaultPostImage.jpg'
 
 import AvatarCard from '../components/AvatarCard'
 import SecondaryBtn from '../components/Btns/SecondaryBtn'
+import Dialog from '../components/Dialog'
 
 import deletePost from '../resources/deletePost'
 
@@ -43,7 +45,8 @@ export default {
   name: 'PostCard',
   components: {
     AvatarCard,
-    SecondaryBtn
+    SecondaryBtn,
+    Dialog
   },
   props: {
     postData: undefined,
@@ -52,7 +55,11 @@ export default {
   },
   data: () => ({
     userStore: userStore.state,
-    defaultPostImage
+    defaultPostImage,
+    offensiveError: {
+      errorText: undefined
+    },
+    dialog: false
   }),
   methods: {
     toggle() {
@@ -75,7 +82,8 @@ export default {
           alert('Your session has expired. Please, login again!')
           this.$router.push('/login')
         } else {
-          alert(e.response.data)
+          this.offensiveError.errorText = e.response.data
+          this.dialog = true
         }
       }
 

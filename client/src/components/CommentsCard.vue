@@ -51,56 +51,31 @@
       </v-card-actions>
     </v-card>
 
-    <v-dialog v-if="offensiveError" v-model="dialog" max-width="500">
-      <v-card v-if="offensiveError" color="#FAD9D3" class="pa-4">
-        <v-card-text class="text--primary" data-id="error-text">{{offensiveError.errorText}}</v-card-text>
-        <v-list color="#FAD9D3">
-          <v-list-item
-            v-for="word in offensiveError.notAllowedWords"
-            :key="word.word"
-            three-line
-            class="d-block pb-3 mb-3 white"
-          >
-            <v-list-item-content shaped>
-              <v-list-item-title class="mb-2">
-                <strong>Word:</strong>
-                {{word.word}}
-              </v-list-item-title>
-              <v-list-item-subtitle class="caption">
-                <strong>Level:</strong>
-                {{word.level}}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <Dialog :offensiveError="offensiveError" :dialog="dialog" @close-dialog="dialog = false" />
   </v-card>
 </template>
 
 <script>
-import userStore from '../stores/user'
-import defaultAvatar from '../assets/avatar-pengin.png'
+import userStore from '../stores/user';
+import defaultAvatar from '../assets/avatar-pengin.png';
 
-import sendNewComment from '../resources/sendNewComment'
-import sendEditComment from '../resources/sendEditComment'
-import deleteComment from '../resources/deleteComment'
+import sendNewComment from '../resources/sendNewComment';
+import sendEditComment from '../resources/sendEditComment';
+import deleteComment from '../resources/deleteComment';
+import formatDate from '../utils/formatDate';
 
-import AvatarCard from '../components/AvatarCard'
-import PrimaryBtn from '../components/Btns/PrimaryBtn'
-import SecondaryBtn from '../components/Btns/SecondaryBtn'
+import AvatarCard from '../components/AvatarCard';
+import PrimaryBtn from '../components/Btns/PrimaryBtn';
+import SecondaryBtn from '../components/Btns/SecondaryBtn';
+import Dialog from '../components/Dialog';
 
 export default {
   name: 'CommentsCard',
   components: {
     AvatarCard,
     PrimaryBtn,
-    SecondaryBtn
+    SecondaryBtn,
+    Dialog
   },
   props: {
     postID: undefined,
@@ -118,122 +93,142 @@ export default {
     rules: {
       required: value => !!value || 'The field is required.'
     },
-    offensiveError: undefined,
+    offensiveError: {
+      errorText: undefined,
+      notAllowedWords: undefined
+    },
     dialog: false
   }),
   computed: {
     idToEdit: {
       get: function() {
-        return this.commentToEdit
+        return this.commentToEdit;
       },
       set: function(comment) {
-        this.commentToEdit.id = comment._id
-        this.commentToEdit.content = comment.content
-        return this.commentToEdit
+        this.commentToEdit.id = comment._id;
+        this.commentToEdit.content = comment.content;
+        return this.commentToEdit;
       }
     }
   },
   methods: {
     async addNewComment() {
-      this.offensiveError = undefined
+      const noSpacesComment = this.newComment.trim();
+      this.newComment = noSpacesComment;
+
       if (this.newComment) {
-        let resultSendComment
+        let resultSendComment;
+
         try {
-          resultSendComment = await sendNewComment(this.postID, this.newComment)
+          resultSendComment = await sendNewComment(
+            this.postID,
+            this.newComment
+          );
         } catch (e) {
           if (e.response.status === 401) {
-            alert('Your session has expired. Please, login again!')
-            this.$router.push('/login')
+            alert('Your session has expired. Please, login again!');
+            this.$router.push('/login');
           } else {
-            this.offensiveError = e.response.data
-            this.dialog = true
+            this.offensiveError = e.response.data;
+            this.dialog = true;
           }
         }
 
         if (resultSendComment) {
-          const { _id, username, image } = this.userStore.data
+          const { _id, username, image } = this.userStore.data;
 
           const userInfo = {
             userID: _id,
             username,
             image
-          }
+          };
 
-          resultSendComment.userInfo = userInfo
-          this.newComment = ' '
-          this.offensiveError = undefined
+          resultSendComment.userInfo = userInfo;
+          resultSendComment.date = formatDate(resultSendComment.date);
 
-          this.comments.unshift(resultSendComment)
+          this.newComment = ' ';
+          this.offensiveError.errorText = undefined;
+          this.offensiveError.notAllowedWords = undefined;
+
+          this.comments.unshift(resultSendComment);
         }
       } else {
-        alert('Fill required fields')
+        this.offensiveError.errorText = 'Fill required fields';
+        this.dialog = true;
       }
     },
     editComment(comment) {
-      return (this.idToEdit = comment)
+      return (this.idToEdit = comment);
     },
     async sendEditComment() {
-      if (this.commentToEdit) {
-        let resultSendComment
+      const noSpacesComment = this.commentToEdit.content.trim();
+      this.commentToEdit.content = noSpacesComment;
+
+      if (this.commentToEdit.content) {
+        let resultSendComment;
         try {
           resultSendComment = await sendEditComment(
             this.postID,
             this.commentToEdit
-          )
+          );
         } catch (e) {
           if (e.response.status === 401) {
-            alert('Your session has expired. Please, login again!')
-            this.$router.push('/login')
+            alert('Your session has expired. Please, login again!');
+            this.$router.push('/login');
           } else {
-            this.offensiveError = e.response.data
-            this.dialog = true
+            this.offensiveError = e.response.data;
+            this.dialog = true;
           }
         }
 
         if (resultSendComment) {
-          const { _id, username, image } = this.userStore.data
+          const { _id, username, image } = this.userStore.data;
 
           const userInfo = {
             userID: _id,
             username,
             image
-          }
+          };
 
-          resultSendComment.userInfo = userInfo
-          this.commentToEdit.id = ''
-          this.offensiveError = undefined
+          resultSendComment.userInfo = userInfo;
+          resultSendComment.date = formatDate(resultSendComment.date);
+          this.commentToEdit.id = '';
+          this.offensiveError.errorText = undefined;
+          this.offensiveError.notAllowedWords = undefined;
 
           const indexComment = this.comments.findIndex(
             comment => comment._id === resultSendComment._id
-          )
-          this.comments.splice(indexComment, 1, resultSendComment)
+          );
+          this.comments.splice(indexComment, 1, resultSendComment);
         }
       } else {
-        alert('Fill required fields')
+        this.offensiveError.errorText = 'Fill required fields';
+        this.dialog = true;
       }
     },
     async deleteComment(id) {
-      let resultSendDelete
+      let resultSendDelete;
       try {
-        resultSendDelete = await deleteComment(this.postID, id)
+        resultSendDelete = await deleteComment(this.postID, id);
       } catch (e) {
         if (e.response.status === 401) {
-          alert('Your session has expired. Please, login again!')
-          this.$router.push('/login')
+          alert('Your session has expired. Please, login again!');
+          this.$router.push('/login');
         } else {
-          alert(e.response.data)
+          this.offensiveError.errorText = e.response.data;
+          this.dialog = true;
         }
       }
 
       if (resultSendDelete) {
         const indexComment = this.comments.findIndex(
           comment => comment._id === id
-        )
-        this.comments.splice(indexComment, 1)
+        );
+        this.comments.splice(indexComment, 1);
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
