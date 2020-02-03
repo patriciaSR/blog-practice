@@ -25,12 +25,13 @@
 </template>
 
 <script>
-import userStore from '../stores/user'
-import loadPostDetail from '../resources/loadPostDetail'
+import userStore from '../stores/user';
+import loadPostDetail from '../resources/loadPostDetail';
+import formatDate from '../utils/formatDate';
 
-import PrimaryBtn from '../components/Btns/PrimaryBtn'
-import PostCard from '../components/PostCard'
-import CommentsCard from '../components/CommentsCard'
+import PrimaryBtn from '../components/Btns/PrimaryBtn';
+import PostCard from '../components/PostCard';
+import CommentsCard from '../components/CommentsCard';
 
 export default {
   name: 'PostDetail',
@@ -48,18 +49,23 @@ export default {
     userStore: userStore.state
   }),
   async mounted() {
-    let id = this.$route.params.id
-    this.postData = await loadPostDetail(id)
+    let id = this.$route.params.id;
+    const post = await loadPostDetail(id);
+    post.date = formatDate(post.date);
+    for (let comment of post.comments) {
+      comment.date = formatDate(comment.date);
+    }
+    this.postData = post;
   },
   methods: {
     toggleComments(isCommentsOpen) {
-      this.isCommentsOpen = isCommentsOpen
+      this.isCommentsOpen = isCommentsOpen;
     },
     goToView(path) {
-      this.$router.push(path)
+      this.$router.push(path);
     }
   }
-}
+};
 </script>
 
 <style scoped>

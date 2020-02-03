@@ -62,6 +62,7 @@ import defaultAvatar from '../assets/avatar-pengin.png';
 import sendNewComment from '../resources/sendNewComment';
 import sendEditComment from '../resources/sendEditComment';
 import deleteComment from '../resources/deleteComment';
+import formatDate from '../utils/formatDate';
 
 import AvatarCard from '../components/AvatarCard';
 import PrimaryBtn from '../components/Btns/PrimaryBtn';
@@ -139,6 +140,8 @@ export default {
           };
 
           resultSendComment.userInfo = userInfo;
+          resultSendComment.date = formatDate(resultSendComment.date);
+
           this.newComment = ' ';
           this.offensiveError.errorText = undefined;
           this.offensiveError.notAllowedWords = undefined;
@@ -181,6 +184,7 @@ export default {
           };
 
           resultSendComment.userInfo = userInfo;
+          resultSendComment.date = formatDate(resultSendComment.date);
           this.commentToEdit.id = '';
           this.offensiveError.errorText = undefined;
           this.offensiveError.notAllowedWords = undefined;
