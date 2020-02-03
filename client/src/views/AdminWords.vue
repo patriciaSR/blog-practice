@@ -2,11 +2,7 @@
   <v-container class="mx-auto d-flex justify-center">
     <v-layout text-left wrap class="d-flex flex-column justify-space-between align-center my-4">
       <v-card width="800" color="secondary">
-        <WordCardInput
-          btnText="+ Word"
-          :word="newWord"
-          @go-sendWord="addNewWord"
-        />
+        <WordCardInput btnText="+ Word" :word="newWord" @go-sendWord="addNewWord" />
 
         <v-card-title class>Lista de palabras</v-card-title>
         <v-list-item three-line class="d-flex flex-wrap pb-3">
@@ -37,32 +33,40 @@
 
               <v-card-actions class="justify-end">
                 <SecondaryBtn btnText="Edit" data-id="edit-word-btn" @go-to="editWord(word)" />
-                <SecondaryBtn btnText="Delete" data-id="delete-word-btn" @go-to="deleteWord(word.word)" />
+                <SecondaryBtn
+                  btnText="Delete"
+                  data-id="delete-word-btn"
+                  @go-to="deleteWord(word.word)"
+                />
               </v-card-actions>
             </v-list-item-content>
           </v-card>
         </v-list-item>
       </v-card>
+
+      <Dialog :offensiveError="offensiveError" :dialog="dialog" @close-dialog="dialog = false" />
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import userStore from '../stores/user'
+import userStore from '../stores/user';
 
-import loadWords from '../resources/loadWords.js'
-import sendNewWord from '../resources/sendNewWord'
-import sendEditWord from '../resources/sendEditWord'
-import deleteWord from '../resources/deleteWord'
+import loadWords from '../resources/loadWords.js';
+import sendNewWord from '../resources/sendNewWord';
+import sendEditWord from '../resources/sendEditWord';
+import deleteWord from '../resources/deleteWord';
 
-import WordCardInput from '../components/WordCardInput'
-import SecondaryBtn from '../components/Btns/SecondaryBtn'
+import WordCardInput from '../components/WordCardInput';
+import SecondaryBtn from '../components/Btns/SecondaryBtn';
+import Dialog from '../components/Dialog';
 
 export default {
   name: 'AdminWords',
   components: {
     WordCardInput,
-    SecondaryBtn
+    SecondaryBtn,
+    Dialog
   },
   data: () => ({
     userStore: userStore.state,
@@ -78,103 +82,102 @@ export default {
     },
     rules: {
       required: value => !!value || 'The field is required.'
-    }
+    },
+    offensiveError: {
+      errorText: undefined
+    },
+    dialog: false
   }),
   computed: {
     idToEdit: {
       get: function() {
-        return this.wordToEdit
+        return this.wordToEdit;
       },
       set: function(word) {
-        this.wordToEdit.id = word._id
-        this.wordToEdit.word = word.word
-        this.wordToEdit.level = word.level
+        this.wordToEdit.id = word._id;
+        this.wordToEdit.word = word.word;
+        this.wordToEdit.level = word.level;
 
-        return this.wordToEdit
+        return this.wordToEdit;
       }
     }
   },
   async mounted() {
-    const result = await loadWords()
-    this.offensiveWords = result
+    const result = await loadWords();
+    this.offensiveWords = result;
   },
   methods: {
     async addNewWord(newWord) {
-      if (newWord.word && newWord.level) {
-        const noSpaceWord = newWord.word.trim()
-        newWord.word = noSpaceWord
-        let resultSendWord
+      const noSpaceWord = newWord.word.trim();
+      newWord.word = noSpaceWord;
+      let resultSendWord;
 
-        try {
-          resultSendWord = await sendNewWord(newWord)
-        } catch (e) {
-          if (e.response.status === 401) {
-            alert('Your session has expired. Please, login again!')
-            this.$router.push('/login')
-          } else {
-            alert(e.response.data)
-          }
+      try {
+        resultSendWord = await sendNewWord(newWord);
+      } catch (e) {
+        if (e.response.status === 401) {
+          alert('Your session has expired. Please, login again!');
+          this.$router.push('/login');
+        } else {
+          this.offensiveError.errorText = e.response.data;
+          this.dialog = true;
         }
+      }
 
-        if (resultSendWord) {
-          this.offensiveWords.unshift(resultSendWord)
-        }
-      } else {
-        alert('Fill required fields')
+      if (resultSendWord) {
+        this.offensiveWords.unshift(resultSendWord);
       }
     },
     editWord(word) {
-      return (this.idToEdit = word)
+      return (this.idToEdit = word);
     },
     async sendEditWord(newWord) {
-      if (this.wordToEdit) {
-        const noSpaceWord = newWord.word.trim()
-        newWord.word = noSpaceWord
+      const noSpaceWord = newWord.word.trim();
+      newWord.word = noSpaceWord;
 
-        let resultSendWord
+      let resultSendWord;
 
-        try {
-          resultSendWord = await sendEditWord(this.wordToEdit.word, newWord)
-        } catch (e) {
-          if (e.response.status === 401) {
-            alert('Your session has expired. Please, login again!')
-            this.$router.push('/login')
-          } else {
-            alert(e.response.data)
-          }
+      try {
+        resultSendWord = await sendEditWord(this.wordToEdit.word, newWord);
+      } catch (e) {
+        if (e.response.status === 401) {
+          alert('Your session has expired. Please, login again!');
+          this.$router.push('/login');
+        } else {
+          this.offensiveError.errorText = e.response.data;
+          this.dialog = true;
         }
-        if (resultSendWord) {
-          const indexWord = this.offensiveWords.findIndex(
-            word => word._id === this.wordToEdit.id
-          )
-          this.offensiveWords.splice(indexWord, 1, resultSendWord)
-        }
-      } else {
-        alert('Fill required fields')
+      }
+      if (resultSendWord) {
+        const indexWord = this.offensiveWords.findIndex(
+          word => word._id === this.wordToEdit.id
+        );
+        this.offensiveWords.splice(indexWord, 1, resultSendWord);
       }
     },
     async deleteWord(word) {
-      let resultSendDelete
+      let resultSendDelete;
       try {
-        resultSendDelete = await deleteWord(word)
+        resultSendDelete = await deleteWord(word);
       } catch (e) {
         if (e.response.status === 401) {
-          alert('Your session has expired. Please, login again!')
-          this.$router.push('/login')
+          alert('Your session has expired. Please, login again!');
+          this.$router.push('/login');
         } else {
-          alert(e.response.data)
+          this.offensiveError.errorText = e.response.data;
+          this.dialog = true;
         }
       }
 
       if (resultSendDelete) {
         const indexWord = this.offensiveWords.findIndex(
           arrayWord => arrayWord.word === word
-        )
-        this.offensiveWords.splice(indexWord, 1)
+        );
+        this.offensiveWords.splice(indexWord, 1);
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
