@@ -1,7 +1,7 @@
 <template>
   <v-container class="mx-auto d-flex justify-center">
     <v-layout wrap class="d-flex flex-row justify-space-between align-center my-4">
-      <div class="v-card v-card--shadow-none">
+      <div v-if="postData.title" class="v-card v-card--shadow-none">
         <PostCard
           :postData="postData"
           :isCommentsOpen="isCommentsOpen"
@@ -14,6 +14,8 @@
           :isCommentsOpen="isCommentsOpen"
         />
       </div>
+
+      <v-card v-else width="80%" class="pa-10">Post Not Found :(</v-card>
 
       <PrimaryBtn
         btnText="New Post"
