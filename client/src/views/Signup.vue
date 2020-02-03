@@ -37,19 +37,23 @@
       </v-card>
 
       <PrimaryBtn btnText="Sign up" @go-to="signup" />
+
+      <Dialog :offensiveError="offensiveError" :dialog="dialog" @close-dialog="dialog = false" />
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import registNewUser from '../resources/registNewUser'
+import registNewUser from '../resources/registNewUser';
 
-import PrimaryBtn from '../components/Btns/PrimaryBtn'
+import PrimaryBtn from '../components/Btns/PrimaryBtn';
+import Dialog from '../components/Dialog';
 
 export default {
   name: 'Signup',
   components: {
-    PrimaryBtn
+    PrimaryBtn,
+    Dialog
   },
   data() {
     return {
@@ -66,34 +70,56 @@ export default {
         min: v => v.length >= 6 || 'Min 6 characters',
         max: v => v.length <= 10 || 'Max 10 characters',
         email: value => {
-          const patternEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          const patternEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-          return patternEmail.test(value) || 'Invalid e-mail.'
+          return patternEmail.test(value) || 'Invalid e-mail.';
         },
         username: value => {
-          const patternUsername = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/
-          return patternUsername.test(value) || 'Invalid username'
+          const patternUsername = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/;
+          return patternUsername.test(value) || 'Invalid username';
         }
       },
-      show2: false
-    }
+      show2: false,
+      offensiveError: {
+        errorText: undefined
+      },
+      dialog: false
+    };
   },
   methods: {
     async signup() {
-      let resultSignUp
-      try {
-        resultSignUp = await registNewUser(this.newUser)
-      } catch (e) {
-        alert(e.response.data)
-      }
+      if (this.checkFields()) {
+        let resultSignUp;
+        try {
+          resultSignUp = await registNewUser(this.newUser);
+        } catch (e) {
+          this.offensiveError.errorText = e.response.data;
+          this.dialog = true;
+        }
 
-      if (resultSignUp) {
-        alert('User registered correctly')
-        return this.$router.push('/login')
+        if (resultSignUp) {
+          alert('User registered correctly');
+          return this.$router.push('/login');
+        }
+      } else {
+        this.offensiveError.errorText = 'Fill required fields correctly';
+        this.dialog = true;
+      }
+    },
+    checkFields() {
+      const checkEmail = typeof this.rules.email(this.newUser.email) === 'boolean' ;
+      const checkUsername =
+        typeof (this.rules.username(this.newUser.username),
+        this.rules.max(this.newUser.username),
+        this.rules.min(this.newUser.username)) === 'boolean';
+      const checkPassword = typeof this.rules.min(this.newUser.password) === 'boolean';
+
+      if (checkUsername && checkEmail && checkPassword) {
+        return true;
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
