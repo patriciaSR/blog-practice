@@ -117,14 +117,18 @@ export default {
     checkFields() {
       const checkEmail =
         typeof this.rules.email(this.newUser.email) === 'boolean';
+
+      const checkUsernameMin =
+        typeof this.rules.min(this.newUser.username) === 'boolean';
+      const checkUsernameMax =
+        typeof this.rules.max(this.newUser.username) === 'boolean';
       const checkUsername =
-        typeof (this.rules.username(this.newUser.username),
-        this.rules.max(this.newUser.username),
-        this.rules.min(this.newUser.username)) === 'boolean';
+        typeof this.rules.username(this.newUser.username) === 'boolean';
+
       const checkPassword =
         typeof this.rules.min(this.newUser.password) === 'boolean';
 
-      if (checkUsername && checkEmail && checkPassword) {
+      if (checkUsername && checkUsernameMin && checkUsernameMax && checkEmail && checkPassword) {
         return true;
       }
     },
