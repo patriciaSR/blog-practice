@@ -10,12 +10,16 @@
           name="input-title"
         ></v-text-field>
 
-        <v-text-field
-          v-model="newPost.image"
+        <v-file-input
+          accept="image/*"
           filled
-          label="Background image URL"
+          prepend-icon
+          prepend-inner-icon="mdi-camera"
+          :label="newPost.imageName || 'Background image file'"
           name="input-image"
-        ></v-text-field>
+          id="file"
+          @change="handleUploadImage"
+        ></v-file-input>
 
         <v-textarea
           v-model="newPost.content"
@@ -77,7 +81,8 @@ export default {
         userID: '',
         tags: [''],
         categories: [''],
-        image: ''
+        image: '',
+        imageName: ''
       },
       postToEdit: '',
       rules: {
@@ -159,6 +164,18 @@ export default {
           this.$router.push('/login');
         }
       }
+    },
+    handleUploadImage(ev) {
+      const file = ev;
+      if (!file) return;
+      this.newPost.imageName = file.name
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = ev => {
+        this.newPost.image = ev.target.result;
+      };
+      document.querySelector('#file').value = '';
     }
   }
 };

@@ -30,9 +30,7 @@ describe('Login with admin role', () => {
     cy.url().should('include', '/myprofile/newpost')
 
     cy.get('input[name="input-title"]').type('Hello Cypress')
-    cy.get('input[name="input-image"]').type(
-      'https://st3.depositphotos.com/1420973/13147/i/1600/depositphotos_131478896-stock-photo-tuscany-cypress-trees-white-road.jpg'
-    )
+    cy.get('input[name="input-image"]').click({ force: true, multiple: true })
     cy.get('textarea').type('Hello cypress')
 
     cy.get('[data-id="addpost-btn"]').click()

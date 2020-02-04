@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const fs = require('fs');
 const https = require('https');
@@ -21,6 +22,11 @@ const signupRouter = require('./controllers/signupRouter');
 const app = express();
 // Enable CORS
 app.use(cors());
+
+// Acept request entity too large
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 // Convert json bodies to JavaScript object
 app.use(express.json());
 
