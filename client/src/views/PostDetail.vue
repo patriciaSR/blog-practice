@@ -1,7 +1,9 @@
 <template>
   <v-container class="mx-auto d-flex justify-center">
     <v-layout wrap class="d-flex flex-row justify-space-between align-center my-4">
-      <div v-if="postData.title" class="v-card v-card--shadow-none">
+      <v-card v-if="notFound" width="80%" class="pa-10">Post Not Found :(</v-card>
+
+      <div v-else class="v-card v-card--shadow-none">
         <PostCard
           :postData="postData"
           :isCommentsOpen="isCommentsOpen"
@@ -14,8 +16,6 @@
           :isCommentsOpen="isCommentsOpen"
         />
       </div>
-
-      <v-card v-else width="80%" class="pa-10">Post Not Found :(</v-card>
 
       <PrimaryBtn
         btnText="New Post"
@@ -48,16 +48,27 @@ export default {
       userInfo: {}
     },
     isCommentsOpen: true,
-    userStore: userStore.state
+    userStore: userStore.state,
+    notFound: false
   }),
   async mounted() {
     let id = this.$route.params.id;
-    const post = await loadPostDetail(id);
-    post.date = formatDate(post.date);
-    for (let comment of post.comments) {
-      comment.date = formatDate(comment.date);
+    let post;
+
+    try {
+      post = await loadPostDetail(id);
+      post.date = formatDate(post.date);
+
+      for (let comment of post.comments) {
+        comment.date = formatDate(comment.date);
+      }
+
+      this.postData = post;
+    } catch (e) {
+      if (e.response.status === 404) {
+        this.notFound = true;
+      }
     }
-    this.postData = post;
   },
   methods: {
     toggleComments(isCommentsOpen) {
