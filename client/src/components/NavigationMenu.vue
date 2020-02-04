@@ -1,12 +1,11 @@
 <template>
   <v-navigation-drawer
-    v-model="drawer"
+    v-model="isOpen"
     :color="color"
     :right="right"
     :src="bg"
     absolute
     dark
-    :class="{open: isOpen, 'd-none': !isOpen}"
     data-id="nav-menu-btn"
   >
     <v-list dense nav class="py-0">
@@ -27,18 +26,18 @@
       <v-divider></v-divider>
 
       <div v-if="userStore.token">
-      <router-link :to="item.path" v-for="item in items" :key="item.title">
-        <v-list-item link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+        <router-link :to="item.path" v-for="item in items" :key="item.title">
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content class="white--text">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </router-link>
-      <v-list-item link @click="logout()">
+            <v-list-item-content class="white--text">
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <v-list-item link @click="logout()">
           <v-list-item-icon>
             <v-icon>fas fa-sign-out-alt</v-icon>
           </v-list-item-icon>
@@ -51,36 +50,34 @@
 
       <div v-else>
         <router-link :to="'/login'">
-        <v-list-item link>
-          <v-list-item-icon>
-            <v-icon>fas fa-sign-in-alt</v-icon>
-          </v-list-item-icon>
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>fas fa-sign-in-alt</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content class="white--text">
-            <v-list-item-title>Login</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </router-link>
+            <v-list-item-content class="white--text">
+              <v-list-item-title>Login</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </div>
-
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
-import userStore from '../stores/user'
-import defaultAvatar from '../assets/avatar-pengin.png'
+import userStore from '../stores/user';
+import defaultAvatar from '../assets/avatar-pengin.png';
 
 export default {
   name: 'NavigationMenu',
   props: {
-    isOpen: undefined
+    drawer: undefined
   },
   data() {
     return {
       userStore: userStore.state,
       defaultAvatar,
-      drawer: true,
       items: [
         { title: 'Posts', icon: 'mdi-view-dashboard', path: '/posts' },
         { title: 'My Profile', icon: 'mdi-account', path: '/myprofile' }
@@ -91,30 +88,40 @@ export default {
       miniVariant: true,
       expandOnHover: false,
       background: false
-    }
+    };
   },
   computed: {
     bg() {
       return this.background
         ? 'https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg'
-        : undefined
+        : undefined;
+    },
+    isOpen: {
+      get() {
+        return this.drawer;
+      },
+      set() {
+        // Do nothing...
+        // No se permite cambiar el valor de "this.drawer" porque viene como atributo del componente padre
+        // y rompe "data down, actions up"
+      }
     }
   },
   methods: {
     close() {
       this.$emit('toggle-menu', false);
     },
-    logout(){
+    logout() {
       localStorage.clear();
       userStore.state.token = '';
       userStore.state.data = {};
 
-      if(this.$router.currentRoute.path !== '/') {
-      return this.$router.push('/');
+      if (this.$router.currentRoute.path !== '/') {
+        return this.$router.push('/');
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

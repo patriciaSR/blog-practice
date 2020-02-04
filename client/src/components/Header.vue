@@ -12,9 +12,9 @@
           />
         </a>
       </div>
-      <v-app-bar-nav-icon @click="toggleMenu(true)"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="toggleMenu"></v-app-bar-nav-icon>
     </v-app-bar>
-    <NavigationMenu :isOpen="isOpen" @toggle-menu="toggleMenu" />
+    <NavigationMenu @toggle-menu="toggleMenu" :drawer="drawer"/>
   </div>
 </template>
 
@@ -27,11 +27,11 @@ export default {
     NavigationMenu
   },
   data: () => ({
-    isOpen: false
+    drawer: null
   }),
   methods: {
     toggleMenu(isOpen) {
-      return (this.isOpen = isOpen);
+      return this.drawer = isOpen;
     }
   }
 };
