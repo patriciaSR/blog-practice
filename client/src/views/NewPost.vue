@@ -10,19 +10,12 @@
           name="input-title"
         ></v-text-field>
 
-        <!-- <v-text-field
-          v-model="newPost.image"
-          filled
-          label="Background image URL"
-          name="input-image"
-        ></v-text-field>-->
-
         <v-file-input
           accept="image/*"
           filled
           prepend-icon
           prepend-inner-icon="mdi-camera"
-          label="Background image file"
+          :label="newPost.imageName || 'Background image file'"
           name="input-image"
           id="file"
           @change="handleUploadImage"
@@ -88,7 +81,8 @@ export default {
         userID: '',
         tags: [''],
         categories: [''],
-        image: ''
+        image: '',
+        imageName: ''
       },
       postToEdit: '',
       rules: {
@@ -174,6 +168,7 @@ export default {
     handleUploadImage(ev) {
       const file = ev;
       if (!file) return;
+      this.newPost.imageName = file.name
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
