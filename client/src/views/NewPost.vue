@@ -10,12 +10,23 @@
           name="input-title"
         ></v-text-field>
 
-        <v-text-field
+        <!-- <v-text-field
           v-model="newPost.image"
           filled
           label="Background image URL"
           name="input-image"
-        ></v-text-field>
+        ></v-text-field>-->
+
+        <v-file-input
+          accept="image/*"
+          filled
+          prepend-icon
+          prepend-inner-icon="mdi-camera"
+          label="Background image file"
+          name="input-image"
+          id="file"
+          @change="handleUploadImage"
+        ></v-file-input>
 
         <v-textarea
           v-model="newPost.content"
@@ -159,6 +170,17 @@ export default {
           this.$router.push('/login');
         }
       }
+    },
+    handleUploadImage(ev) {
+      const file = ev;
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = ev => {
+        this.newPost.image = ev.target.result;
+      };
+      document.querySelector('#file').value = '';
     }
   }
 };
