@@ -19,7 +19,15 @@
             label="E-mail *"
           ></v-text-field>
 
-          <v-text-field v-model="newUser.image" label="Profile Image url"></v-text-field>
+          <v-file-input
+            accept="image/*"
+            prepend-icon
+            append-icon="mdi-camera"
+            label="Profile Image file"
+            name="input-image"
+            id="file"
+            @change="handleUploadImage"
+          ></v-file-input>
 
           <v-text-field
             v-model="newUser.password"
@@ -107,16 +115,29 @@ export default {
       }
     },
     checkFields() {
-      const checkEmail = typeof this.rules.email(this.newUser.email) === 'boolean' ;
+      const checkEmail =
+        typeof this.rules.email(this.newUser.email) === 'boolean';
       const checkUsername =
         typeof (this.rules.username(this.newUser.username),
         this.rules.max(this.newUser.username),
         this.rules.min(this.newUser.username)) === 'boolean';
-      const checkPassword = typeof this.rules.min(this.newUser.password) === 'boolean';
+      const checkPassword =
+        typeof this.rules.min(this.newUser.password) === 'boolean';
 
       if (checkUsername && checkEmail && checkPassword) {
         return true;
       }
+    },
+    handleUploadImage(ev) {
+      const file = ev;
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = ev => {
+        this.newUser.image = ev.target.result;
+      };
+      document.querySelector('#file').value = '';
     }
   }
 };
