@@ -43,6 +43,7 @@
 <script>
 import userStore from '../stores/user'
 import loadUserPosts from '../resources/loadUserPosts'
+import formatDate from '../utils/formatDate';
 
 import AvatarCard from '../components/AvatarCard'
 import PostList from '../components/PostList'
@@ -78,6 +79,10 @@ export default {
 
       if (userData) {
         const result = await loadUserPosts(userData._id)
+
+        for (let post of result) {
+        post.date = formatDate(post.date);
+      }
         return result
       }
     }
