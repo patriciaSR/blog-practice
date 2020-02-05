@@ -80,6 +80,17 @@ The client is running now on safe port [https://localhost:8080](https://localhos
 
 If you want to learn more about vue client structure you can see [client folder](./client/README.md).
 
+---
+Other way to see the app is running `/dist` directory on a **local web server**. Run this commands to try it:
+
+Install serve:
+
+`sudo npm install -g serve`
+
+Run the serve from `/client` folder:
+
+`serve -s dist`
+
 ## Run tests
 
 ### Server tests
