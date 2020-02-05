@@ -35,8 +35,8 @@ export default {
   name: 'Dialog',
   components: {},
   props: {
-    offensiveError: undefined,
-    dialog: undefined
+    offensiveError: Object,
+    dialog: Boolean
   },
   data: () => ({}),
   methods: {

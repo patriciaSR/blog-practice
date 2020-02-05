@@ -15,9 +15,10 @@
             max-width="800"
           >
             <WordCardInput
-              v-if="word._id === wordToEdit.id"
+              v-if="word._id === wordToEdit.id && isEdit"
               btnText="Edit"
-              :word="wordToEdit"
+              :isEdit="true"
+              :word="wordEdit"
               @go-sendWord="sendEditWord"
             />
 
@@ -75,7 +76,7 @@ export default {
       word: '',
       level: ''
     },
-    wordToEdit: {
+    wordEdit: {
       id: '',
       word: '',
       level: ''
@@ -86,19 +87,20 @@ export default {
     offensiveError: {
       errorText: undefined
     },
-    dialog: false
+    dialog: false,
+    isEdit: false
   }),
   computed: {
-    idToEdit: {
-      get: function() {
-        return this.wordToEdit;
+    wordToEdit: {
+      get() {
+        return this.wordEdit;
       },
-      set: function(word) {
-        this.wordToEdit.id = word._id;
-        this.wordToEdit.word = word.word;
-        this.wordToEdit.level = word.level;
+      set(word) {
+        this.wordEdit.id = word._id;
+        this.wordEdit.word = word.word;
+        this.wordEdit.level = word.level;
 
-        return this.wordToEdit;
+        return this.wordEdit;
       }
     }
   },
@@ -129,7 +131,8 @@ export default {
       }
     },
     editWord(word) {
-      return (this.idToEdit = word);
+      this.isEdit = true;
+      return (this.wordToEdit = word);
     },
     async sendEditWord(newWord) {
       const noSpaceWord = newWord.word.trim();
@@ -138,7 +141,7 @@ export default {
       let resultSendWord;
 
       try {
-        resultSendWord = await sendEditWord(this.wordToEdit.word, newWord);
+        resultSendWord = await sendEditWord(this.wordEdit.word, newWord);
       } catch (e) {
         if (e.response.status === 401) {
           alert('Your session has expired. Please, login again!');
@@ -150,8 +153,9 @@ export default {
       }
       if (resultSendWord) {
         const indexWord = this.offensiveWords.findIndex(
-          word => word._id === this.wordToEdit.id
+          word => word._id === this.wordEdit.id
         );
+        this.isEdit = false;
         this.offensiveWords.splice(indexWord, 1, resultSendWord);
       }
     },

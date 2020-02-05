@@ -49,9 +49,9 @@ export default {
     Dialog
   },
   props: {
-    postData: undefined,
-    isCommentsOpen: undefined,
-    token: undefined
+    postData: Object,
+    isCommentsOpen: Boolean,
+    token: String
   },
   data: () => ({
     userStore: userStore.state,

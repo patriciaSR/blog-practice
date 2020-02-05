@@ -78,9 +78,9 @@ export default {
     Dialog
   },
   props: {
-    postID: undefined,
-    comments: undefined,
-    isCommentsOpen: undefined
+    postID: String,
+    comments: Array,
+    isCommentsOpen: Boolean
   },
   data: () => ({
     userStore: userStore.state,
@@ -101,10 +101,10 @@ export default {
   }),
   computed: {
     idToEdit: {
-      get: function() {
+      get() {
         return this.commentToEdit;
       },
-      set: function(comment) {
+      set(comment) {
         this.commentToEdit.id = comment._id;
         this.commentToEdit.content = comment.content;
         return this.commentToEdit;

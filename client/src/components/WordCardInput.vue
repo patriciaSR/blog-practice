@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import PrimaryBtn from '../components/Btns/PrimaryBtn'
+import PrimaryBtn from '../components/Btns/PrimaryBtn';
 
 export default {
   name: 'WordCardInput',
@@ -34,7 +34,8 @@ export default {
   },
   props: {
     btnText: String,
-    word: Object
+    word: Object,
+    isEdit: Boolean
   },
   data() {
     return {
@@ -45,14 +46,19 @@ export default {
       rules: {
         required: value => !!value || 'The field is required.'
       }
-    }
+    };
   },
   methods: {
-    sendWord() {
-      this.$emit('go-sendWord', this.newWord)
+    async sendWord() {
+      await this.$emit('go-sendWord', this.newWord);
+
+      if (!this.isEdit) {
+        this.newWord.word = ' ';
+        this.newWord.level = 1;
+      }
     }
   }
-}
+};
 </script>
 
 <style scoped>

@@ -6,7 +6,7 @@
 export default {
   name: 'PrimaryBtn',
   props: {
-    btnText: undefined
+    btnText: String
   },
   data: () => ({}),
   methods: {

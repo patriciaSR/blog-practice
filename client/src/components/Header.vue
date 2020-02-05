@@ -27,7 +27,7 @@ export default {
     NavigationMenu
   },
   data: () => ({
-    drawer: null
+    drawer: false
   }),
   methods: {
     toggleMenu(isOpen) {
