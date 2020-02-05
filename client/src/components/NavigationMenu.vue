@@ -18,7 +18,7 @@
           <v-list-item-title>{{userStore.data.firstname}} {{userStore.data.lastname || ''}}</v-list-item-title>
           <v-list-item-subtitle>@{{userStore.data.username}}</v-list-item-subtitle>
         </v-list-item-content>
-        <v-btn text icon color="red" @click="close()">
+        <v-btn text icon color="red" @click="close">
           <v-icon>fa-times</v-icon>
         </v-btn>
       </v-list-item>
@@ -37,7 +37,7 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <v-list-item link @click="logout()">
+        <v-list-item link @click="logout">
           <v-list-item-icon>
             <v-icon>fas fa-sign-out-alt</v-icon>
           </v-list-item-icon>

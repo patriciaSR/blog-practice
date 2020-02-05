@@ -20,7 +20,7 @@
           class="input-group--focused"
           data-id="password"
           @click:append="show2 = !show2"
-          @keyup.enter="login()"
+          @keyup.enter="login"
         ></v-text-field>
       </v-card>
 

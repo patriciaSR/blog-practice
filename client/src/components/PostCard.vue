@@ -22,7 +22,7 @@
       <v-btn
         text
         color="orange"
-        @click="toggle()"
+        @click="toggle"
         data-id="show-comments-btn"
       >Show Comments ({{postData.comments.length}})</v-btn>
     </v-card-actions>

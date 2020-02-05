@@ -39,7 +39,7 @@
             hint="At least 6 characters"
             class="input-group--focused"
             @click:append="show2 = !show2"
-            @keyup.enter="signup()"
+            @keyup.enter="signup"
           ></v-text-field>
         </v-form>
       </v-card>

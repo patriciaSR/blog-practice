@@ -24,9 +24,6 @@ export default {
     userStore: userStore.state,
   }),
   methods: {
-    goToView(path) {
-      this.$router.push(path)
-    }
   }
 }
 </script>

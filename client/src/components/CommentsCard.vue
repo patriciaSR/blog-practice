@@ -15,7 +15,7 @@
         label="Write your comment"
         name="input-comment"
         rows="3"
-        @keyup.enter="addNewComment()"
+        @keyup.enter="addNewComment"
       ></v-text-field>
 
       <PrimaryBtn btnText="+ Comment" data-id="add-comment-btn" @go-to="addNewComment" />
@@ -32,7 +32,7 @@
           label="Write your comment"
           name="input-comment-edit"
           rows="3"
-          @keyup.enter="sendEditComment()"
+          @keyup.enter="sendEditComment"
         ></v-text-field>
 
         <PrimaryBtn btnText="Edit" data-id="send-comment-btn" @go-to="sendEditComment" />
