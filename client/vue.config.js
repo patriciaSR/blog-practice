@@ -1,5 +1,5 @@
 module.exports = {
   transpileDependencies: ['vuetify'],
   devServer: { https: true },
-  publicPath: '<blog-practice>'
+  publicPath: process.env.NODE_ENV === 'production' ? '/blog-practice/client' : '/'
 };
