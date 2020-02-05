@@ -9,5 +9,3 @@ coverage
 *.lcov
 
 ## server certificate files
-server.cert
-server.key
