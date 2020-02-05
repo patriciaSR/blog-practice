@@ -91,6 +91,8 @@ Run the serve from `/client` folder:
 
 `serve -s dist`
 
+But you also need to run the server in other terminal: `npm run start` from `/server` folder
+
 ## Run tests
 
 ### Server tests
