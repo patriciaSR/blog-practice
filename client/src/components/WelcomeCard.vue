@@ -38,7 +38,7 @@ export default {
     PrimaryBtn
   },
   props: {
-    userStore: undefined
+    userStore: Object
   },
   data: () => ({}),
   methods: {

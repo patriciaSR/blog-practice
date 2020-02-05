@@ -32,8 +32,8 @@ export default {
   name: 'PostList',
   components: {},
   props: {
-    listTitle: undefined,
-    posts: undefined
+    listTitle: String,
+    posts: Array
   },
   data: () => ({}),
   methods: {}

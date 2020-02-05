@@ -46,10 +46,10 @@ import defaultAvatar from '../assets/avatar-pengin.png'
 export default {
   name: 'PrimaryBtn',
   props: {
-    postData: undefined,
-    commentUserData: undefined,
-    commentDate: undefined,
-    userData: undefined
+    postData: Object,
+    commentUserData: Object,
+    commentDate: String,
+    userData: Object
   },
   data: () => ({
     defaultAvatar
